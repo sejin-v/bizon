@@ -1,0 +1,396 @@
+.sidebar {
+  width: $sidebar-width;
+
+  &--user {
+    @apply flex flex-col justify-between;
+    overflow-y: auto;
+    height: calc(100vh - 60px - $header-height);
+    padding: 40px 20px;
+    background: $white;
+    border-radius: 20px;
+
+    %is-select {
+      background: linear-gradient(to right, $purple-50, $pink-50);
+      .icon--basic {
+        display: none;
+      }
+      .icon--hover {
+        display: block;
+      }
+    }
+
+    .el-menu {
+      overflow: auto;
+      height: 100%;
+
+      &.el-menu--vertical {
+        border-bottom: 1px solid $gray-80;
+      }
+      &-item,
+      .el-sub-menu__title {
+        @include font($font-size: 15, $font-weight: 600);
+        border-radius: 6px;
+
+        .icon {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          @extend %is-select;
+        }
+        &.is-active:not(:hover) {
+          @extend %is-select;
+        }
+        .el-icon {
+          display: none;
+        }
+      }
+
+      .el-sub-menu {
+        &.is-opened {
+          .el-sub-menu__title {
+            @extend %is-select;
+            color: $white;
+          }
+        }
+        &.el-menu-item__link {
+          .el-sub-menu__title {
+            @include after($w: 16, $h: 16) {
+              @include icon($name: link__line--666);
+              right: 20px;
+            }
+            &:hover,
+            &.is-active {
+              @include after($w: 16, $h: 16) {
+                @include icon($name: link__line--fff);
+                right: 20px;
+              }
+            }
+          }
+        }
+      }
+
+      // sub-menu
+      &-item-group {
+        .el-menu-item {
+          &:hover {
+            color: $purple-50 !important;
+          }
+          &.el-menu-item__link {
+            &:hover {
+              @include after($w: 16, $h: 16) {
+                @include icon($name: link__line--9e4);
+              }
+            }
+          }
+        }
+      }
+      &-item__link--depth {
+        padding: 0 55px;
+        margin-top: 6px;
+        @include after($w: 16, $h: 16) {
+          @include icon($name: link__line--333);
+          right: 79px;
+        }
+        &:hover {
+          color: $purple-50;
+          @include after($w: 16, $h: 16) {
+            @include icon($name: link__line--9e4);
+          }
+        }
+      }
+    }
+  }
+
+  .icon--hover {
+    display: none;
+  }
+
+  &__btn {
+    @include btn-size($size: "sm");
+    @apply flex items-center;
+    width: fit-content;
+    background: $gray-40;
+    border-radius: 92px;
+    margin: 20px 0 0 10px;
+    .icon {
+      margin-right: 5px;
+    }
+    &--shorcut {
+      @apply flex items-center justify-center;
+      @include font($font-size:16);
+      width: 213px;
+      padding: 15px 20px;
+      margin: 25px auto 0;
+      border: 1px solid $gray-80;
+      border-radius: 40px;
+      color:$gray-430;
+      & + .sidebar__btn--shorcut {
+        margin-top:10px;
+      }
+    }
+  }
+
+  &--mgmt {
+    h1 {
+      @apply flex items-center justify-center;
+      height: $mgmt-header-height;
+      margin: 0 20px;
+      border-bottom: 1px solid $gray-75;
+      cursor: pointer;
+    }
+
+    &-title {
+      @apply flex items-center;
+      padding: 28px 20px 10px;
+      margin: 6px 0;
+      span {
+        @include font($font-size: 16);
+        margin-left: 10px;
+      }
+    }
+
+    .el-menu {
+      height: calc(100% - $mgmt-header-height - 160px);
+      padding: 36px 20px 20px;
+      &.el-menu--vertical {
+        overflow-y: auto;
+      }
+
+      &-item,
+      .el-sub-menu__title {
+        @include font($font-size: 15);
+        border-radius: 30px;
+        color: $gray-400;
+
+        &:hover {
+          background: $purple-50;
+        }
+        &.is-active:not(:hover) {
+          background: $purple-50;
+        }
+      }
+      //mgmt menu
+      &-item.el-menu--mgmt,
+      .el-sub-menu.el-menu--mgmt > .el-sub-menu__title {
+        height: 37px;
+        background: $gray-30;
+        color: inherit;
+        &:hover {
+          color: $gray-400;
+        }
+        &.is-active {
+          background: $gray-30;
+          color: $gray-400 !important;
+        }
+      }
+      // disabled
+      &-item--disabled {
+        color: $gray-130 !important;
+        background: transparent !important;
+      }
+
+      .el-sub-menu {
+        &__title {
+          .el-icon {
+            @include icon($name: plus__line--333);
+            width: 16px;
+            height: 16px;
+            top: 44%;
+            svg {
+              display: none;
+            }
+          }
+        }
+        &:not(.el-menu--mgmt) {
+          .el-sub-menu__title {
+            &:hover {
+              .el-icon {
+                @include icon($name: plus__line--fff);
+              }
+            }
+          }
+        }
+        &.is-opened {
+          .el-sub-menu__title {
+            .el-icon {
+              @include icon($name: minus__line--333);
+            }
+          }
+          &:not(.el-menu--mgmt) {
+            .el-sub-menu__title {
+              &:hover {
+                .el-icon {
+                  @include icon($name: minus__line--fff);
+                }
+              }
+            }
+          }
+        }
+      }
+      &.el-menu--inline {
+        padding: 0;
+      }
+    }
+  }
+
+  // el-menu 공통
+  .el-menu {
+    border-right: none;
+
+    & > li {
+      & + li {
+        margin-top: 6px;
+      }
+    }
+
+    &.el-menu--inline {
+      .el-menu-item,
+      .el-sub-menu__title {
+        &.is-active {
+          color: inherit;
+        }
+      }
+    }
+    &-item,
+    .el-sub-menu__title {
+      height: 45px;
+      padding: 12px 20px !important;
+      transition: $transition;
+      &:hover {
+        color: $white;
+      }
+      &.is-active:not(:hover) {
+        color: $white;
+      }
+    }
+    &-item {
+      &__link:not(.el-sub-menu) {
+        @include after($w: 16, $h: 16) {
+          @include icon($name: link__line--666);
+          right: 20px;
+        }
+        &:hover,
+        &.is-active {
+          @include after($w: 16, $h: 16) {
+            @include icon($name: link__line--fff);
+            right: 20px;
+          }
+        }
+      }
+    }
+    // sub-menu
+    &-item-group {
+      padding: 10px 30px;
+      &__title {
+        padding: 0;
+      }
+      .el-menu-item {
+        @include font($font-size: 14);
+        height: 20px;
+        padding: 0 !important;
+        color: $gray-400;
+        & + .el-menu-item {
+          margin-top: 10px;
+        }
+
+        &.is-active {
+          background: none;
+        }
+
+        &:hover {
+          background: transparent;
+          color: inherit;
+        }
+      }
+    }
+  }
+  .el-tree {
+    padding: 6px 10px 6px 20px;
+  
+    > .el-tree-node {
+      position: relative;
+      > .el-tree-node__children {
+        padding-left: 20px;
+        > .el-tree-node {
+          > .el-tree-node__children {
+            padding: 0 0 10px 10px;
+          }
+        }
+      }
+    }
+  
+    &-node {
+      &.is-current {
+        > .el-tree-node__content {
+          background-color: transparent !important;
+          span {
+            color: $purple-50;
+            transition: $transition;
+          }
+        }
+        >.el-tree-node__content {
+          .el-icon {
+            @include before($w: 20, $h: 20) {
+              @include icon($name: arrow-r__line--9e4);
+            }
+          }
+        }
+      }
+  
+      &:focus {
+        > .el-tree-node__content {
+          background-color: transparent !important;
+        }
+      }
+      &__content {
+        height: 30px !important;
+        padding-left: 0 !important;
+        transition: $transition;
+        span {
+          @apply truncate;
+          color: $gray-330;
+        }
+        &:hover {
+          background-color: transparent !important;
+        }
+      }
+  
+      &__children {
+        position: relative;
+  
+        &:empty {
+          display: none !important;
+        }
+  
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 10px;
+          width: 1px;
+          height: calc(100% - 3px);
+          background: $gray-50;
+        }
+      }
+  
+      .el-icon {
+        @include before($w: 20, $h: 20) {
+          @include icon($name: arrow-r__line--555);
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        &.el-tree-node__expand-icon {
+          padding: 0;
+  
+          svg {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

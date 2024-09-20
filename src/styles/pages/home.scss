@@ -1,0 +1,258 @@
+// LandingPage.vue
+.home--white {
+  @include after($w: 850, $h: 927) {
+    @include icon($name: double-simbol__line);
+    z-index: -100;
+    bottom: 0;
+    right: 0;
+  }
+  overflow: hidden;
+  height: 100%;
+  padding: 0 80px;
+
+  .home {
+    &__cont {
+      @apply flex justify-between;
+      position: relative;
+      height: 78%;
+      padding: 0 50px 0 100px;
+      margin-bottom: 75px;
+    }
+
+    &__title {
+      @apply flex flex-col justify-center;
+      height: calc(100% - 240px);
+      
+      &-desc {
+        @include font($font-size: 28, $font-weight: 500);
+        margin-bottom: 20px;
+        color: $gray-300;
+      }
+    }
+
+    &__box {
+      z-index: -1;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 240px;
+      background: $purple-50;
+      border-radius: 20px;
+
+      &-cont {
+        @apply flex flex-col justify-center;
+        height: 240px;
+        color: $white;
+        word-break: keep-all;
+      }
+      &-title {
+        @include font($font-size: 30, $font-weight: 700, $font-family: $font-family-nanum);
+      }
+      &-desc {
+        @include font($font-size: 23, $line-height: 32px, $font-family: $font-family-nanum);
+        margin-top: 15px;
+      }
+    }
+
+    &__holeman {
+      @apply flex items-end justify-end;
+    }
+
+    &__btns {
+      @apply flex items-center;
+      margin-bottom: 72px;
+      margin-left: 30px;
+      button {
+        min-width: fit-content;
+      }
+    }
+    &__info {
+      @apply flex flex-col items-end;
+      position: absolute;
+      bottom: -147px;
+      left: 0;
+      z-index: 20;
+      width: 371px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+    
+      &__title {
+        @include font($font-size: 18, $font-weight: 600, $font-family: $font-family-nanum);
+        margin-bottom: 6px;
+        color: $white;
+    
+        &--desc {
+          @include font($font-family: $font-family-nanum);
+          color: $white;
+        }
+      }
+    
+      &-btn {
+        @apply flex items-center justify-center;
+        @include font($font-size: 13, $font-weight: 600, $font-family: $font-family-nanum);
+        height: 40px;
+        width: 170px;
+        padding: 0 10px;
+        margin-top: 10px;
+        border-radius: 50px;
+        border: 1px solid $white;
+        color: $white;
+      }
+    }
+  }
+}
+// LandingPageSec.vue
+.home--purple {
+  overflow: hidden;
+  height: 100%;
+
+  .home {
+    &__cont {
+      @apply flex justify-between;
+      @include after($w: 803, $h: 898) {
+        @include icon($name: home-purple-bg);
+        right: 0;
+      }
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      height: 78%;
+      padding-left: 100px;
+      margin-bottom: 75px;
+      background-image: linear-gradient($purple-50, $pink-50);
+      color: $white;
+    }
+
+    &__title {
+      @include font($font-size: 32, $font-weight: 700, $font-family: $font-family-nanum);
+      margin-top: 40px;
+      &-desc {
+        @include font($font-size: 23, $line-height:32px ,$font-family: $font-family-nanum);
+        margin-top: 19px;
+      }
+    }
+    &__btns {
+      @apply flex items-center;
+      margin-top: 37px;
+    }
+    &__holeman {
+      @apply flex justify-end;
+      z-index: 10;
+      position: absolute;
+      top: 12%;
+      right: 140px;
+    }
+    &__info {
+      @apply flex flex-col items-end;
+      position: absolute;
+      bottom: 195px;
+      right: 10px;
+      z-index: 20;
+      width: 371px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+    
+      &__title {
+        @include font($font-size: 18, $font-weight: 600, $font-family: $font-family-nanum);
+        margin-bottom: 6px;
+        color: $white;
+    
+        &--desc {
+          @include font($font-family: $font-family-nanum);
+          color: $white;
+        }
+      }
+    
+      &-btn {
+        @apply flex items-center justify-center;
+        @include font($font-size: 13, $font-weight: 600, $font-family: $font-family-nanum);
+        height: 40px;
+        width: 170px;
+        padding: 0 10px;
+        margin-top: 10px;
+        border-radius: 50px;
+        border: 1px solid $white;
+        color: $white;
+      }
+    }
+  }
+}
+
+.btn {
+  @apply flex items-center justify-center;
+  @include font($font-size:18, $line-height:60px, $font-weight:700, $font-family: $font-family-nanum);
+  min-width: 70px;
+  height: 60px;
+  padding: 0 30px;
+  border-radius: 50px;
+  & + button {
+    margin-left: 16px;
+  } 
+  .icon {
+    margin-left: 10px;
+  }
+
+  &__full--white {
+    @extend .btn;
+    background-color: $white;
+    color: $gray-430;
+  }
+  
+  &__line--white {
+    @extend .btn;
+    border: 2px solid $white;
+    color: $white;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .home--white {
+    .home {
+      &__title {
+        margin-left: -40px;
+      }
+      &__cont {
+        padding: 0 40px;
+      }
+      &__box {
+        &-desc {
+          display: none;
+          &.hidden {
+            @include font($font-size: 24, $font-family: $font-family-nanum);
+            display: block;
+            em {
+              @include font($font-size: 24, $font-weight: 700);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .home--purple {
+    .home {
+      &__cont {
+        padding-left: 60px;
+        &::after {
+          right: -120px;
+        }
+      }
+      &__title {
+        &-desc {
+          display: none;
+          &.hidden {
+            @include font($font-size: 24, $font-family: $font-family-nanum);
+            margin-top: 10px;
+            display: block;
+          }
+        }
+      }
+      &__holeman {
+        right: 63px;
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+.dashboard {
+  .form {
+    &__search {
+      &-wrap {
+        @apply flex;
+        > .form {
+          margin-left: 40px;
+        }
+      }
+      &-btns {
+        @apply flex;
+      }
+    }
+  }
+  &__date {
+    @include font($font-size:16, $font-weight:500);
+  }
+  &__cont {
+    & + .dashboard__cont {
+      margin-top: 30px;
+    }
+
+    .mgmt__title--sm {
+      & + .dashboard__date {
+        @include before($w:1, $h:18) {
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          background: $gray-80;
+        }
+        padding-left: 15px;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &__card {
+    width: 25%;
+    height: 150px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    & + .dashboard__card {
+      margin-left: 15px;
+    }
+
+    h3 {
+      @include font($font-size:24, $font-weight: 600, $line-height: 33px);
+      & + p {
+        @include font($font-size:16);
+        color: $gray-300;
+      }
+    }
+    em {
+      @include font($font-size:40, $font-weight:700, $line-height: 40px);
+      & + p {
+        @include font($font-size:16, $font-weight:500);
+        margin-left: 5px;
+        color: $gray-300;
+      }
+    }
+    &-wrap {
+      @apply flex;
+    }
+    &--green {
+      background: #ECFAF2;
+      border: 1px solid #6FC29F;
+      em {
+        color: #10BB73;
+      }
+    }
+    &--pink {
+      background: #FFECEC;
+      border: 1px solid #EFB0B0;
+      em {
+        color: #ED5454;
+      }
+    }
+    &--blue {
+      background: #ECF9FF;
+      border: 1px solid #6EC0E3;
+      em {
+        color: #0AB0F6;
+      }
+    }
+    &--purple {
+      background: #F2E8FF;
+      border: 1px solid #BF9DEC;
+      em {
+        color: $purple-50;
+      }
+    }
+  }
+
+  &__chart {
+    &-title {
+      @apply flex items-center justify-between;
+      width: 66.666%;
+    }
+    &-ex {
+      @apply flex;
+      p {
+        @apply flex items-center;
+        @include before($w:31,$h:9) {
+          left: 0;
+        }
+        @include font($font-size: 15);
+        padding-left: 41px;
+        color: $gray-300;
+        & + p {
+          margin-left: 30px;
+        }
+      }
+    }
+    &--api {
+      &::before {
+        @include icon($name: 'chart__line-api');
+      }
+    }
+    &--good {
+      &::before {
+        @include icon($name: 'chart__line-good');
+      }
+    }
+    &--error {
+      &::before {
+        @include icon($name: 'chart__line-error');
+      }
+    }
+  }
+
+  @media screen and (max-width: 1440px) {
+    .dashboard {
+      &__card {
+        @apply flex justify-between;
+        width: calc(50% - 7.5px);
+        height: fit-content;
+        &:nth-child(odd) {
+          margin-left: 0;
+        }
+        &:nth-child(n+3) {
+          margin-top: 15px;
+        }
+        &-wrap {
+          @apply flex-wrap;
+        }
+      }
+      &__chart {
+        > div {
+          @apply flex-col;
+        }
+        &-title {
+          @apply justify-end;
+          width: 100%;
+          margin-top: 12px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1820px) {
+    .form {
+      &__search {
+        &-wrap {
+          @apply flex-col;
+          > .form {
+            margin-top: 10px;
+            margin-left: 0;
+            .form__label {
+              @include font($font-weight:500, $line-height:18px);
+              width: 60px;
+              min-width: unset;
+            }
+          }
+        }
+        &-btns {
+          @apply items-end;
+        }
+      }
+    }
+
+  }
+}

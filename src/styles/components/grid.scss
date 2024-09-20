@@ -1,0 +1,128 @@
+/* ========================== Table ========================== */
+.total {
+  @apply flex items-end justify-between;
+  margin-bottom: 22px;
+  span {
+    color: $purple-50;
+  }
+}
+.table {
+  &__underline {
+    color: $gray-330;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  &__state {
+    &--success {
+      color: #00A31A;
+    }
+    &--fail {
+      color: $error;
+    }
+    &--wait {
+      color: #FF7E35;
+    }
+  }
+}
+.el-table {
+  .el-table {
+    &__inner-wrapper {
+      &::before {
+        background-color: $gray-80;
+      }
+    }
+    &__header {
+      thead {
+        @include font($font-size:15,$font-weight:600);
+        color: $gray-400;
+      }
+      .el-table__cell.is-leaf {
+        height: 33px;
+        padding: 0;
+        border-bottom: 1px solid $gray-400;
+        text-align: center;
+        vertical-align: unset;
+      }
+    }
+
+    &__body {
+      .el-table__cell {
+        @include font($font-size:14);
+        height: 56px;
+        padding: 10px 0;
+        border-bottom: 1px solid $gray-80;
+        color: $gray-400;
+      }
+
+      .el-table__row {
+        &:hover {
+          td.el-table__cell {
+            background: $purple-5;
+          }
+        }
+        .cell {
+          padding: 0 8px;
+        }
+      }
+    }
+  }
+  &--small {
+    .el-table__body {
+      .el-table__cell {
+        @include font($font-size:14);
+        height: 50px;
+        padding: 6px 0;
+      }
+    }
+  }
+
+  &.no-hover {
+    .el-table__body {
+      .el-table__row {
+        &:hover {
+          td.el-table__cell {
+            background: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* ========================== Pagination ========================== */
+.pagination {
+  @apply flex justify-center;
+  margin-top: 20px;
+  .pagination-container {
+    @apply flex;
+    column-gap: 2px;
+    > li {
+      height: 32px;
+    }
+    .paginate-buttons {
+      width: 32px;
+      height: 32px;
+      border:0;
+      border-radius: 2px;
+      color: $gray-330;
+      transition: $transition;
+      &:hover {
+        background: $white;
+      }
+      &.active-page {
+        @include font($font-weight:600);
+        background: $purple-50;
+        color: $white;
+      }
+      &.back-button {
+        @include icon($name:"arrow-l__line--555");
+        color:transparent;
+      }
+      &.next-button {
+        @include icon($name:"arrow-r__line--555");
+        color:transparent;
+      }
+    }
+  }
+}

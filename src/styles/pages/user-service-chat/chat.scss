@@ -1,0 +1,593 @@
+.chat {
+  @apply flex justify-center;
+  overflow-x: hidden;
+  position: relative;
+  width: calc(100% - 340px);
+  // padding: 44px 0 21px 0;
+  background: $gray-5;
+  box-sizing: border-box;
+  // ===================== 문의하기 =====================
+  &-container {
+    @apply flex flex-col items-center;
+    overflow-y: auto;
+    // overflow-x: hidden;
+    width: 100%;
+    min-width: 900px;
+    margin-top: 44px;
+    padding-bottom: 21px;
+    transition: $transition;
+    // height: calc(100% - 162px); // 전체 높이(100%) - 채팅 영역높이(107px) - 채팅과 컨텐츠 여백(55px)
+  }
+
+  &__toolbar {
+    @apply flex justify-between items-center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 860px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    background: $gray-5;
+    .form {
+      margin-left: 45px;
+      &__label {
+        min-width: 88px;
+      }
+      .el-select {
+        width: 167px;
+      }
+    }
+  }
+
+  &__guide {
+    @apply flex flex-col justify-start flex-1;
+    width: 860px;
+    padding-top: 3%;
+
+    &--info {
+      @apply flex flex-col items-center;
+      margin-left: 17px;
+    }
+
+    &--title {
+      @include font($font-size: 36, $font-weight: 700, $line-height: 54px, $font-family: $font-family-nanum);
+      width: 565px;
+      margin-bottom: 22px;
+    }
+    &--subtitle {
+      @include font($font-size: 24, $font-weight: 700, $line-height: 33px, $font-family: $font-family-nanum);
+      text-align: left;
+    }
+
+    &--desc {
+      @include font($font-size: 16);
+      width: 100%;
+    }
+
+    &-btn {
+      @apply inline-flex flex-col items-center justify-center;
+      @include font($font-size: 18);
+      width: 132px;
+      height: 132px;
+      background: $white;
+      border-radius: 20px;
+
+      & + .chat__guide-btn {
+        margin-left: 15px;
+      }
+
+      span {
+        margin-top: 13px;
+      }
+    }
+
+    &--question {
+      @apply flex items-center;
+      @include font($font-size: 20, $line-height: 28px);
+      padding: 20px 30px;
+      background: $white;
+      border: 1px solid $gray-80;
+      border-radius: 10px;
+      cursor: pointer;
+
+      & + .chat__guide--question {
+        margin-top: 12px;
+      }
+
+      &-select {
+        border-color: $purple-50;
+      }
+
+      &:nth-child(2n) {
+        img {
+          &:first-child {
+            display: none;
+          }
+        }
+      }
+
+      &:nth-child(2n-1) {
+        img {
+          &:nth-child(2) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  &__bubble {
+    width: 100%;
+    // height: calc(100% - 55px);
+    // padding-bottom: 45px;
+
+    li {
+      max-width: 860px;
+      margin: 0 auto;
+      padding-bottom: 13px;
+    }
+
+    &-header {
+      @apply flex items-center;
+      margin-bottom: 5px;
+
+      &--icon {
+        @include font($font-size: 18, $line-height: 40px, $font-weight: 500);
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        border-radius: 50%;
+        text-align: center;
+      }
+
+      &--user {
+        @include font($font-size: 16, $font-weight: 500);
+        margin-right: 10px;
+        color: $black;
+      }
+
+      &--date {
+        color: $gray-300;
+      }
+    }
+
+    &-content {
+      max-width: 100%;
+      padding: 15px 30px;
+      background: $white;
+      word-break: break-all;
+
+      &--file {
+        @apply flex flex-col;
+        div {
+          > button {
+            @apply truncate;
+            @include font($line-height: 20px);
+            max-width: 250px;
+            &:first-child {
+              color: $link;
+            }
+          }
+        }
+        &.file__box {
+          width: calc(50% - 6px);
+          padding: 20px 20px 15px;
+          border-radius: 20px;
+          background: $gray-5;
+        }
+      }
+
+      &--btns {
+        margin-top: 10px;
+      }
+
+      img {
+        max-width: 300px;
+        max-height: 300px;
+      }
+    }
+
+    // 질문
+    &--question {
+      @apply flex flex-col items-end;
+
+      .chat__bubble {
+        &-header {
+          &--icon {
+            background: $green-70;
+            color: $white;
+          }
+        }
+
+        &-content {
+          border: 1px solid $gray-80;
+          border-radius: 40px 0px 40px 40px;
+        }
+      }
+    }
+
+    // 답변
+    &--answer {
+      @apply flex flex-col items-start;
+
+      .chat__bubble {
+        &-content {
+          position: relative;
+          border: 1px solid $purple-50;
+          border-radius: 0 40px 40px 40px;
+
+          &--review {
+            margin-top: 11px;
+
+            button {
+              & + button {
+                margin-left: 3px;
+              }
+            }
+          }
+
+          &--utils {
+            button {
+              position: absolute;
+              right: -4px;
+              bottom: -4px;
+              background: $gray-5;
+              border-radius: 50%;
+            }
+
+            > div {
+              button {
+                transition: $transition;
+                z-index: -1;
+                opacity: 0;
+                &:nth-child(1) {
+                  right: -4px;
+                  bottom: -4px;
+                }
+
+                &:nth-child(2) {
+                  right: -4px;
+                  bottom: -4px;
+                }
+
+                &:nth-child(3) {
+                  right: -4px;
+                  bottom: -4px;
+                }
+              }
+              &.chat__bubble-content--utils-active {
+                button {
+                  z-index: 1;
+                  opacity: 1;
+                  &:nth-child(1) {
+                    right: 14px;
+                    bottom: 36px;
+                  }
+
+                  &:nth-child(2) {
+                    right: -31px;
+                    bottom: 34px;
+                  }
+
+                  &:nth-child(3) {
+                    right: -49px;
+                    bottom: -12px;
+                  }
+                }
+              }
+              &.chat__bubble-content--utils-copy-write {
+                button {
+                  z-index: 1;
+                  opacity: 1;
+                  &:nth-child(1) {
+                    right: -31px;
+                    bottom: 34px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    // 즐겨찾기
+    &--bookmark {
+      .chat__bubble-content {
+        background: $purple-3;
+      }
+    }
+  }
+
+  &__enter {
+    position: fixed;
+    bottom: 21px;
+    width: 860px;
+    background: $gray-5;
+
+    p {
+      margin-top: 10px;
+      text-align: center;
+      color: $gray-300;
+    }
+  }
+
+  %chat-util {
+    @apply flex;
+    position: fixed;
+    right: -114px;
+    z-index: 1;
+    width: 114px;
+    border: 1px solid $gray-70;
+    border-radius: 16px 0 0 16px;
+    background-color: $white;
+    transform: translateY(-50%);
+    transition: $transition;
+  }
+  &__util {
+    &--func {
+      @extend %chat-util;
+      top: 40%;
+    }
+    &--set {
+      @extend %chat-util;
+      top: calc(40% + 360px);
+    }
+    &--show {
+      right: 0 !important;
+    }
+
+    &-menu {
+      @apply flex flex-col items-center flex-1;
+      padding: 20px 17px;
+
+      button {
+        @apply flex flex-col items-center justify-center;
+        width: 80px;
+        height: 80px;
+
+        span {
+          margin-top: 8px;
+        }
+
+        & + button {
+          margin-top: 5px;
+        }
+      }
+      &--title {
+        @include font($font-weight: 500);
+        margin-bottom: 20px;
+        color: $gray-430;
+      }
+
+      &--selected {
+        background: $purple-5;
+        border-radius: 30px;
+      }
+    }
+
+    &-trigger {
+      position: absolute;
+      top: 50%;
+      left: -24px;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 100px;
+      background: $purple-200;
+      border-radius: 16px 0 0 16px;
+      color: $white;
+    }
+  }
+
+  &__input {
+    @apply flex items-center;
+    position: relative;
+
+    &--state {
+      @include after($w: 1, $h: 16) {
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: $gray-80;
+      }
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      visibility: hidden;
+    }
+
+    textarea {
+      @include font($font-size: 15);
+      height: 80px;
+      width: 100%;
+      padding: 30px 134px 29px 90px;
+      background-color: $white;
+      border: 1px solid $gray-80;
+      border-radius: 10px;
+      resize: none;
+      transition: $transition;
+
+      &::placeholder {
+        position: absolute;
+        top: 50%;
+        left: 30px;
+        transform: translateY(-50%);
+      }
+
+      &:focus {
+        background-image: linear-gradient($white, $white), linear-gradient(to right, $purple-50, $pink-50);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+        border-color: transparent;
+        transition: $transition;
+
+        &::placeholder {
+          color: transparent;
+        }
+        & + .chat__input--state {
+          visibility: visible;
+          & + .chat__input-btn {
+            .btn__send {
+              @include icon($name: send__line--purple);
+            }
+          }
+        }
+      }
+    }
+
+    &-btn {
+      @apply flex;
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      .btn__send {
+        margin-left: 20px;
+        @include after($w: 1, $h: 16) {
+          left: -10px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: $gray-80;
+        }
+      }
+    }
+
+    .btn {
+      &__send {
+        @include icon($name: send__line--aaa);
+        width: 32px;
+        height: 32px;
+        transition: $transition;
+      }
+
+      &__mic {
+        @include icon($name: microphone__line--aaa);
+        width: 32px;
+        height: 32px;
+        transition: $transition;
+
+        &--active {
+          @include icon($name: microphone__line--purple);
+        }
+      }
+    }
+    &--disabled {
+      textarea {
+        background: $gray-30;
+        cursor: not-allowed;
+      }
+    }
+  }
+  // ===================== 에이전트 엔진 =====================
+  &-container {
+    &.egent-engine {
+      margin-top: 30px;
+      .chat__toolbar {
+        padding-bottom: 125px;
+      }
+      .chat__enter {
+        bottom: initial;
+        top: 166px;
+        z-index: 1;
+      }
+      .chat__guide {
+        @apply justify-start;
+        &--info {
+          @apply justify-center;
+        }
+        &--title {
+          margin-bottom: 0;
+        }
+      }
+      .chat__bubble {
+        &--question {
+          .chat__bubble-content {
+            border-radius: 20px 0px 20px 20px;
+          }
+        }
+        &--answer {
+          .chat__bubble-content {
+            width: 100%;
+            border-radius: 0px 20px 20px 20px;
+          }
+          &.egent-engine__summary {
+            margin-top: 49px;
+            .chat__bubble-content {
+              background: $purple-3;
+            }
+          }
+          &.egent-engine__llm {
+            .chat__bubble-content {
+              background-color: rgb(161 213 255 / 0.2);
+            }
+          }
+        }
+      }
+    }
+  }
+  // ===================== 배포용 =====================
+  &.deploy-chat {
+    width: 100%;
+    height: 100%;
+  }
+  // ===================== 2분할 화면 =====================
+  &-division {
+    width: 100%;
+    &__side {
+      overflow: auto;
+      width: 100%;
+      min-width: 500px;
+      padding: 25px 30px;
+      background: $white;
+      border-left: 1px solid $gray-80;
+      :deep(.prompt-popup__setting) {
+        height: calc(100% - 80px);
+      }
+    }
+  }
+  &-deploy-popup {
+    p {
+      color: $gray-300;
+    }
+    &__form {
+      @apply flex items-center justify-between;
+      @include font($font-size: 15);
+      height: 60px;
+      padding: 0 20px;
+      border: 1px solid $gray-80;
+      span {
+        @apply flex-1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+  // ===================== 카피라이터 =====================
+  &-copywrite {
+    @apply flex flex-col flex-1;
+    padding: 30px 90px 40px;
+  
+    &__option {
+      @apply flex;
+      max-width: 1400px;
+      padding: 19px 30px;
+      background: $white;
+      border: 1px solid $gray-80;
+      border-radius: 20px;
+  
+      li {
+        min-width: 270px;
+        &+li {
+          margin-left: 30px;
+          padding-left: 30px;
+          border-left: 1px solid $gray-80;
+        }
+        &:last-child {
+          min-width: initial;
+        }
+      }
+    }
+  }
+}

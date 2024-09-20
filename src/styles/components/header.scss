@@ -1,0 +1,190 @@
+.header {
+  @apply flex items-center justify-between;
+  height: $header-height;
+  padding: 0 60px;
+  background-color: $white;
+
+  h1 {
+    cursor: pointer;
+  }
+
+  &--purple {
+    background-color: $purple-50;
+  }
+
+  // 관리자
+  &--chat {
+    height: $mgmt-header-height;
+    padding: 0 30px;
+    border-bottom: 1px solid $gray-40;
+    box-sizing: border-box;
+  }
+  &--mgmt {
+    @apply flex justify-end;
+    height: $mgmt-header-height;
+    margin: 0 60px;
+    border-bottom: 1px solid $gray-75;
+    box-sizing: border-box;
+  }
+  &__user {
+    @apply flex items-center;
+    @include font($font-size:15);
+    padding-right: 20px;
+    margin-right: 20px;
+    color: $gray-430;
+
+    @include after($w:1, $h:16) {
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: $gray-80;
+    }
+  }
+
+
+  // el-menu
+  .el-menu {
+    height: 100%;
+    background-color: $white;
+    border-bottom: none !important;
+  
+    .el-sub-menu {
+      &:hover {
+        .el-sub-menu__title {
+          border-bottom: 4px solid $purple-50;
+          color: $purple-50;
+        }
+      }
+      &.is-active:not(:hover) {
+        .el-sub-menu__title {
+          border-bottom: 4px solid transparent;
+          color: $gray-400;
+        }
+      }
+      &__title {
+        border-bottom: 4px solid transparent;
+        transition: $transition;
+        box-sizing: border-box;
+      }
+    }
+    &-item, .el-sub-menu__title {
+      @include font($font-size:20, $font-weight:500);
+      height: 100%;
+      padding-left: 0;
+      padding-right: 0 !important;
+      margin: 0 20px;
+      color: $gray-400;
+      &:hover {
+        background-color: transparent !important;
+      }
+      .el-icon {
+        display: none;
+      }
+    }
+  // header--purple
+    &.el-menu--purple {
+        background-color: $purple-50 !important;
+        .el-menu-item, .el-sub-menu__title {
+          color: $white;
+        }
+        .el-sub-menu {
+          &:hover {
+            .el-sub-menu__title {
+              border-bottom: 4px solid $white;
+              color: $white;
+            }
+          }
+        }
+    }
+  }
+}
+// sub-menu
+.el-popper {
+  --el-popper-border-radius: unset;
+  &.header-menu, &.header-menu--purple {
+    &:nth-child(1),&:nth-child(4) {
+      margin-left: -32px;
+    }
+    &:nth-child(2),&:nth-child(5) {
+      margin-left: -60px;
+    }
+    border-radius: 6px;
+  }
+  &.header-menu {
+    border: 1px solid $purple-50 !important;
+  }
+  &.header-menu--purple {
+    border: 1px solid transparent;
+  }
+
+  .el-menu {
+    &--popup {
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: none;
+    }
+    &-item {
+      @include font($font-size:16, $font-weight:500);
+      height: 16px !important;
+      color: $gray-400 !important;
+      padding: 0 !important;
+      margin: 0;
+
+      &:hover {
+        background-color: transparent !important;
+        color: $purple-50 !important;
+      }
+
+      // 미사용 메뉴 (시연 끝난 후 수정 필요)
+      &.is-disabled {
+        opacity: inherit;
+      }
+
+      & + .el-menu-item {
+        margin-top: 15px;
+      }
+
+      &__two-depth {
+        margin-top: 15px;
+        li {
+          @apply flex items-center;
+          @include before($w:4, $h:2) {
+            left: 0;
+            background-color: $gray-300;
+          }
+          @extend .el-menu-item__link;
+          width: max-content;
+          padding-left: 12px;
+          padding-right: 24px;
+          transition: $transition;
+          color: $gray-300;
+          cursor: pointer;
+
+          &:hover {
+            @include before($w:4, $h:2) {
+              background-color: $purple-50;
+            }
+          }
+        }
+      }
+    
+      &-group__title {
+        padding: 0;
+      }
+
+      &__link {
+        @include after($w:16, $h:16) {
+          @include icon($name: link__line--333);
+          right: 0
+        }
+        &:hover {
+          @include after($w:16, $h:16) {
+            @include icon($name: link__line--9e4);
+            right: 0
+          }
+          color: $purple-50;
+        }
+      }
+    }
+  }
+}

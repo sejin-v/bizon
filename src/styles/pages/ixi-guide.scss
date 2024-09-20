@@ -1,0 +1,65 @@
+.ixi-guide {
+
+  &__title {
+    @apply flex items-center;
+    @include font($font-size: 24, $font-weight: 600);
+    margin-bottom: 7px;
+
+    span {
+      @include font($font-size: 18, $font-weight: 700, $line-height: 36px);
+      display: inline-block;
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      background: $purple-50;
+      border-radius: 15px;
+      text-align: center;
+      color: $white;
+    }
+  }
+
+  &__list {
+    margin-bottom: 50px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__cont {
+    padding-left: 36px;
+
+    &-info {
+      @apply flex items-center;
+      @include font($font-size: 15);
+      padding-left: 10px;
+      margin-bottom: 30px;
+
+      img {
+        margin: 0 10px;
+      }
+    }
+
+    &-desc {
+      margin: 10px 0;
+    }
+
+    h4 {
+      @include font($font-size: 16);
+      margin-top: 30px;
+      margin-bottom: 20px;
+
+      span {
+        @include font($font-size: 15, $font-weight: 600, $line-height: 24px);
+        display: inline-block;
+        width: 32px;
+        height: 24px;
+        margin-right: 10px;
+        border: 1px solid $purple-50;
+        border-radius: 2px;
+        text-align: center;
+        color: $purple-50;
+      }
+    }
+  }
+}

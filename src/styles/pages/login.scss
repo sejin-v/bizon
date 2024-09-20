@@ -1,0 +1,65 @@
+.login {
+  @apply flex flex-col items-center justify-center;
+  height: 100%;
+  background: $gray-35;
+
+  &-box {
+    @apply flex flex-col justify-between;
+    width: 800px;
+    height: 481px;
+    padding: 40px 60px;
+    margin-bottom: 27px;
+    background: $white;
+    border-radius: 20px;
+
+    &__form {
+      @apply flex flex-col items-end justify-between flex-1;
+
+      .form__label {
+        @include font($font-size: 15, $line-height: 50px, $font-weight: 500);
+        min-width: 70px;
+        margin-right: 6px;
+      }
+
+      :deep(.custom-input) {
+        .custom-input__wrap {
+          input {
+            height: 50px;
+            width: 322px;
+          }
+        }
+      }
+
+      :deep(.el-checkbox) {
+        width: 322px;
+
+        .el-checkbox__label {
+          color: $gray-330 !important;
+        }
+      }
+
+      .btn__primary--lg {
+        @include font($font-size: 15, $line-height: 48px);
+        height: 48px;
+        width: 321px;
+        margin-top: 22px;
+      }
+    }
+  }
+
+  &-desc {
+    li {
+      @include font($font-size: 15, $line-height: 21px);
+      color: $gray-330;
+    }
+
+    em {
+      @include font($font-weight: 500);
+    }
+  }
+  &-popup {
+    // text-align: center;
+    p {margin-bottom: 10px;}
+    color: $gray-330;
+  }
+}
