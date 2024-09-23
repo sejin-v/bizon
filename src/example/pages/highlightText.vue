@@ -6,6 +6,7 @@ const highlightText = ref('{user} query')
 
 <template>
   <div class="p-20">
+    {{ prettyNumber(10000) }}
     <h2 class="text-3xl font-semibold">
       Highlight Text
     </h2>

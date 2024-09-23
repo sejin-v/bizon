@@ -27,7 +27,6 @@ const service = axios.create({
   baseURL: baseUrl,
   headers: {
     apiKey: '843227cfb6-fba97-b43b2-fa9c5-c59de18a6e',
-
   },
 })
 

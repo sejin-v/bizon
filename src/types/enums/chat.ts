@@ -1,9 +1,0 @@
-export enum EChatUtil {
-  QUESTION = 'QUESTION',
-  INFERENCE = 'INFERENCE',
-  PROMPT = 'PROMPT',
-  ACTION = 'ACTION',
-  OCR = 'OCR',
-  TEXT = 'TEXT',
-  SENTENCE = 'SENTENCE',
-}

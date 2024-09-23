@@ -33,13 +33,6 @@ export default defineConfig({
   build: {
     target: 'esnext',
     rollupOptions: {
-      // output: {
-      //   manualChunks: {
-      //     'pdfjs-dist': ['pdfjs-dist'],
-      //     'pdfjs-dist/build/pdf.worker': ['pdfjs-dist/build/pdf.worker'],
-      //   }
-      // },
-      // external: ['pdfjs-dist', 'pdfjs-dist/build/pdf.worker'],
     },
   },
   optimizeDeps: {
@@ -56,21 +49,9 @@ export default defineConfig({
     port: 8080,
     open: true,
     proxy: {
-      // '/api/mock': {
-      //   target: 'https://sc-ixistudio.dev-sp.violet.uplus.co.kr',
-      //   changeOrigin: true,
-      //   rewrite: (path) => {
-      //     return path.replace(/^\/api\/mock/, '')
-      //   },
-      // },
-      //  '/api': {
-      //   target: 'https://sc-igsn-studio-server.dev-sp.violet.uplus.co.kr',
-      //   // target: 'https://d248a82ea6866dccd67243be01c7eef3.serveo.net',
-      //   changeOrigin: true,
-      // },
       // '/api': {
-        // target: 'https://sc-ixistudio.temp-sp.violet.uplus.co.kr/',
-        // changeOrigin: true,
+      // target: 'https://sc-ixistudio.temp-sp.violet.uplus.co.kr/',
+      // changeOrigin: true,
       // },
     },
   },

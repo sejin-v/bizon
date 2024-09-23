@@ -1,69 +1,7 @@
-api-mgmt:
-  all: entire
-  api_method_type: API method type
-  api_mgmt: API management
-  api_use_yn: Whether or not to use
-  confirm:
-    delete: Are you sure you want to delete the selected API?
-  limit-default: View 10
-  search_type: search requirement
-button:
-  about: About
-  back: Back
-  cancel: cancellation
-  change: change
-  create: registration
-  delete: delete
-  get: check
-  go: GO
-  guide: Dev Guide
-  home: Home
-  toggle_dark: Toggle dark mode
-  toggle_langs: Change languages
-code:
-  all-delete: Are you sure you want to delete all selected data?
-  create: registered
-  delete: has been deleted
-  modify: It is changed
-  no-data: No Data
-  title-group-code-create: Group code registration
-  title-group-code-delete: Change group code
-  title-group-code-detail: Group code details
-  val-group-code: Please enter the group code.
-  val-group-code-num: Group codes cannot exceed 30 characters.
-  val-group-codedescription: Please enter a group code description.
-  val-group-codedescription-num: Group code descriptions cannot exceed 300 characters.
-  val-group-codename: Please enter the group code name.
-  val-group-codename-num: Group code names cannot exceed 30 characters.
-intro:
-  aka: Also known as
-  desc: Opinionated Vite Starter Template & Guide
-  dynamic-route: Demo of dynamic route
-  hi: Hi, {name}!
-  whats-your-name: What's your name?
-login:
-  error:
-    empty-id: Please enter your ID
-    empty-pw: Please enter your password
-    login-fail: |-
-      Failed to login.
+projectName: vue3-components
 
-      Please check your ID and password
-  login_btn: log in
-  password: password
-  pls_enter_id: Please enter your ID
-  pls_enter_pw: Please enter a password
-  saveId: save ID
-  title: admin login
-not-found: Not found
-notification:
-  error:
-    create: Registration failed.
-    modify: Modification failed.
-  success:
-    create: Registered.
-    delete: Deleted.
-    modify: It is changed.
-user:
-  meta:
-    manage: user management
+button:
+  confirm: 확인
+  cancel: 취소
+  close: 닫기
+  back: 뒤로

@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import '~/styles/base.scss'
-import '~/styles/common.scss'
-import '~/styles/components/grid.scss'
-import '~/styles/components/button.scss'
-import '~/styles/components/form.scss'
-import '~/styles/mgmt/common.scss'
+import '~/styles/base.scss';
+import '~/styles/common.scss';
+import '~/styles/components/grid.scss';
+import '~/styles/components/button.scss';
+import '~/styles/components/form.scss';
+import '~/styles/mgmt/common.scss';
 
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia';
 
-const ACircularLoading = defineAsyncComponent(() => import('~/components/ACircularLoading/component.vue'))
+const ACircularLoading = defineAsyncComponent(
+  () => import('~/components/ACircularLoading/component.vue')
+);
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
 useHead({
-  title: 'ixi Solution',
+  title: 'biz-on',
   meta: [
-    { name: 'description', content: 'ixi Solution' },
+    { name: 'description', content: 'biz-on' },
     {
       name: 'theme-color',
-      content: computed(() => isDark.value ? '#00aba9' : '#ffffff'),
+      content: computed(() => (isDark.value ? '#00aba9' : '#ffffff')),
     },
   ],
   link: [
@@ -29,18 +31,28 @@ useHead({
       // href: computed(() => preferredDark.value ? '/favicon-dark.svg' : '/favicon.svg'),
     },
   ],
-})
-const log = useLogger()
+});
+const log = useLogger();
 onErrorCaptured((hook, instance, message) => {
-  log.error('Vue Global Error: hook: ', hook, '\n instance: ', instance, 'message: ', message)
-})
-const store = useProgressStore()
-const { isShowCircularLoading, isDisableOutside } = storeToRefs(store)
+  log.error(
+    'Vue Global Error: hook: ',
+    hook,
+    '\n instance: ',
+    instance,
+    'message: ',
+    message
+  );
+});
+const store = useProgressStore();
+const { isShowCircularLoading, isDisableOutside } = storeToRefs(store);
 </script>
 
 <template>
   <Transition>
-    <ACircularLoading v-if="isShowCircularLoading" :disable-click-outside="isDisableOutside" />
+    <ACircularLoading
+      v-if="isShowCircularLoading"
+      :disable-click-outside="isDisableOutside"
+    />
   </Transition>
   <RouterView />
 </template>

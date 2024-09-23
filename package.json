@@ -1,5 +1,5 @@
 {
-  "name": "ixi-gen-studio-client",
+  "name": "biz-on",
   "type": "module",
   "version": "0.0.1",
   "private": true,
@@ -15,14 +15,9 @@
     "test": "vitest",
     "test:unit": "vitest run",
     "typecheck": "vue-tsc --noEmit",
-    "up": "taze major -I",
-    "type:gen:lint": "eslint src/types/schema.d.ts src/types/schema-prompt.d.ts --fix",
-    "type:gen": "pnpm run type:gen:was && pnpm run type:gen:prompt && pnpm run type:gen:lint",
-    "type:gen:prompt": "openapi-typescript https://sc-ixi-gen-prompt-service.dev-sp.violet.uplus.co.kr/openapi.json -o src/types/schema-prompt.d.ts",
-    "type:gen:was": "openapi-typescript https://sc-ixistudio.dev-sp.violet.uplus.co.kr/oapidoc/server.yaml -o src/types/schema.d.ts"
+    "up": "taze major -I"
   },
   "dependencies": {
-
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "@vuepic/vue-datepicker": "^8.5.1",
     "@vueuse/core": "^10.9.0",

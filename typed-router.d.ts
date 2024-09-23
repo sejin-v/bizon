@@ -43,7 +43,7 @@ declare module 'vue-router/auto-routes' {
     'date-picker': RouteRecordInfo<'date-picker', '/example/vue-date-picker', Record<never, never>, Record<never, never>>,
     '/home': RouteRecordInfo<'/home', '/home', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
-    '/maintenance-page': RouteRecordInfo<'/maintenance-page', '/maintenance-page', Record<never, never>, Record<never, never>>,
+    '/maintenancePage': RouteRecordInfo<'/maintenancePage', '/maintenancePage', Record<never, never>, Record<never, never>>,
     '/mgmt/': RouteRecordInfo<'/mgmt/', '/mgmt', Record<never, never>, Record<never, never>>,
     '/mgmt/preparing': RouteRecordInfo<'/mgmt/preparing', '/mgmt/preparing', Record<never, never>, Record<never, never>>,
     '/not-accessible': RouteRecordInfo<'/not-accessible', '/not-accessible', Record<never, never>, Record<never, never>>,
