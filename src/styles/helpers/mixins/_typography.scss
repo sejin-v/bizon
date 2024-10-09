@@ -1,0 +1,26 @@
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@mixin truncate-multi($row) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $row;
+}
+
+@mixin typo(
+  $font-size: var(--font-size-14),
+  $font-weight: 400,
+  $color: inherit,
+  $line-height: null,
+  $font-family: null
+) {
+  font-family: if($font-family == null, null, $font-family);
+  line-height: if($line-height == null, null, $line-height);
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color: $color;
+}

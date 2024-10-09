@@ -1,6 +1,7 @@
 export interface IModalProps {
   modelValue: boolean
   title?: string
+  desc?: string
   cancelText?: string
   confirmText?: string
   size?: string
@@ -16,10 +17,6 @@ export interface IModalPopup {
 }
 
 export enum MODAL_SIZE {
-  SMALL = 'sm',
   MEDIUM = 'md',
   LARGE = 'lg',
-  XLARGE = 'xl',
-  XXLARGE = '2xl',
-  XXXLARGE = '3xl',
 }

@@ -1,0 +1,91 @@
+// FAQ Tab
+.faq-list {
+  &__header {
+    @apply flex items-center justify-between;
+    @include typo(var(--font-size-15),600,var(--color-gray-800));
+    height: 48px;
+    padding-right: 18px;
+    p {
+      text-align: center;
+      &:nth-child(1) {
+        min-width: 60px;
+      }
+      &:nth-child(2){
+        width: 60%;
+      }
+      &:nth-child(3){
+        @include after(24px,100%) {
+          right: 0;
+        }
+        width: 200px;
+        padding-right: 24px;
+      }
+    }
+  }
+  &__num {
+    @include typo(var(--font-size-15),$color:var(--color-gray-600),$line-height:48px);
+    min-width: 60px;
+    text-align: center;
+  }
+  &__title {
+    width: calc(100% - 130px);
+    padding: 0 18px;
+    word-break: break-all;
+    text-align: left;
+    &-wrap {
+      @apply flex justify-between;
+      width: 100%;
+    }
+  }
+  &__date {
+    @apply flex items-center justify-center;
+    @include typo(var(--font-size-15),$color:var(--color-gray-600));
+    width: 200px;
+  }
+}
+
+// 공지사항 Tab
+@include breakpoint(mobile) {
+  .notice {
+    &__list {
+      border-top: 1px solid var(--color-gray-600);
+      .el-table {
+        &__header {
+          display: none;
+        }
+        &__body {
+          .el-table__row {
+            .cell {
+              .font-color--dark-gray {
+                white-space: pre-wrap;
+                word-break: break-all;
+                & + p {
+                  @include typo(var(--font-size-14),$color:var(--color-gray-600));
+                  margin-top: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .faq {
+    &-list {
+      &__title {
+        width: 100%;
+        padding-right: 16px;
+        &-wrap {
+          @apply flex-col items-start; 
+        }
+      }
+      &__date {
+        @apply justify-start;
+        width: 100%;
+        min-width: unset;
+        margin-top: 5px;
+        font-size: var(--font-size-14);
+      }
+    }
+  }
+}

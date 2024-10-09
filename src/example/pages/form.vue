@@ -1,4 +1,11 @@
-<script setup lang="ts">
+<script></script>
+
+<template lang="">
+  <div />
+</template>
+
+<style lang=""></style>
+<!-- <script setup lang="ts">
 import CustomInput from '~/components/CustomInput.vue'
 import CustomTextarea from '~/example/components/custom-textarea/CustomTextarea.vue'
 
@@ -40,14 +47,9 @@ const initTreeData = ref('1-1-1')
 
 <template>
   <div class="p-20">
-    <h2 class="text-3xl font-semibold">
-      Form
-    </h2>
-    <!-- input -->
+    <h2 class="text-3xl font-semibold">Form</h2>
     <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        input
-      </mark>
+      <mark class="inline-block mb-5 text-xl font-bold" style="background: #f0e4ff"> input </mark>
       <div class="form">
         <label class="form__label">Basic</label>
         <div class="flex gap-3 w-full">
@@ -73,16 +75,12 @@ const initTreeData = ref('1-1-1')
         <CustomInput v-model="form.input" placeholder="내용을 입력하세요." valid-message="입력하신 내용을 확인해주세요." />
       </div>
     </div>
-    <hr>
+    <hr />
 
-    
-    <hr>
+    <hr />
 
-    <!-- textarea -->
     <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        textarea
-      </mark>
+      <mark class="inline-block mb-5 text-xl font-bold" style="background: #f0e4ff"> textarea </mark>
       <div class="form">
         <label class="form__label">Basic</label>
         <CustomTextarea v-model="form.textarea" max-length="20" placeholder="20자 내로 설명을 입력해주세요." />
@@ -97,17 +95,13 @@ const initTreeData = ref('1-1-1')
       </div>
       <div class="form">
         <label class="form__label--required">Error</label>
-        <CustomTextarea v-model="form.textarea" max-length="20" placeholder="20자 내로 설명을 입력해주세요."
-          valid-message="입력하신 내용을 확인해주세요." />
+        <CustomTextarea v-model="form.textarea" max-length="20" placeholder="20자 내로 설명을 입력해주세요." valid-message="입력하신 내용을 확인해주세요." />
       </div>
     </div>
-    <hr>
+    <hr />
 
-    <!-- select -->
     <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        select
-      </mark>
+      <mark class="inline-block mb-5 text-xl font-bold" style="background: #f0e4ff"> select </mark>
       <div class="form">
         <label class="form__label">Basic</label>
         <div class="flex gap-3 w-full">
@@ -124,72 +118,42 @@ const initTreeData = ref('1-1-1')
         <label class="form__label">Readonly</label>
         <basic-select-box v-model="initData" :options="options" readonly />
       </div>
-      <!-- <div class="form">
-        <label class="form__label">chip</label>
-        <basic-select-box v-model="initMultiData" :options="options" multiple clearable />
-      </div>
-      <div class="form">
-        <label class="form__label">Tree</label>
-        <TreeSelectBox v-model="initTreeData" :tree-data="treeData" />
-      </div> -->
     </div>
-    <hr>
+    <hr />
 
-    <!-- checkbox -->
     <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        checkbox
-      </mark>
+      <mark class="inline-block mb-5 text-xl font-bold" style="background: #f0e4ff"> checkbox </mark>
       <div class="form">
         <label class="form__label">Basic</label>
-        <el-checkbox v-model="form.checkbox1" true-value="Y" false-value="N">
-          A
-        </el-checkbox>
-        <el-checkbox v-model="form.checkbox2" true-value="Y" false-value="N">
-          B
-        </el-checkbox>
+        <el-checkbox v-model="form.checkbox1" true-value="Y" false-value="N"> A </el-checkbox>
+        <el-checkbox v-model="form.checkbox2" true-value="Y" false-value="N"> B </el-checkbox>
       </div>
       <div class="form">
         <label class="form__label">Disabled</label>
-        <el-checkbox v-model="form.checkbox1" true-value="Y" false-value="N" disabled>
-          A
-        </el-checkbox>
-        <el-checkbox v-model="form.checkbox2" true-value="Y" false-value="N" disabled>
-          B
-        </el-checkbox>
+        <el-checkbox v-model="form.checkbox1" true-value="Y" false-value="N" disabled> A </el-checkbox>
+        <el-checkbox v-model="form.checkbox2" true-value="Y" false-value="N" disabled> B </el-checkbox>
       </div>
     </div>
-    <hr>
+    <hr />
 
-    <!-- radio -->
     <div class="my-10">
-      <mark class="inline-block mb-5 text-xl font-bold" style="background:#F0E4FF">
-        radio
-      </mark>
+      <mark class="inline-block mb-5 text-xl font-bold" style="background: #f0e4ff"> radio </mark>
       <div class="form">
         <label class="form__label">Basic</label>
         <el-radio-group v-model="form.radio">
-          <el-radio value="A">
-            A
-          </el-radio>
-          <el-radio value="B">
-            B
-          </el-radio>
+          <el-radio value="A"> A </el-radio>
+          <el-radio value="B"> B </el-radio>
         </el-radio-group>
       </div>
       <div class="form">
         <label class="form__label">Disabled</label>
         <el-radio-group v-model="form.radio" disabled>
-          <el-radio value="A">
-            A
-          </el-radio>
-          <el-radio value="B">
-            B
-          </el-radio>
+          <el-radio value="A"> A </el-radio>
+          <el-radio value="B"> B </el-radio>
         </el-radio-group>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss"></style> -->

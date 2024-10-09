@@ -33,11 +33,19 @@ watchEffect(() => {
 
 <template>
   <div>
-    <div id="loading-container" class=" flex flex-col justify-center align-middle items-center" :style="containerStyle">
+    <div
+      id="loading-container"
+      class="flex flex-col justify-center align-middle items-center"
+      :style="containerStyle"
+    >
       <div id="loading-wrapper">
         <div class="loading" />
         <div class="loading-text font-mono font-bold text-sm">
-          {{ circularChildDefault && circularChildDefault.length > 1 ? circularChildDefault : 'Loading..' }}
+          {{
+            circularChildDefault && circularChildDefault.length > 1
+              ? circularChildDefault
+              : 'Loading..'
+          }}
         </div>
       </div>
     </div>
@@ -46,14 +54,13 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 #loading-container {
-
   #loading-wrapper {
     position: relative;
     height: 10rem;
     width: 10rem;
 
     &:hover .loading {
-      border-color: transparent #E45635 transparent #E45635;
+      border-color: transparent #e45635 transparent #e45635;
     }
   }
 
@@ -66,10 +73,9 @@ watchEffect(() => {
     border: 2px solid transparent;
     border-radius: 100%;
     // border-color: #ff19f5 transparent #9e4eff transparent;
-    border-color: $pink-50 transparent $purple-50 transparent;
+    // border-color: $pink-50 transparent $purple-50 transparent;
     animation: rotate-loading 1s linear 0s infinite normal;
     transform-origin: 50% 50%;
-
   }
 
   &:hover,

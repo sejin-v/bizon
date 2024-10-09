@@ -1,0 +1,143 @@
+/* ========================== Variables ========================== */
+$button-style: (
+  sm: (
+    min-width: 68px,
+    height: var(--form-height-sm),
+    padding: 10px 12px
+  ),
+  md: (
+    min-width: 79px,
+    height: var(--form-height-md),
+    padding: 10px 16px
+  ),
+  lg: (
+    min-width: 89px,
+    height: var(--form-height-lg),
+    padding: 15px 20px
+  )
+);
+
+$button-solid-colors: (
+  primary: (
+    text: var(--color-white),
+    default: var(--color-primary-800)
+  ),
+  negative: (
+    text: var(--color-gray-500),
+    default: var(--color-gray-100)
+  )
+);
+
+$button-line-colors: (
+  primary: (
+    text: var(--color-primary-800),
+    default: var(--color-primary-800)
+  ),
+  negative: (
+    text: var(--color-gray-500),
+    default: var(--color-gray-150)
+  )
+);
+
+/* ========================== Mixins ========================== */
+@mixin btn-base($type: 'full', $color: 'primary') {
+  @apply inline-flex justify-center items-center;
+  @include btn-color($type: $type, $color: $color);
+  @include after($w: calc(100% + 2px), $h: calc(100% + 2px)) {
+    border-radius: var(--radius-xs);
+    transition: var(--transition);
+  }
+  & {
+    @include typo($font-weight: 600, $color: null);
+    // width: max-content;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+  }
+  &:disabled {
+    &::after {
+      & {
+        background: #ffffff99;
+      }
+    }
+  }
+  &:hover:not(:disabled) {
+    &::after {
+      background: #0000000f;
+    }
+  }
+  &:active:not(:disabled) {
+    &::after {
+      & {
+        background: #0000001f;
+      }
+    }
+  }
+
+  & + button {
+    margin-left: 10px;
+  }
+}
+
+@mixin btn-color($type, $color) {
+  $solid-color-map: map-get($button-solid-colors, $color);
+  $line-color-map: map-get($button-line-colors, $color);
+
+  @if $type == 'full' {
+    background-color: map-get($solid-color-map, default);
+    border: 1px solid map-get($solid-color-map, default);
+    color: map-get($solid-color-map, text);
+  } @else if $type == 'line' {
+    background-color: var(--color-white);
+    border: 1px solid map-get($line-color-map, default);
+    color: map-get($line-color-map, text);
+  }
+}
+
+@mixin btn-size($size: 'md') {
+  $size-map: map-get($button-style, $size);
+  & {
+    min-width: map-get($size-map, min-width);
+    height: map-get($size-map, height);
+    padding: map-get($size-map, padding);
+    @if $size == 'sm' {
+      font-size: var(--font-size-12);
+    }
+  }
+}
+
+/* ========================== Styles ========================== */
+.btn {
+  &__full {
+    @each $color in map-keys($button-solid-colors) {
+      @each $size in map-keys($button-style) {
+        &--#{$color}-#{$size} {
+          @include btn-base($type: 'full', $color: $color);
+          @include btn-size($size);
+        }
+      }
+    }
+  }
+
+  &__line {
+    @each $color in map-keys($button-solid-colors) {
+      @each $size in map-keys($button-style) {
+        &--#{$color}-#{$size} {
+          @include btn-base($type: 'line', $color: $color);
+          @include btn-size($size);
+        }
+      }
+    }
+  }
+  &__text {
+    &--primary {
+      @include typo(var(--font-size-15), 500, var(--color-primary-600), $line-height: 21px);
+    }
+    &--667 {
+      @include typo(var(--font-size-15), 500, var(--color-gray-500));
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@mixin divide($w, $h, $color) {
+  width: $w;
+  height: $h;
+  background-color: $color;
+}
+.divide {
+  &__horizon {
+    &--dce {
+      @include divide(100%, 1px, var(--color-gray-200));
+    }
+  }
+}

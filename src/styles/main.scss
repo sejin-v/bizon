@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Helpers
+@import './helpers/variables';
+
+@import './helpers/mixins/typography';
+@import './helpers/mixins/media-query';
+@import './helpers/mixins/icon';
+@import './helpers/mixins/prefix';
+@import './helpers/mixins/pseudo-elements';
+@import './helpers/mixins/space';
+@import './helpers/mixins/box';
+@import './helpers/mixins/divide';
+
+//Base
+@import './base/reset';
+@import './base/font';
+@import './base/common';
+
+// Layout
+@import './layout/wrapper';
+@import './layout/header';
+@import './layout/footer';
+
+// Components
+@import './components/accordion';
+@import './components/button';
+@import './components/form';
+@import './components/pagination';
+@import './components/popup';
+@import './components/selector';
+@import './components/tab';
+@import './components/table';
+@import './components/textfield';
+
+//Pages
+@import './pages/apply';
+@import './pages/board';
+@import './pages/error';
+@import './pages/login';
+@import './pages/my-page';
+@import './pages/password';

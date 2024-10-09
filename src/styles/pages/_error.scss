@@ -1,0 +1,15 @@
+.error {
+  @apply flex items-center justify-center;
+  height: 100%;
+  text-align: center;
+  .cm-icon {
+    margin: 0 auto 30px;
+  }
+  em {
+    @include typo(var(--font-size-24),600,var(--color-gray-800),34px);
+  }
+  p {
+    @include typo(var(--font-size-16),$color:var(--color-gray-600),$line-height: 22px);
+    margin: 10px 0 30px;
+  }
+}

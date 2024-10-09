@@ -1,0 +1,91 @@
+.apply {
+  &__info {
+    @apply flex flex-wrap;
+    @include before(1px, 100%) {
+      left: 0;
+      background-color: var(--color-white);
+    }
+    @include after(100%, 1px) {
+      bottom: 0;
+      background-color: var(--color-gray-200);
+    }
+    & {
+      width: 100%;
+      border-top: 1px solid var(--color-gray-600);
+    }
+    > li {
+      @apply flex flex-1;
+      min-width: 33.333%;
+      max-width: 33.333%;
+      height: 48px;
+      border-left: 1px solid var(--color-gray-200);
+      border-bottom: 1px solid var(--color-gray-200);
+      box-sizing: border-box;
+      &:last-child {
+        max-width: 100%;
+        > div {
+          @include truncate;
+          display: inline-block;
+          line-height: 35px;
+        }
+      }
+
+      label {
+        @apply flex items-center;
+        @include typo(var(--font-size-15), 500, var(--color-gray-800));
+        min-width: 150px;
+        max-width: 150px;
+        padding: 6px 16px;
+        background-color: #f5f8fe;
+        & + div {
+          @apply flex items-center flex-1;
+          @include typo(var(--font-size-15), $color: var(--color-gray-600));
+          // min-width: 200px;
+          padding: 6px 16px;
+          background-color: var(--color-white);
+          border-left: 1px solid var(--color-gray-200);
+          &.apply__info--fail {
+            @include typo(var(--foint-size-15), $color: var(--color-red-800));
+          }
+          &.apply__info--success {
+            @include typo(var(--foint-size-15), $color: var(--color-secondary-800));
+          }
+        }
+      }
+    }
+  }
+  .list {
+    margin-top: 20px;
+  }
+}
+
+@include breakpoint-between(tablet, laptop) {
+  .apply {
+    &__info {
+      > li {
+        label {
+          & + div {
+            min-width: 130px;
+          }
+        }
+        max-width: unset;
+        min-width: unset;
+      }
+    }
+  }
+}
+
+@include breakpoint(tablet) {
+  .apply {
+    &__info {
+      > li {
+        width: 100%;
+        max-width: unset;
+        min-width: 100%;
+      }
+    }
+    .list {
+      margin-top: 16px;
+    }
+  }
+}

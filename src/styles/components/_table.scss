@@ -1,0 +1,78 @@
+.el-table {
+  .el-table {
+    &__inner-wrapper {
+      &::before {
+        background-color: #dddddd;
+      }
+    }
+    &__header {
+      thead {
+        height: 48px;
+      }
+      .el-table__cell.is-leaf {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--color-gray-800);
+        text-align: center;
+        .cell {
+          @include typo(var(--font-size-15), 600, var(--color-gray-800), 18px);
+        }
+      }
+    }
+
+    &__body {
+      .el-table__cell {
+        height: 56px;
+        padding: 10px;
+        border-bottom: 1px solid #dddddd;
+        .cell {
+          @include typo(var(--font-size-15),$color: var(--color-gray-600));
+          @include truncate;
+          > * {
+            @include truncate;
+          }
+          em {
+            @include typo(var(--font-size-15),600,var(--color-gray-600));
+          }
+          .font-color--blue {
+            @include typo(var(--font-size-15),600,#1662F8);
+          }
+          .font-color--pink {
+            @include typo(var(--font-size-15),600,var(--color-primary-800));
+          }
+          .font-color--dark-gray {
+            @include typo(var(--font-size-15),500,var(--color-gray-800),18px);
+          }
+        }
+      }
+
+      .el-table__row {
+        cursor: pointer;
+        &:hover {
+          td.el-table__cell {
+            background: transparent;
+          }
+        }
+        .cell {
+          padding: 0 8px;
+        }
+      }
+    }
+    &__empty {
+      &-block {
+        padding: 50px;
+      }
+      &-text {
+        @include typo($color: var(--color-gray-400), $line-height: 1.5);
+        @include before(40px, 40px) {
+          @include icon(nodata--7f8);
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        & {
+          padding-top: 42px;
+        }
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@ export const openConfirm = ({ content, hideCancelButton, title, confirmButtonTex
       closeOnClickModal: closeOnClickModal || false,
       closeOnPressEscape: closeOnPressEscape || false,
       showClose: showClose || false,
+      autofocus: false
     },
   )
 }

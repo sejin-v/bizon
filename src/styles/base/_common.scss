@@ -1,0 +1,58 @@
+/* ========================== Page ========================== */
+.title {
+  @include typo(var(--font-size-36), 600, var(--color-gray-800));
+  margin-bottom: 40px;
+  &--sm {
+    @include before(4px, 16px) {
+      @include icon(info-bar--21d);
+      top: 2px;
+      left: 0;
+    }
+    & {
+      @include typo(var(--font-size-18), 500, var(--color-gray-800));
+      padding-left: 9px;
+      margin-bottom: 20px;
+      span {
+        & + span {
+          @include before(1px,16px) {
+            top: 2px;
+            left: 0;
+            background-color: var(--color-gray-200);
+          }
+          & {
+            padding-left: 10px;
+            margin-left: 10px;
+            word-break: break-all;
+          }
+        }
+      }
+    }
+  }
+  &__desc {
+    @include typo(var(--font-size-18), $color: var(--color-gray-800));
+  }
+}
+
+.list {
+  @apply flex flex-col;
+  @include space($y: 10px);
+  li {
+    @include typo(var(--font-size-15), $color: var(--color-gray-600), $line-height: 16px);
+    display: inline-flex;
+    word-break: break-all;
+  }
+}
+
+@include breakpoint(mobile) {
+  .title {
+    @include typo(var(--font-size-24), 600, var(--color-gray-800));
+    margin-bottom: 24px;
+    text-align: center;
+    &--sm {
+      margin-bottom: 16px;
+    }
+    &__desc {
+      @include typo(var(--font-size-16), $color: var(--color-gray-800));
+    }
+  }
+}

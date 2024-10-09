@@ -1,0 +1,31 @@
+/* ========================== Variables ========================== */
+$media-query-map: (
+  mobile: 480px,
+  tablet: 800px,
+  laptop: 1024px
+);
+
+/* ========================== Mixins ========================== */
+@mixin breakpoint($point) {
+  @if $point == laptop {
+    @media only screen and (max-width: #{map-get($media-query-map, laptop)}) {
+      @content;
+    }
+  }
+   @else if $point == tablet {
+    @media only screen and (max-width: #{map-get($media-query-map, tablet)}) {
+      @content;
+    }
+  }
+  @else if $point == mobile {
+    @media only screen and (max-width: #{map-get($media-query-map, mobile)}) {
+      @content;
+    }
+  }
+}
+
+@mixin breakpoint-between($from, $to) {
+  @media only screen and (min-width: #{map-get($media-query-map, $from)}) and (max-width: #{map-get($media-query-map, $to)}) {
+    @content;
+  }
+}

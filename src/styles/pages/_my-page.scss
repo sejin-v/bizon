@@ -1,0 +1,17 @@
+.my-page {
+  .btn__line--primary-md {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@include breakpoint(laptop) {
+  .my-page {
+    .btn__line--primary-md {
+      position: relative;
+      margin-top: 24px;
+    }
+  }
+
+}

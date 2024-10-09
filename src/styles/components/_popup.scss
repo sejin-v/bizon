@@ -1,0 +1,265 @@
+// 팝업 오픈시 페이지 밀리는 이슈 해결을 위한 css
+.el-popup-parent--hidden {
+  width: initial !important;
+}
+
+// confirm,alert
+.el-overlay-message-box {
+  .el-message-box {
+    @include typo(var(--font-size-16),$color:var(--color-gray-600));
+    z-index: var(--z-index-popup);
+    padding: 0;
+    border-radius: var(--radius-lg);
+    box-shadow: 0px 10px 16px 0px #0000001F;
+
+    .el-message-box {
+      padding-top: 20px;
+      &__header {
+        padding: 32px 20px 0;
+      }
+      &__header {
+        & + .el-message-box__content {
+          padding-top: 12px;
+        }
+      }
+      &__title {
+        @include typo(var(--font-size-20),700,var(--color-gray-800),24px);
+        text-align: center;
+      }
+      &__content {
+        @include typo($font-weight: 500);
+        padding: 32px 20px 24px;
+      }
+      &__btns {
+        @apply justify-center;
+        @include space(8px);
+        & {
+          padding: 0 20px 20px;
+        }
+        button {
+          &:nth-child(1) {
+            @include btn-base($type: 'line', $color: 'negative');
+            @include btn-size($size: 'sm');
+          }
+          &:nth-child(2) {
+            @include btn-base($type: 'full', $color: 'primary');
+            @include btn-size($size: 'sm');
+          }
+        }
+      }
+    }
+  }
+}
+
+// popup
+.el-overlay {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+.el-overlay-dialog {
+  .el-dialog {
+    @apply flex flex-col;
+    z-index: var(--z-index-popup);
+    max-width: calc(100% - 32px);
+    max-height: 95%;
+    padding: 0;
+    border-radius: var(--radius-lg);
+
+    &__header {
+      @apply flex items-center justify-center;
+      @include typo(var(--font-size-24), 600, var(--color-gray-800), 24px);
+      position: relative;
+      min-height: 70px;
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid var(--color-gray-200);
+      &.show-close {
+        padding-right: 70px;
+        padding-left: 70px;
+      }
+
+      h2 {
+        @include truncate;
+      }
+      
+      &btn {
+        @include icon(close__line--181);
+        top: 50%;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        transform: translateY(-50%);
+        .el-icon {
+          display: none;
+        }
+      }
+    }
+
+    &__body {
+      @apply flex flex-col flex-1;
+      @include typo(var(--font-size-15),$color: var(--color-gray-600),$line-height:22px);
+      overflow-y: auto;
+      min-height: 200px;
+      max-height: 500px;
+      padding: 40px 40px 0;
+      overscroll-behavior: none;
+    }
+    &__footer {
+      @apply flex items-center justify-center;
+      padding: 40px;
+    }
+  }
+
+  .popup {
+    &__desc {
+      @include typo(var(--font-size-18),500,var(--color-gray-800));
+      margin-bottom: 21px;
+      em {
+        @include typo(var(--font-size-18),600,var(--color-primary-800));
+      }
+      &--sm {
+        @include typo(var(--font-size-16),500,var(--color-gray-800));
+        em {
+          @include typo(var(--font-size-16),600,var(--color-primary-800));
+        }
+      }
+    }
+  }
+  .detail-popup {
+    .el-dialog {
+      &__header {
+        @apply flex-col items-start;
+        min-height: fit-content;
+        padding: 40px 0 10px;
+        margin: 0 40px;
+        h2 {
+          @include typo(var(--font-size-20),600,var(--color-gray-800),24px);
+          white-space: wrap;
+          word-break: break-all;
+        }
+        p {
+          @include typo(var(--font-size-15),$color:var(--color-gray-600),$line-height:18px);
+          margin-top: 10px;
+        }
+      }
+      &__body {
+        padding: 30px 40px 0;
+      }
+    }
+  }
+}
+
+// 페이지 단에서 사용하는 스타일
+.login-p {
+  .el-dialog {
+    &__body {
+      overflow: auto;
+    }
+  }
+}
+.apply-p {
+  .form {
+    @include space($y:7px);
+    & {
+      margin: 30px 0;
+    }
+    &__item {
+      @apply flex items-center;
+
+    }
+  }
+}
+.satisfaction-p {
+  .popup__desc--sm {
+    margin-bottom: 20px;
+  }
+  &__list {
+    @apply flex flex-col;
+    li {
+      @apply flex items-center justify-between;
+      @include typo(var(--font-size-16),600,var(--color-gray-800),19px);
+      & + li {
+        @include before(100%,1px) {
+          top: 0;
+          background-color: var(--color-gray-200);
+        }
+      & {
+          padding-top: 19px;
+          margin-top: 19px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(mobile) {
+  // 공통
+  .el-overlay-dialog {
+    .el-dialog {
+      &__body {
+        min-height: 300px;
+        padding: 24px 16px 0;
+      }
+      &__footer {
+        padding: 24px 16px 16px;
+      }
+    }
+    .detail-popup {
+      .el-dialog {
+        &__header {
+          @apply flex-col items-start;
+          padding: 24px 0 10px;
+          margin: 0 16px;
+        }
+        &__body {
+          padding: 24px 16px 0;
+        }
+      }
+    }
+  }
+  .popup {
+    &__desc {
+      margin-bottom: 16px;
+    }
+  }
+
+  // 페이지
+  .apply-p {
+    .form {
+      @include space($y:16px);
+      margin: 24px 0;
+      &__item {
+        align-items: unset;
+      }
+    }
+    .el-dialog {
+      &__footer {
+        @apply flex-col;
+        button {
+          width: 100%;
+          & + button {
+            margin: 10px 0 0;
+          }
+        }
+      }
+    }
+  }
+  .satisfaction-p {
+    &__list {
+    li {
+      @apply flex-col items-start;
+      label {
+        & + div:not(.custom-textarea) {
+          margin-top: 16px;
+        }
+      }
+      + li {
+          padding-top: 16px;
+          margin-top: 16px;
+        }
+      }
+    }
+    .popup__desc--sm {
+      margin-bottom: 16px;
+    }
+  }
+}
+

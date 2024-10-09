@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import '~/styles/base.scss';
-import '~/styles/common.scss';
-import '~/styles/components/grid.scss';
-import '~/styles/components/button.scss';
-import '~/styles/components/form.scss';
-import '~/styles/mgmt/common.scss';
+import '~/styles/main.scss'
 
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 const ACircularLoading = defineAsyncComponent(
   () => import('~/components/ACircularLoading/component.vue')
-);
+)
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg

@@ -1,0 +1,63 @@
+@mixin box(
+  $padding,
+  $bd-color: transparent,
+  $radius: var(--radius-xl),
+  $bg-color: var(--color-white)
+) {
+  padding: $padding;
+  background-color: $bg-color;
+  border: 1px solid $bd-color;
+  border-radius: $radius;
+  box-sizing: border-box;
+}
+.box {
+  &--fff {
+    @include box(40px);
+    height: 100%;
+    box-shadow: 0px 0px 20px 0px #0000000d;
+  }
+  &--f3f {
+    @apply flex items-center flex-wrap;
+    @include box(20px 60px,$radius:var(--radius-md),$bg-color:var(--color-gray-100));
+    @include typo(var(--font-size-15),500,var(--color-gray-600));
+    @include space(40px);
+    & {
+      max-width: 320px;
+      width: 100%;
+    }
+    span {
+      @include typo(var(--font-size-15),600,var(--color-gray-800));
+    }
+    em {
+      @include typo(var(--font-size-15),600,var(--color-primary-800));
+    }
+  }
+  &--f9f {
+    @include box(30px,$radius:0,$bg-color:var(--color-gray-50));
+    margin-top: 30px;
+  }
+}
+
+@include breakpoint(mobile) {
+  .box {
+    &--fff {
+      @include box(0, $bg-color: transparent);
+      box-shadow: none;
+      @include before(100%,100%) {
+        z-index: -1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: var(--color-white);
+      }
+    }
+    &--f3f {
+      @include box(8px 16px,$radius:var(--radius-md),$bg-color:var(--color-gray-100));
+      max-width: unset;
+    }
+    &--f9f {
+      @include box(16px,$radius:0,$bg-color:var(--color-gray-50));
+      margin-top: 24px;
+    }
+  }
+}

@@ -2,7 +2,7 @@ export interface IPaginationOptions {
   modelValue?: number
   currentPage?: number
   totalCount: number
-  limit: number
+  limit?: number
   limitOptions?: number[]
   maxPagesShown?: number
   belowLimitShown?: boolean

@@ -12,4 +12,5 @@ export interface IInputProps {
   useComma?: boolean
   useCount?: boolean
   useDelete?: boolean
+  useTimer?: boolean
 }

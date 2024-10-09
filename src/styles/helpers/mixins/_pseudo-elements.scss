@@ -1,0 +1,24 @@
+@mixin before($w: null, $h: null) {
+  position: relative;
+
+  &::before {
+    display: inline-block;
+    position: absolute;
+    content: '';
+    width: $w;
+    height: $h;
+    @content;
+  }
+}
+@mixin after($w: null, $h: null) {
+  position: relative;
+
+  &::after {
+    display: inline-block;
+    position: absolute;
+    content: '';
+    width: $w;
+    height: $h;
+    @content;
+  }
+}

@@ -9,7 +9,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 // import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import Inspect from 'vite-plugin-inspect'
-
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 // Elements Plus auto import 사용을 위해 추가
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
@@ -53,6 +53,7 @@ export default defineConfig({
       // target: 'https://sc-ixistudio.temp-sp.violet.uplus.co.kr/',
       // changeOrigin: true,
       // },
+
     },
   },
 
@@ -66,9 +67,10 @@ export default defineConfig({
       // importMode: (filepath: string) => 'async',
       importMode: 'async',
       // extendRoute(route) {
-      //   if (route.path === '/ui-examples') {
-      //     route.meta = { layout: 'detail' }
-      //   }
+      //   route.meta = { layout: 'default' }
+      // //   if (route.path === '/ui-examples') {
+      // //     route.meta = { layout: 'detail' }
+      // //   }
       // },
     }),
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -80,6 +82,7 @@ export default defineConfig({
     AutoImport({
       imports: [
         'vue',
+        VueRouterAutoImports,
         'vue-i18n',
         'vue-router',
         'vue/macros',
@@ -92,7 +95,7 @@ export default defineConfig({
         },
       ],
       dts: 'src/auto-imports.d.ts',
-      dirs: ['src/composables/**', 'src/store', 'src/utils'],
+      dirs: ['src/composables', 'src/store', 'src/utils'],
       vueTemplate: true,
       resolvers: [ElementPlusResolver()],
     }),
@@ -139,14 +142,14 @@ export default defineConfig({
   ],
 
   // SCSS 전역 사용
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData:
-          '@import "./src/styles/_variables"; @import "./src/styles/_mixin";',
-      },
-    },
-  },
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData:
+  //         '@import "./src/styles/main";',
+  //     },
+  //   },
+  // },
 
   // // https://github.com/antfu/vite-ssg
   // ssgOptions: {

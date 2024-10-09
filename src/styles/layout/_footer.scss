@@ -1,0 +1,34 @@
+.footer {
+  @apply flex items-end justify-between;
+  padding: 26px 47px 32px 60px;
+  background-color: #343434;
+
+  &__info {
+    @include typo(var(--font-size-15), $color: var(--color-white), $line-height: 18px);
+  }
+  &__legal {
+    @apply flex;
+    margin-bottom: 20px;
+    a {
+      @include typo(var(--font-size-16), 600);
+      & + a {
+        @include before(2px, 14px) {
+          top: 50%;
+          left: 0;
+          background-color: var(--color-white);
+          transform: translateY(-50%);
+        }
+        & {
+          padding-left: 15px;
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(mobile) {
+  .footer {
+    display: none;
+  }
+}

@@ -1,0 +1,33 @@
+.pagination {
+  @apply flex justify-center;
+  margin-top: 25px;
+
+  .pagination-container {
+    @apply flex;
+    @include space($x: 2px);
+    & > li,
+    .paginate-buttons {
+      width: 32px;
+      height: 32px;
+    }
+    .paginate-buttons {
+      @include typo($color: var(--color-gray-600));
+      border: 0;
+      border-radius: var(--radius-xxs);
+      transition: var(--transition);
+      &:hover {
+        background: transparent;
+      }
+      &.active-page {
+        @include typo($font-weight: 600, $color: var(--color-white));
+        background: var(--color-primary-800);
+      }
+    }
+  }
+}
+
+@include breakpoint(mobile) {
+  .pagination {
+    margin-top: 20px;
+  }
+}

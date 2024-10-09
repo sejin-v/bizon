@@ -1,0 +1,134 @@
+.login {
+  @include before(100%, 100%) {
+    @include icon('login-bg', $format: 'png', $size: 'cover');
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  @include after(100%,100%) {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--color-black);
+    opacity: 0.5;
+  }
+  & {
+    width: 100%;
+    height: 100%;
+  }
+  &__wrap {
+    @apply flex flex-col items-center justify-center;
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+    padding: 40px;
+    margin: 0 auto;
+    background-color: #0000004D;
+    border-radius: var(--radius-xl);
+    box-shadow: 0px 0px 40px 0px #0000000D;
+
+  }
+  &__title {
+    @include typo(var(--font-size-20), $color: var(--color-white), $line-height: 24px);
+    margin-bottom: 32px;
+    text-align: center;
+    em {
+      @include typo(var(--font-size-20), 700);
+    }
+    .logo {
+      @apply flex items-center;
+      @include typo(var(--font-size-48), 700, var(--color-white), 58px);
+      margin-top: 5px;
+      .cm-icon {
+        width: 169px;
+        height: 36px;
+      }
+    }
+  }
+  &__form {
+    width: 100%;
+    a {
+      @include typo(var(--font-size-15), 500, var(--color-white));
+    }
+    .custom-input {
+      input {
+        height: 56px;
+      }
+    }
+    .el-checkbox {
+      &__input {
+        &.is-checked {
+          & + .el-checkbox__label {
+            color: var(--color-white);
+          }
+        }
+      }
+      &__inner {
+        background-color: transparent;
+        border-color: var(--color-gray-200);
+      }
+      &__label {
+        @include typo(var(--font-size-15), 500, var(--color-white));
+      }
+    }
+  }
+  &__desc {
+    @include typo($font-weight: 500, $color: var(--color-white), $line-height: 20px);
+    width: 100%;
+    padding: 8px 16px;
+    margin-top: 16px;
+    border-radius: var(--radius-xs);
+    button {
+      @apply inline-flex items-center;
+      @include typo($font-weight: 500, $color: #4c88ff, $line-height: 17px);
+      margin-left: 5px;
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+  .btn__full--primary-lg {
+    height: 56px;
+    margin-top: 32px;
+  }
+}
+
+@include breakpoint(mobile) {
+  .login {
+    padding-top: 40px;
+    &__wrap {
+      @apply justify-start;
+      padding: 0;
+      background-color: transparent;
+    }
+    &__title {
+      @include typo(var(--font-size-16), $color: var(--color-white), $line-height: 19px);
+      margin-bottom: 24px;
+      em {
+        @include typo(var(--font-size-18), 700);
+      }
+      .logo {
+        @include typo(var(--font-size-36), 700, var(--color-white), 43px);
+        margin-top: 2px;
+        .cm-icon {
+          width: 115px;
+          height: 26px;
+        }
+      }
+    }
+    &__desc {
+      @apply flex flex-col items-center;
+      background-color: #00000080;
+      text-align: center;
+      button {
+        @apply flex items-center;
+        margin: 10px 0 0;
+      }
+    }
+    .btn__full--primary-lg {
+      margin-top: 24px;
+    }
+  }
+}

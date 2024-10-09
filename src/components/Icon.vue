@@ -18,17 +18,11 @@ const props = defineProps({
     type: String,
   },
 })
-
-const imageSrc = ref(`${import.meta.env.VITE_ICON_SRC_PATH}/${props.name}.${props.extension}`)
+const imageSrc = computed(() => {
+  return `/icon/${props.name}.${props.extension}`
+})
 </script>
 
 <template>
-  <img
-    :src="imageSrc"
-    class="icon"
-    :alt="alt"
-    :style="`width: ${width}px; height: ${height}px;`"
-  >
+  <img :src="imageSrc" class="cm-icon" :alt="alt" :style="`width: ${width}px; height: ${height}px;`" />
 </template>
-
-<style lang="scss" scoped></style>
