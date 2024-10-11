@@ -5,10 +5,10 @@ import { IToastType, MODAL_SIZE, ILoginForm, ILoginParams } from '~/types';
 const router = useRouter();
 const { setUser } = useUserStore();
 
-const loginForm = reactive<ILoginForm>({
-  email: '',
-  password: '',
-});
+// const loginForm = reactive<ILoginForm>({
+//   email: '',
+//   password: '',
+// });
 
 const userId = ref('');
 const password = ref('');
@@ -107,6 +107,8 @@ const handleLogin = async () => {
   try {
     await fetchLogin(params);
     const result = await getUserData();
+    setUser(result);
+    router.push('/apply');
   } catch (error) {
     console.error(error);
   }

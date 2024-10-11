@@ -1,8 +1,8 @@
 <!-- 관리자 화면 Header (MgmtLayout)  -->
 
 <script setup lang="ts">
-const userStore = useUserStore()
-const { user } = userStore
+const userStore = useUserStore();
+const { user } = userStore;
 </script>
 
 <template>
@@ -17,6 +17,4 @@ const { user } = userStore
   </header>
 </template>
 
-<style lang="scss" scoped>
-@import '~/styles/components/header'
-</style>
+<style lang="scss" scoped></style>

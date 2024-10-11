@@ -1,6 +1,6 @@
 <!-- 랜딩페이지 화면 Header (UserLayout) -->
 <script setup lang="ts">
-import type { IMenu } from '~/types/menu'
+import type { IMenu } from '~/types/menu';
 
 const menuList = ref<IMenu[]>([
   {
@@ -75,24 +75,21 @@ const menuList = ref<IMenu[]>([
       },
     ],
   },
-])
-const router = useRouter()
+]);
+const router = useRouter();
 const moveHomePage = () => {
-  router.push('/home')
-}
+  router.push('/home');
+};
 
 const moveNewWebSide = (twoDepthMenuInfo: IMenu) => {
-  if (!isEmpty(twoDepthMenuInfo.menuUrl))
-    window.open(twoDepthMenuInfo.menuUrl)
-}
+  if (!isEmpty(twoDepthMenuInfo.menuUrl)) window.open(twoDepthMenuInfo.menuUrl);
+};
 
 const movePage = (menuUrl: string) => {
-  const newWebPageUrlRegex = /http(s)?:\/\/.+/
-  if (newWebPageUrlRegex.test(menuUrl))
-    window.open(menuUrl)
-  else
-    router.push(menuUrl)
-}
+  const newWebPageUrlRegex = /http(s)?:\/\/.+/;
+  if (newWebPageUrlRegex.test(menuUrl)) window.open(menuUrl);
+  else router.push(menuUrl);
+};
 </script>
 
 <template>
@@ -103,15 +100,28 @@ const movePage = (menuUrl: string) => {
     <el-menu mode="horizontal" :ellipsis="false" :popper-offset="0">
       <template v-for="menu in menuList" :key="`user-sidebar-${menu.menuId}`">
         <!-- 메뉴가 여러 뎁스로 있는 경우 사용 -->
-        <el-sub-menu v-if="menu.children" :index="menu.menuIndex" popper-class="header-menu">
+        <el-sub-menu
+          v-if="menu.children"
+          :index="menu.menuIndex"
+          popper-class="header-menu"
+        >
           <template #title>
             <span>{{ menu.menuName }}</span>
           </template>
           <el-menu-item-group>
-            <template v-for="twoDepthMenu in menu.children" :key="`user-sidebar-menu-two-depth-${twoDepthMenu.menuId}`">
-              <el-menu-item :index="twoDepthMenu.menuIndex"
-                :class="{ 'el-menu-item__link': twoDepthMenu.menuId === 'ixiStudioGo' || twoDepthMenu.menuId === 'ixiBestPractices' }"
-                @click="movePage(twoDepthMenu.menuUrl!)">
+            <template
+              v-for="twoDepthMenu in menu.children"
+              :key="`user-sidebar-menu-two-depth-${twoDepthMenu.menuId}`"
+            >
+              <el-menu-item
+                :index="twoDepthMenu.menuIndex"
+                :class="{
+                  'el-menu-item__link':
+                    twoDepthMenu.menuId === 'ixiStudioGo' ||
+                    twoDepthMenu.menuId === 'ixiBestPractices',
+                }"
+                @click="movePage(twoDepthMenu.menuUrl!)"
+              >
                 <template #title>
                   <span>{{ twoDepthMenu.menuName }}</span>
                 </template>
@@ -119,9 +129,11 @@ const movePage = (menuUrl: string) => {
 
               <template v-if="twoDepthMenu.children">
                 <ul class="el-menu-item__two-depth">
-                  <li v-for="threeDepthMenu in twoDepthMenu.children"
+                  <li
+                    v-for="threeDepthMenu in twoDepthMenu.children"
                     :key="`user-header-menu-three-depth-${threeDepthMenu.menuId}`"
-                    @click="moveNewWebSide(threeDepthMenu)">
+                    @click="moveNewWebSide(threeDepthMenu)"
+                  >
                     {{ threeDepthMenu.menuName }}
                   </li>
                 </ul>
@@ -130,7 +142,11 @@ const movePage = (menuUrl: string) => {
           </el-menu-item-group>
         </el-sub-menu>
         <!-- 메뉴가 1뎁스 인 경우 사용 -->
-        <el-menu-item v-else :index="menu.menuIndex" @click="movePage(menu.menuUrl!)">
+        <el-menu-item
+          v-else
+          :index="menu.menuIndex"
+          @click="movePage(menu.menuUrl!)"
+        >
           <!-- TODO: icon 필요할때 사용 -->
           <!-- <Icon :name="menu.icon" width="20" height="20" /> -->
 
@@ -143,6 +159,4 @@ const movePage = (menuUrl: string) => {
   </header>
 </template>
 
-<style lang="scss">
-@import '~/styles/components/header';
-</style>
+<style lang="scss"></style>

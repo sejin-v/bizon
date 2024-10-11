@@ -1,14 +1,14 @@
 <!-- 관리자 화면 Sidebar (MgmtLayout)  -->
 
 <script setup lang="ts">
-import type { IMenu, IMenuSetting } from '~/types/menu'
+import type { IMenu, IMenuSetting } from '~/types/menu';
 import { useUserStore } from '~/store/user';
 
 withDefaults(defineProps<IMenuSetting>(), {
   menuBackgroundColor: '', // 메뉴 배경색 지정
   menuActiveTextColor: '', // 메뉴 활성화 text 색상 지정
   menuTextColor: '', // 메뉴 text 색상 지정
-})
+});
 
 // TODO: 시연때는 관리자 메뉴 하드코딩
 const menuList = ref<IMenu[]>([
@@ -197,64 +197,59 @@ const menuList = ref<IMenu[]>([
   //   mgmt: true,
   //   disabled: false,
   // },
-])
+]);
 
-const route = useRoute()
+const route = useRoute();
 
 const getActiveMenu = () => {
-  let activeMenu = ''
+  let activeMenu = '';
 
   // const activeMenuInfo = menuList.value.find((m) => {
   //   return m.menuUrl === route.path
   // })
 
-  const activeMenuInfo = findActiveMenuInfo(menuList.value, route.path)
-  if (isEmpty(activeMenuInfo))
-    activeMenu = menuList.value[0].menuIndex
-  else
-    activeMenu = activeMenuInfo!.menuIndex
+  const activeMenuInfo = findActiveMenuInfo(menuList.value, route.path);
+  if (isEmpty(activeMenuInfo)) activeMenu = menuList.value[0].menuIndex;
+  else activeMenu = activeMenuInfo!.menuIndex;
 
-  return activeMenu
-}
+  return activeMenu;
+};
 
-const router = useRouter()
+const router = useRouter();
 
 const moveProjectList = () => {
-  router.push('/mgmt/project')
-}
+  router.push('/mgmt/project');
+};
 
 const movePage = (menuUrl: string) => {
-  const newWebPageUrlRegex = /http(s)?:\/\/.+/
-  if (newWebPageUrlRegex.test(menuUrl))
-    window.open(menuUrl)
-  else
-    router.push(menuUrl)
-}
+  const newWebPageUrlRegex = /http(s)?:\/\/.+/;
+  if (newWebPageUrlRegex.test(menuUrl)) window.open(menuUrl);
+  else router.push(menuUrl);
+};
 
 const moveHome = () => {
-  router.push('/')
-}
+  router.push('/');
+};
 const moveGuide = () => {
   // router.push('/ixi-studio/guide')
   window.open('/ixi-studio/guide', '', 'width=1200, height=800');
-}
+};
 
 onMounted(() => {
-  const { user } = useUserStore()
+  const { user } = useUserStore();
   if (!user) {
-    return
+    return;
   }
 
   if (!user.isSuperuser) {
     for (let i = 0; i < menuList.value.length; i++) {
       const menu = menuList.value[i];
       if (menu.menuId === 'userManagement') {
-        menuList.value.splice(i, 1)
+        menuList.value.splice(i, 1);
       }
     }
   }
-})
-
+});
 </script>
 
 <template>
@@ -263,29 +258,48 @@ onMounted(() => {
       <Icon name="logo__studio" width="139" height="28" alt="ixi studio" />
     </h1>
     <!-- 메뉴 -->
-    <el-menu :default-active="getActiveMenu()" :background-color="menuBackgroundColor"
-      :active-text-color="menuActiveTextColor" :text-color="menuTextColor" :default-openeds="['4']">
+    <el-menu
+      :default-active="getActiveMenu()"
+      :background-color="menuBackgroundColor"
+      :active-text-color="menuActiveTextColor"
+      :text-color="menuTextColor"
+      :default-openeds="['4']"
+    >
       <template v-for="menu in menuList" :key="`mgmt-sidebar-${menu.menuId}`">
         <div v-if="menu.menuId === 'analytics'" class="sidebar--mgmt-title">
           <Icon name="system-mgmt" width="20" height="20" />
           <span>시스템 관리자</span>
         </div>
-        <el-sub-menu v-if="menu.children" :index="menu.menuIndex" :class="{ 'el-menu--mgmt': menu.mgmt === true }">
+        <el-sub-menu
+          v-if="menu.children"
+          :index="menu.menuIndex"
+          :class="{ 'el-menu--mgmt': menu.mgmt === true }"
+        >
           <template #title>
             <!-- icon 필요할때 사용 -->
             <!-- <Icon :name="menu.icon" width="20" height="20" /> -->
             <span>{{ menu.menuName }}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item v-for="lowerMenu in menu.children" :key="`mgmt-sidebar-menu-lower-${lowerMenu.menuId}`"
-              :index="lowerMenu.menuIndex" @click="movePage(lowerMenu.menuUrl!)">
+            <el-menu-item
+              v-for="lowerMenu in menu.children"
+              :key="`mgmt-sidebar-menu-lower-${lowerMenu.menuId}`"
+              :index="lowerMenu.menuIndex"
+              @click="movePage(lowerMenu.menuUrl!)"
+            >
               <span>{{ lowerMenu.menuName }}</span>
             </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
-        <el-menu-item v-else :index="menu.menuIndex"
-          :class="{ 'el-menu--mgmt': menu.mgmt === true, 'el-menu-item--disabled': menu.disabled }"
-          @click="movePage(menu.menuUrl!)">
+        <el-menu-item
+          v-else
+          :index="menu.menuIndex"
+          :class="{
+            'el-menu--mgmt': menu.mgmt === true,
+            'el-menu-item--disabled': menu.disabled,
+          }"
+          @click="movePage(menu.menuUrl!)"
+        >
           <!-- icon 필요할때 사용 -->
           <!-- <Icon :name="menu.icon" width="20" height="20" /> -->
           <template #title>
@@ -297,15 +311,25 @@ onMounted(() => {
 
     <button type="button" class="sidebar__btn--shorcut" @click="moveGuide">
       <span> ixi-Studio 가이드 </span>
-      <Icon name="direct__line--333" width="20" height="20" alt="" class="ml-1" />
+      <Icon
+        name="direct__line--333"
+        width="20"
+        height="20"
+        alt=""
+        class="ml-1"
+      />
     </button>
     <button type="button" class="sidebar__btn--shorcut" @click="moveHome">
       <span> ixi Solution 돌아가기 </span>
-      <Icon name="direct__line--333" width="20" height="20" alt="" class="ml-1" />
+      <Icon
+        name="direct__line--333"
+        width="20"
+        height="20"
+        alt=""
+        class="ml-1"
+      />
     </button>
   </div>
 </template>
 
-<style lang="scss">
-@import '~/styles/components/sidebar';
-</style>
+<style lang="scss"></style>

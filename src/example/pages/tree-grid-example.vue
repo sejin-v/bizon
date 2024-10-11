@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { IGridOption, ITreeGridRowInfo } from '~/example/types/grid'
-import type { IColumn, IGridData } from '~/types/grid'
-import TreeTableGrid from '~/example/components/grid/tree-table-grid.vue'
+import type { IGridOption, ITreeGridRowInfo } from '~/example/types/grid';
+import type { IColumn, IGridData } from '~/types/grid';
 
 const treeGridData = ref<ITreeGridRowInfo[]>([
   {
@@ -149,7 +148,7 @@ const treeGridData = ref<ITreeGridRowInfo[]>([
     datepicker: '2023-09-20',
     lastResult: '',
   },
-])
+]);
 
 const parentColumns = ref<IColumn[]>([
   {
@@ -193,7 +192,7 @@ const parentColumns = ref<IColumn[]>([
     minWidth: 10,
     draggable: true,
   },
-])
+]);
 const childColumns = ref<IColumn[]>([
   {
     property: 'manager',
@@ -236,24 +235,26 @@ const childColumns = ref<IColumn[]>([
     minWidth: 10,
     draggable: true,
   },
-])
+]);
 
 // const selectedRowList = ref<IGridRowInfo[]>([])
 
-const updateColumnOrder = (changedOrderColumns: IColumn[], isUpperTable: boolean) => {
+const updateColumnOrder = (
+  changedOrderColumns: IColumn[],
+  isUpperTable: boolean
+) => {
   // 컬럼 순서 변경하는 API 호출(columns.value 값을 백엔드로 보내주고, 순서 변경하도록 적용 필요)
   if (isUpperTable) {
     // 부모 컬럼 드래그 이동
-  }
-  else {
+  } else {
     // 자식 컬럼 드래그 이동
   }
-}
+};
 
 const updateRowOrder = (rowList: IGridData[]) => {
-  console.info('rowList', rowList)
+  console.info('rowList', rowList);
   // row 순서 변경하는 API 호출(treeGridData.value 값을 백엔드로 보내주면됨.)
-}
+};
 
 // const managerButtonRef = ref<Record<number, HTMLButtonElement>>({})
 // const progressStatusButtonRef = ref<Record<number, HTMLButtonElement>>({})
@@ -283,7 +284,7 @@ const alignOptions = [
     value: 'right',
     label: '오른쪽 정렬',
   },
-]
+];
 
 const parentTableOption: IGridOption = reactive({
   useCheckBox: false,
@@ -292,7 +293,7 @@ const parentTableOption: IGridOption = reactive({
   useColumnResizable: true,
   headerAlign: 'left',
   rowAlign: 'left',
-})
+});
 
 const childTableOption: IGridOption = reactive({
   useCheckBox: false,
@@ -301,51 +302,81 @@ const childTableOption: IGridOption = reactive({
   useColumnResizable: true,
   headerAlign: 'left',
   rowAlign: 'left',
-})
+});
 </script>
 
 <template>
   <div>
-    <h2 class="pb-2">
-      트리 그리드 예제
-    </h2>
+    <h2 class="pb-2">트리 그리드 예제</h2>
     <div class="border-dotted border-2 p-2 mb-2 rounded-md border-lime-600">
       <h3>부모 테이블 설정</h3>
       <div class="flex pb-2">
         <div class="w-1/2">
           <span class="pr-2">체크박스 사용여부</span>
-          <span><el-switch v-model="parentTableOption.useCheckBox" />{{ parentTableOption.useCheckBox }}</span>
+          <span
+            ><el-switch v-model="parentTableOption.useCheckBox" />{{
+              parentTableOption.useCheckBox
+            }}</span
+          >
         </div>
         <div class="w-1/2">
           <span class="pr-2">컬럼 넓이 조정 사용여부</span>
-          <span><el-switch v-model="parentTableOption.useColumnResizable" />{{ parentTableOption.useColumnResizable
-            }}</span>
+          <span
+            ><el-switch v-model="parentTableOption.useColumnResizable" />{{
+              parentTableOption.useColumnResizable
+            }}</span
+          >
         </div>
       </div>
       <div class="flex pb-2">
         <div class="w-1/2">
           <span class="pr-2">컬럼 드래그</span>
-          <span><el-switch v-model="parentTableOption.useDragColumn" />{{ parentTableOption.useDragColumn }}</span>
+          <span
+            ><el-switch v-model="parentTableOption.useDragColumn" />{{
+              parentTableOption.useDragColumn
+            }}</span
+          >
         </div>
         <div class="w-1/2">
           <span class="pr-2">row 드래그</span>
-          <span><el-switch v-model="parentTableOption.useDragRow" />{{ parentTableOption.useDragRow }}</span>
+          <span
+            ><el-switch v-model="parentTableOption.useDragRow" />{{
+              parentTableOption.useDragRow
+            }}</span
+          >
         </div>
       </div>
       <div class="flex pb-2">
         <div class="w-1/2 align-middle">
           <span class="pr-2">header 텍스트 정렬</span>
-          <span><el-radio-group v-model="parentTableOption.headerAlign" class="ml-4">
-              <el-radio v-for="align of alignOptions" :key="align.value" :label="align.value" size="large">{{
-            align.label }}</el-radio>
-            </el-radio-group></span>
+          <span
+            ><el-radio-group
+              v-model="parentTableOption.headerAlign"
+              class="ml-4"
+            >
+              <el-radio
+                v-for="align of alignOptions"
+                :key="align.value"
+                :label="align.value"
+                size="large"
+                >{{ align.label }}</el-radio
+              >
+            </el-radio-group></span
+          >
         </div>
         <div class="w-1/2">
           <span class="pr-2">cell 텍스트 정렬</span>
-          <span><el-radio-group v-model="parentTableOption.rowAlign" class="ml-4">
-              <el-radio v-for="align of alignOptions" :key="align.value" :label="align.value" size="large">{{
-            align.label }}</el-radio>
-            </el-radio-group></span>
+          <span
+            ><el-radio-group v-model="parentTableOption.rowAlign" class="ml-4">
+              <el-radio
+                v-for="align of alignOptions"
+                :key="align.value"
+                :label="align.value"
+                size="large"
+                >{{ align.label }}</el-radio
+              >
+            </el-radio-group></span
+          >
         </div>
       </div>
     </div>
@@ -354,51 +385,93 @@ const childTableOption: IGridOption = reactive({
       <div class="flex pb-2">
         <div class="w-1/2">
           <span class="pr-2">체크박스 사용여부</span>
-          <span><el-switch v-model="childTableOption.useCheckBox" />{{ childTableOption.useCheckBox }}</span>
+          <span
+            ><el-switch v-model="childTableOption.useCheckBox" />{{
+              childTableOption.useCheckBox
+            }}</span
+          >
         </div>
         <div class="w-1/2">
           <span class="pr-2">컬럼 넓이 조정 사용여부</span>
-          <span><el-switch v-model="childTableOption.useColumnResizable" />{{ childTableOption.useColumnResizable
-            }}</span>
+          <span
+            ><el-switch v-model="childTableOption.useColumnResizable" />{{
+              childTableOption.useColumnResizable
+            }}</span
+          >
         </div>
       </div>
       <div class="flex pb-2">
         <div class="w-1/2">
           <span class="pr-2">컬럼 드래그</span>
-          <span><el-switch v-model="childTableOption.useDragColumn" />{{ childTableOption.useDragColumn }}</span>
+          <span
+            ><el-switch v-model="childTableOption.useDragColumn" />{{
+              childTableOption.useDragColumn
+            }}</span
+          >
         </div>
         <div class="w-1/2">
           <span class="pr-2">row 드래그</span>
-          <span><el-switch v-model="childTableOption.useDragRow" />{{ childTableOption.useDragRow }}</span>
+          <span
+            ><el-switch v-model="childTableOption.useDragRow" />{{
+              childTableOption.useDragRow
+            }}</span
+          >
         </div>
       </div>
       <div class="flex pb-2">
         <div class="w-1/2 align-middle">
           <span class="pr-2">header 텍스트 정렬</span>
-          <span><el-radio-group v-model="childTableOption.headerAlign" class="ml-4">
-              <el-radio v-for="align of alignOptions" :key="align.value" :label="align.value" size="large">{{
-            align.label }}</el-radio>
-            </el-radio-group></span>
+          <span
+            ><el-radio-group
+              v-model="childTableOption.headerAlign"
+              class="ml-4"
+            >
+              <el-radio
+                v-for="align of alignOptions"
+                :key="align.value"
+                :label="align.value"
+                size="large"
+                >{{ align.label }}</el-radio
+              >
+            </el-radio-group></span
+          >
         </div>
         <div class="w-1/2">
           <span class="pr-2">cell 텍스트 정렬</span>
-          <span><el-radio-group v-model="childTableOption.rowAlign" class="ml-4">
-              <el-radio v-for="align of alignOptions" :key="align.value" :label="align.value" size="large">{{
-            align.label }}</el-radio>
-            </el-radio-group></span>
+          <span
+            ><el-radio-group v-model="childTableOption.rowAlign" class="ml-4">
+              <el-radio
+                v-for="align of alignOptions"
+                :key="align.value"
+                :label="align.value"
+                size="large"
+                >{{ align.label }}</el-radio
+              >
+            </el-radio-group></span
+          >
         </div>
       </div>
     </div>
-    <TreeTableGrid v-model:rows="treeGridData" v-model:parent-columns="parentColumns"
-      v-model:child-columns="childColumns" row-id-key="id" :use-parent-check-box="parentTableOption.useCheckBox"
-      :use-child-check-box="childTableOption.useCheckBox" :use-parent-drag-column="parentTableOption.useDragColumn"
-      :use-child-drag-column="childTableOption.useDragColumn" :use-parent-drag-row="parentTableOption.useDragRow"
+    <TreeTableGrid
+      v-model:rows="treeGridData"
+      v-model:parent-columns="parentColumns"
+      v-model:child-columns="childColumns"
+      row-id-key="id"
+      :use-parent-check-box="parentTableOption.useCheckBox"
+      :use-child-check-box="childTableOption.useCheckBox"
+      :use-parent-drag-column="parentTableOption.useDragColumn"
+      :use-child-drag-column="childTableOption.useDragColumn"
+      :use-parent-drag-row="parentTableOption.useDragRow"
       :use-child-drag-row="childTableOption.useDragRow"
       :use-parent-column-resizable="parentTableOption.useColumnResizable"
       :use-child-column-resizable="childTableOption.useColumnResizable"
-      :parent-header-align="parentTableOption.headerAlign" :child-header-align="childTableOption.headerAlign"
-      :parent-row-align="parentTableOption.rowAlign" :child-row-align="childTableOption.rowAlign"
-      @change-row-order="updateRowOrder" @change-column-order="updateColumnOrder" />
+      :parent-header-align="parentTableOption.headerAlign"
+      :child-header-align="childTableOption.headerAlign"
+      :parent-row-align="parentTableOption.rowAlign"
+      :child-row-align="childTableOption.rowAlign"
+      @change-row-order="updateRowOrder"
+      @change-column-order="updateColumnOrder"
+    />
   </div>
 </template>
 

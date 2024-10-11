@@ -23,7 +23,31 @@ export function useMock(url: string) {
       httpStatusCode: 200
     },
     getUser: {
-      userName: '박세진'
+      id: 'sejin',
+      userName: '박세진',
+      customerNumber: '******4561',
+      customerName: 'AA반도체',
+      // startDate: '2024-10-09',
+      // generatedTraffic: [100, 220],
+      // subscriptionTraffic: [300, 500],
+      // trafficStatus: '임계치 초과',
+      // availability: true,
+      // limitDate: '2024-11209',
+      // note: '연간 신청가능 2회중 0회 신청 완료'
+    },
+    getApply: {
+      id: 'sejin',
+      userName: '박세진',
+      service: '비즈온 Standard',
+      customerNumber: '******4561',
+      customerName: 'AA반도체',
+      startDate: '2024-10-09',
+      generatedTraffic: [100, 220],
+      subscriptionTraffic: [300, 500],
+      trafficStatus: '임계치 초과',
+      availability: true,
+      limitDate: '2024-11209',
+      note: '연간 신청가능 2회중 0회 신청 완료'
     }
   }
   const result = ref()

@@ -1,27 +1,33 @@
 <script lang="ts">
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData } from 'chart.js'
-import { Doughnut } from 'vue-chartjs'
+// import {
+//   Chart as ChartJS,
+//   ArcElement,
+//   Tooltip,
+//   Legend,
+//   ChartData,
+// } from 'chart.js';
+// import { Doughnut } from 'vue-chartjs'
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+// ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default {
   name: 'DoughnutChart',
-  components: { Doughnut },
+  // components: { Doughnut },
   props: {
     chartData: {
       type: Object,
-      required: true
+      required: true,
     },
     chartOptions: {
       type: Object,
-      default: () => { }
-    }
+      default: () => {},
+    },
   },
-}
+};
 </script>
 
 <template>
-  <Doughnut ref="chartRef" :data="(chartData as ChartData<'doughnut', number[], unknown>)" :options="chartOptions" />
+  <!-- <Doughnut ref="chartRef" :data="(chartData as ChartData<'doughnut', number[], unknown>)" :options="chartOptions" /> -->
 </template>
 
 <style scoped>

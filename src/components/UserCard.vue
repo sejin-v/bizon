@@ -1,13 +1,16 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
-  userImage?: string
-  userName: string
-  userAuth: string
-}>(), {
-  userImage: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-  userName: '',
-})
-
+withDefaults(
+  defineProps<{
+    userImage?: string;
+    userName: string;
+    userAuth: string;
+  }>(),
+  {
+    userImage:
+      'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+    userName: '',
+  }
+);
 </script>
 
 <template>
@@ -20,6 +23,4 @@ withDefaults(defineProps<{
   </el-card>
 </template>
 
-<style lang="scss" scoped>
-@import '~/styles/pages/user-service-chat/chat'
-</style>
+<style lang="scss" scoped></style>
