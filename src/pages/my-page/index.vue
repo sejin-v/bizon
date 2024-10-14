@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const router = useRouter()
+const router = useRouter();
 
 const myPageData = [
   {
@@ -26,11 +26,13 @@ const myPageData = [
     },
     status: '미완료',
   },
-]
+];
+
+const pageOption = reactive({});
 
 const goChangePwPage = () => {
-  router.push('my-page/changePw')
-}
+  router.push('my-page/changePw');
+};
 </script>
 
 <template>
@@ -43,28 +45,55 @@ const goChangePwPage = () => {
     </div>
 
     <el-table :data="myPageData" style="width: 100%">
-      <el-table-column prop="date" label="변경 요청 일자" align="center" min-width="150" />
-      <el-table-column prop="before" label="변경 전&#40;다운로드 &#47; 업로드&#41;" align="center" min-width="200">
+      <el-table-column
+        prop="date"
+        label="변경 요청 일자"
+        align="center"
+        min-width="150"
+      />
+      <el-table-column
+        prop="before"
+        label="변경 전&#40;다운로드 &#47; 업로드&#41;"
+        align="center"
+        min-width="200"
+      >
         <template #default="scope">
           <span>{{ scope.row.before.download }}</span
           >&nbsp;&#47;&nbsp;<span>{{ scope.row.before.upload }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="after" label="변경 후&#40;다운로드 &#47; 업로드&#41;" align="center" min-width="200">
+      <el-table-column
+        prop="after"
+        label="변경 후&#40;다운로드 &#47; 업로드&#41;"
+        align="center"
+        min-width="200"
+      >
         <template #default="scope">
           <span class="font-color--pink">{{ scope.row.before.download }}</span
           >&nbsp;&#47;&nbsp;<span>{{ scope.row.before.upload }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="작업 상태" align="center" min-width="150">
+      <el-table-column
+        prop="status"
+        label="작업 상태"
+        align="center"
+        min-width="150"
+      >
         <template #default="scope">
-          <em :class="{ 'font-color--blue': scope.row.status === '미완료' }">{{ scope.row.status }}</em>
+          <em :class="{ 'font-color--blue': scope.row.status === '미완료' }">{{
+            scope.row.status
+          }}</em>
         </template>
       </el-table-column>
     </el-table>
     <div class="relative flex flex-wrap justify-center">
       <Pagination />
-      <a href="javascript:void(0);" class="btn__line--primary-md" @click="goChangePwPage">비밀번호 변경하기</a>
+      <a
+        href="javascript:void(0);"
+        class="btn__line--primary-md"
+        @click="goChangePwPage"
+        >비밀번호 변경하기</a
+      >
     </div>
   </div>
 </template>

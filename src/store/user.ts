@@ -11,7 +11,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
   const initUser = async () => {
     try {
-      const result = await request.get('/mock/api/getUser');
+      const result = await request.get('/mock/api/customer');
       setUser(result.data);
     } catch (e: any) {
       console.error(e);

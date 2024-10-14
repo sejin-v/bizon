@@ -9,5 +9,7 @@ export interface ILoginForm {
   password: string;
 }
 export interface ILoginParams {
-  data: ILoginForm;
+  info1: string;
+  info2: string;
 }
+

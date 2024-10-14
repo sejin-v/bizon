@@ -6,16 +6,16 @@
 // onMounted(() => {
 // log.info('on mounted', router.options.routes)
 // })
-const router = useRouter()
+const router = useRouter();
 
 const moveMainScreen = () => {
-  router.push('/home')
-}
-// moveMainScreen()
+  router.push('/apply');
+};
+moveMainScreen();
 </script>
 
 <template>
-  <div >test</div>
+  <div></div>
 </template>
 
 <!-- <route lang="yaml">

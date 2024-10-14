@@ -51,15 +51,15 @@ const confirmOpen = async (message: string) => {
   } catch (error) {}
 };
 
-const getParams = (): ILoginForm => {
+const getParams = () => {
   return {
-    userId: userId.value,
-    password: password.value,
+    info1: userId.value,
+    info2: password.value,
   };
 };
 
 // 로그인 실행
-const fetchLogin = async (data: ILoginForm) => {
+const fetchLogin = async (data: ILoginParams) => {
   try {
     const result = await request.get('/mock/api/login', { data });
     return result.data;
@@ -70,7 +70,7 @@ const fetchLogin = async (data: ILoginForm) => {
 
 const getUserData = async () => {
   try {
-    const result = await request.get('/mock/api/getUser');
+    const result = await request.get('/mock/api/customer');
     return result.data;
   } catch (e: any) {
     throw e;

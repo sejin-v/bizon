@@ -1,22 +1,32 @@
 <script setup lang="ts">
 interface IMenu {
-  menuId: string
-  menuName: string
+  menuId: string;
+  menuName: string;
 }
+const userStore = useUserStore();
+const router = useRouter();
+const route = useRoute();
+const defaultMenu = ref(route.fullPath);
+console.log(route);
+
 const menuList = ref<IMenu[]>([
   {
-    menuId: 1,
+    menuId: '/apply',
     menuName: '비즈온 증속 신청',
   },
   {
-    menuId: 2,
+    menuId: '/my-page',
     menuName: '마이페이지',
   },
   {
-    menuId: 3,
+    menuId: '/board',
     menuName: '게시판',
   },
-])
+]);
+
+const handleMenuClick = (target: string) => {
+  router.push(target);
+};
 </script>
 
 <template>
@@ -28,15 +38,30 @@ const menuList = ref<IMenu[]>([
       </a>
     </h1>
     <div class="flex items-center">
-      <el-menu mode="horizontal" :ellipsis="false">
-        <el-menu-item v-for="(menu, index) in menuList" :key="`mgmt=menu-list-${menu.menuId}`" :index="String(index)">
+      <el-menu
+        mode="horizontal"
+        :ellipsis="false"
+        :default-active="defaultMenu"
+      >
+        <el-menu-item
+          v-for="(menu, index) in menuList"
+          :key="`mgmt=menu-list-${menu.menuId}`"
+          :index="menu.menuId"
+          @click="handleMenuClick(menu.menuId)"
+        >
           {{ menu.menuName }}
         </el-menu-item>
       </el-menu>
 
       <button type="button" class="header__user">
-        <Icon name="user__full--fff" width="24" height="24" alt="" aria-hidden="true" />
-        <span class="ml-1">홍길동</span>
+        <Icon
+          name="user__full--fff"
+          width="24"
+          height="24"
+          alt=""
+          aria-hidden="true"
+        />
+        <span class="ml-1">{{ userStore.user?.cucoChrrNm }}</span>
       </button>
       <button type="button">
         <icon name="logout__line--181" width="24" height="24" alt="로그아웃" />
