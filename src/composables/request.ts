@@ -52,7 +52,7 @@ service.interceptors.response.use(
     NProgress.done()
     if (response.config.url?.includes('/mock')) {
       const { result } = useMock(response.config.url)
-      if (result.value.status === 400) {
+      if (result.value?.status === 400) {
         throw new Error("error");
       }
       response.data = result.value

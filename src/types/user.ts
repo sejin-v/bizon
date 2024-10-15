@@ -1,9 +1,4 @@
-export interface TUser {
-  id: string
-  userName: string
-  customerNumber?: number
-  customerName?: string
-
+export interface IUser {
   entrNo: string,
   mbrStusCd: string,
   cucoNm: string,
@@ -21,5 +16,27 @@ export interface TUser {
   cucoChrrHpno: string,
   cucoEmalAddr: string,
   lastLoginDttm: string | null,
+}
+
+export interface IServiceData {
+  entrNo: string,
+  trfEvetOccrDttm: string,
+  svcNm: string,
+  cucoNm: string,
+  cntcStrtDt: string,
+  sbscUpldSped: string,
+  sbscDownSped: string,
+  occrTrfUpldSpedVlue: string,
+  occrTrfDownSpedVlue: string,
+  icspRqstDdayDt: string,
+  trfEvetOccrYn: string,
+  rqstAbleYn: string,
+  rqstUnableRsn: string,
+  icspRqstKdCd: string,
+  icspRqstUpldSped: string,
+  icspRqstDownSped: string,
+  bizEmpNm: string,
+  bizEmpHpno: string,
+  bizEmpEmalAddr: string,
 }
 

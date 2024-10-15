@@ -48,6 +48,7 @@
     @include typo(var(--font-size-24), 600, var(--color-gray-800));
     margin-bottom: 24px;
     text-align: center;
+
     &--sm {
       margin-bottom: 16px;
     }

@@ -19,6 +19,7 @@ $textfield-padding: (
     white-space: pre-wrap;
     overflow-wrap: break-word;
 
+
     @if ($type == input) {
       @include truncate;
       height: var(--form-height-md);

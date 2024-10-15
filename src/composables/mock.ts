@@ -45,35 +45,44 @@ export function useMock(url: string) {
       cucoChrrHpno: "01011111111",
       cucoEmalAddr: "abacus@back.d",
       lastLoginDttm: null
-
     },
-    speedup: {
-      "entrNo": "530002522556",					// 가입 번호
-      "trfEvetOccrDttm": "20240924",			// 트래픽 이벤트 발생 일시
-      "svcNm": "Standard",						// 서비스 명
+    standard: {
+      "icspRqstKdCd": "03",						// 증속 신청 유형 코드(1: 다운로드, 2: 업로드, 3: 업다운로드)
+      "icspRqstDownSped": 300,					// 증속 신청 다운로드 속도(MB)
+      "icspRqstUpldSped": 400						// 증속 신청 업로드 속도(MB)
+    },
+    status: {
+      "entrNo": "100000000001",					// 가입 번호
+      "trfEvetOccrDt": "20241014",				// 트래픽 이벤트 발생 일자
+      "svcNm": "Basic",							// 서비스 명(Basic/Standard/Premium)
+      "svcCd": "basic",							// 서비스 코드(basic/standard/premium)
       "cucoNm": "AA반도체",						// 고객사 명
-      "cntcStrtDt": "20240924",					// 서비스 개통 일자
-      "sbscUpldSped": "300000000",				// 청약 트래픽 업로드 속도
-      "sbscDownSped": "500000000",				// 청약 트래픽 다운로드 속도
-      "occrTrfUpldSpedVlue": "300000000",		// 발생 트래픽 업로드 속도값
-      "occrTrfDownSpedVlue": "500000000",		// 발생 트래픽 다운로드 속도값
-      "icspRqstDdayDt": "20241024",				// 증속 신청 기한 일자
-      "trfEvetOccrYn": "Y",						// 트래픽 이벤트 발생 여부(Y: 임계치 초과, N: 정상)
-      "rqstAbleYn": "Y",						// 신청 가능 여부(Y: 가능, N: 불가)
-      "rqstUnableRsn": "5일 기한 초과",			// 신청 불가 사유
-      "icspRqstKdCd": "3",					// 증속 신청 유형 코드(1: 다운로드, 2: 업로드, 3: 업다운로드)
-      "icspRqstUpldSped": "300000000",			// 증속 신청 업로드 속도
-      "icspRqstDownSped": "500000000",			// 증속 신청 다운로드 속도
+      "cntcStrtDt": "20240901",					// 서비스 개통 일자
+      "sbscUpldSped": "200",						// 청약 트래픽 업로드 속도(MB)
+      "sbscDownSped": "100",						// 청약 트래픽 다운로드 속도(MB)
+      "occrTrfUpldSpedVlue": "190",				// 발생 트래픽 업로드 속도값(MB)
+      "occrTrfDownSpedVlue": "190",				// 발생 트래픽 다운로드 속도값(MB)
+      "icspRqstDdayDt": "20241019",				// 증속 신청 기한 일자
+      "rqstAbleYn": "Y",							// 신청 가능 여부(Y: 가능, N: 불가)
+      "rqstUnableRsn": "신청 가능",				// 신청 불가 사유
       "bizEmpNm": "김비즈",						// 영업 담당자 명
-      "bizEmpHpno": "010-8080-1234",			// 영업 담당자 휴대폰번호
-      "bizEmpEmalAddr": "bizon@lguplus.co.kr"	// 영업 담당자 이메일 주소
-
+      "bizEmpHpno": "010-1001-1001",				// 영업 담당자 휴대폰번호
+      "bizEmpEmalAddr": "biz01@lguplus.co.kr",	// 영업 담당자 이메일 주소
+      "trfEvetOccrYn": "Y"						// 트래픽 이벤트 발생 여부(Y: 임계치 초과, N: 정상)
+    },
+    request: {
+      "timestamp": "2024-10-14 16:23:17.035",
+      "statusCode": 201,
+      // status: 400,
+      "code": "20121001",
+      "message": "속도 변경 신청 접수가 완료되었습니다.",
+      "data": null
     }
 
   }
   const result = ref()
 
-  result.value = mockData[url.split('/')[3]]
+  result.value = mockData[url.split('/')[4]]
 
   return {
     result

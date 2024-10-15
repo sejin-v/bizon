@@ -1,149 +1,72 @@
 <script lang="ts" setup>
 import { MODAL_SIZE } from '~/types';
-import { TApplyData } from '~/types';
+import { IApplyData } from '~/types';
 import dayjs from 'dayjs';
+
 const userStore = useUserStore();
-
-// const infoList = reactive([
-//   { label: '서비스', value: '비즈온 Standard', field: 'service', type: 'text' },
-//   {
-//     label: '고객번호',
-//     value: '******4567',
-//     field: 'customerNumber',
-//     type: 'text',
-//   },
-//   { label: '고객사명', value: 'AA반도체', field: 'customerName', type: 'text' },
-//   {
-//     label: '서비스 개통일자',
-//     value: '2023-07-25',
-//     field: 'startDate',
-//     type: 'text',
-//   },
-//   {
-//     label: '청약 트래픽',
-//     value1: '300M',
-//     value2: '500M',
-//     field: 'subscriptionTraffic',
-//     type: 'traffic',
-//   },
-//   {
-//     label: '발생 트래픽',
-//     value1: '300M',
-//     value2: '500M',
-//     field: 'generatedTraffic',
-//     type: 'traffic',
-//   },
-//   {
-//     label: '트래픽 상태',
-//     value: '임계치 초과',
-//     field: 'trafficStatus',
-//     type: 'text',
-//   },
-//   // FIXME :: 가능여부에 따른 클래스입니다. statusClass -  불가: apply__info--fail, 가능: apply__info--success
-//   {
-//     label: '임시증속 신청가능 여부',
-//     value: '불가',
-//     type: 'text',
-//     field: 'availability',
-//     statusClass: 'apply__info--fail',
-//   },
-//   { label: '임시증속 신청하기', field: '', type: 'button' },
-//   { label: '신청기한', value: '2024-05-10', field: 'limitDate', type: 'text' },
-//   {
-//     label: '비고',
-//     value: '불가사유..불가사유...',
-//     field: 'note',
-//     type: 'text',
-//   },
-// ]);
-
-const applyData = ref<TApplyData>({
-  id: '',
-  customerNumber: 0,
-  customerName: '',
-  startDate: '',
-  generatedTraffic: [0, 0],
-  subscriptionTraffic: [0, 0],
-  trafficStatus: '',
-  availability: false,
-  limitDate: '',
-  note: '',
-  service: '',
+const applyData = ref<IApplyData>({
+  entrNo: '',
+  trfEvetOccrDt: '',
+  svcNm: '',
+  svcCd: '',
+  cucoNm: '',
+  cntcStrtDt: '',
+  sbscUpldSped: 0,
+  sbscDownSped: 0,
+  occrTrfUpldSpedVlue: 0,
+  occrTrfDownSpedVlue: 0,
+  icspRqstDdayDt: '',
+  rqstAbleYn: '',
+  rqstUnableRsn: '',
+  bizEmpNm: '',
+  bizEmpHpno: '',
+  bizEmpEmalAddr: '',
+  trfEvetOccrYn: '',
 });
 // 팝업
 const applyPopupShow = ref(false);
-const satisfaction = ref();
 const satisfactionPopupShow = ref(false);
-// const popup: IModalPopup = reactive({
-//   applyPopup: {
-//     show: false,
-//   },
-//   satisfactionPopup: {
-//     show: false,
-//   },
-// });
-// function openModal(modal: string) {
-//   popup[modal].show = true;
-// }
-// function handleCancel(modal: string) {
-//   popup[modal].show = false;
-// }
+const satisfaction = ref();
+const applyIncreaseRef = ref();
 
-// 고객만족도 조사 팝업
-// const questions = reactive([
-//   {
-//     label: '비즈온 증속 서비스를 얼마나 만족하시나요?',
-//     type: 'rating',
-//     score: 0,
-//   },
-//   {
-//     label: '트래픽 초과 알림 방식(문자/이메일)에 대해 얼마나 만족하시나요?',
-//     type: 'rating',
-//     score: 0,
-//   },
-//   {
-//     label: '홈페이지를 통한 증속절차에 얼마나 만족하시나요?',
-//     type: 'rating',
-//     score: 0,
-//   },
-//   {
-//     label:
-//       '증속 체험 후 실제 사용중인 서비스 속도를 변경 신청할 의향이 있으신가요?',
-//     type: 'rating',
-//     score: 0,
-//   },
-//   {
-//     label: '(모바일 사용자 중) 모바일을 통한 서비스 신청에 만족하시나요?',
-//     type: 'rating',
-//     score: 0,
-//   },
-//   {
-//     label:
-//       '더 나은 서비스를 위해 추가적으로 하고 싶은 말씀을 자유롭게 써주시기 바랍니다.',
-//     type: 'textarea',
-//     score: 0,
-//   },
-// ]);
-// const advice = ref('');
-// const score = ref<boolean>(true);
+const confirmOption = reactive({
+  content: '',
+  center: true,
+  closeOnClickModal: true,
+  closeOnPressEscape: true,
+  hideCancelButton: true,
+});
 
-const getApplyData = async () => {
+const geIApplyData = async () => {
   try {
-    const result = await request.get('/mock/api/speedup/status');
-    console.log(result.data);
-    applyData.value = result.data;
+    const result = await request.get('/mock/api/icsp/status');
+    return result.data;
   } catch (error) {
     console.error(error);
   }
+};
+
+const confirmOpen = async (message: string) => {
+  confirmOption.content = message;
+  try {
+    await openConfirm(confirmOption);
+  } catch (error) {}
 };
 
 const handleApplyButton = () => {
   applyPopupShow.value = true;
 };
 
-const handleConfirmApply = () => {
-  applyPopupShow.value = false;
-  satisfactionPopupShow.value = true;
+const handleConfirmApply = async () => {
+  const data = applyIncreaseRef.value.getRequestData();
+  try {
+    const result = await request.get('/mock/api/icsp/request', { data });
+    confirmOpen(result.data.message);
+    applyPopupShow.value = false;
+    satisfactionPopupShow.value = true;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const handleCancelApply = () => {
@@ -152,7 +75,6 @@ const handleCancelApply = () => {
 
 const handleConfirmSatisfaction = () => {
   const result = satisfaction.value.getSatisfactionData();
-  console.log(result);
   satisfactionPopupShow.value = false;
 };
 
@@ -167,8 +89,10 @@ const dateFormatter = (date: string) => {
   return dayjs(date).format('YYYY-MM-DD');
 };
 
-onMounted(() => {
-  getApplyData();
+onMounted(async () => {
+  const result = await geIApplyData();
+  applyData.value = result;
+  userStore.setServiceData(result);
 });
 </script>
 
@@ -197,7 +121,7 @@ onMounted(() => {
         <label>청약 트래픽</label>
         <div class="flex-col !items-start">
           <p class="flex items-center">
-            {{ kbToMb(applyData.sbscUpldSped) }}M
+            {{ applyData.sbscUpldSped }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -207,7 +131,7 @@ onMounted(() => {
             />
           </p>
           <p class="flex items-center">
-            {{ kbToMb(applyData.sbscDownSped) }}M
+            {{ applyData.sbscDownSped }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -222,7 +146,7 @@ onMounted(() => {
         <label>발생 트래픽</label>
         <div class="flex-col !items-start">
           <p class="flex items-center">
-            {{ kbToMb(applyData.occrTrfUpldSpedVlue) }}M
+            {{ applyData.occrTrfUpldSpedVlue }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -232,7 +156,7 @@ onMounted(() => {
             />
           </p>
           <p class="flex items-center">
-            {{ kbToMb(applyData.occrTrfDownSpedVlue) }}M
+            {{ applyData.occrTrfDownSpedVlue }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -333,7 +257,14 @@ onMounted(() => {
       @confirm="handleConfirmApply"
     >
       <template #content>
-        <apply-increase :entrNo="applyData.entrNo" />
+        <apply-increase
+          ref="applyIncreaseRef"
+          :entrNo="applyData.entrNo"
+          :svcCd="applyData.svcCd"
+          :sbscDownSpedVlue="applyData.sbscDownSpedVlue"
+          :sbscUpldSpedVlue="applyData.sbscUpldSpedVlue"
+          :trfEvetOccrDt="applyData.trfEvetOccrDt"
+        />
       </template>
     </common-modal>
 

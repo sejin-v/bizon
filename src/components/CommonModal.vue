@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<IModalProps>(), {
   showClose: true,
   useFooter: true,
 });
+
 const emit = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void;
   (e: 'cancel'): void;
@@ -45,6 +46,7 @@ const calculateModalWidth = computed(() => {
   else return 'var(--modal-width-md)';
 });
 
+
 const cancel = () => {
   emit('cancel');
 };
@@ -63,6 +65,7 @@ const confirm = () => {
     destroy-on-close
     :show-close="showClose"
     :append-to-body="true"
+
     class="popup"
     :class="{ 'detail-popup': desc }"
   >

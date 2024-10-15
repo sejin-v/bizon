@@ -5,6 +5,7 @@
   .el-collapse {
     &-item {
       border-bottom: 1px solid #dddddd !important;
+
       &__header {
         @include typo(var(--font-size-15),500,var(--color-gray-800),18px);
         min-height: 56px;
@@ -42,6 +43,7 @@
           transform: rotate(180deg);
         }
       }
+
     }
   }
 }

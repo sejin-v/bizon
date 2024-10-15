@@ -36,6 +36,7 @@ const isMobile = breakpoints.smaller('mobile');
         v-for="(faq, index) in faqList"
         :key="`faq-list-${faq.id}`"
       >
+
         <template #title>
           <p v-if="!isMobile" class="faq-list__num">
             {{ index + 1 }}
@@ -56,5 +57,6 @@ const isMobile = breakpoints.smaller('mobile');
       v-model="pageData.currentPage"
       :total-count="pageData.totalCount"
     />
+
   </div>
 </template>

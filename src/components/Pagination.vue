@@ -53,6 +53,7 @@ const changeLimit = () => {
 const totalPages = computed(() => {
   return Math.ceil(props.totalCount / props.limit);
 });
+
 </script>
 
 <template>

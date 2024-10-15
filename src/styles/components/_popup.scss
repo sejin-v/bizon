@@ -99,6 +99,7 @@
       overflow-y: auto;
       min-height: 200px;
       max-height: 500px;
+
       padding: 40px 40px 0;
       overscroll-behavior: none;
     }
@@ -128,6 +129,7 @@
       &__header {
         @apply flex-col items-start;
         min-height: fit-content;
+
         padding: 40px 0 10px;
         margin: 0 40px;
         h2 {
@@ -196,6 +198,7 @@
     .el-dialog {
       &__body {
         min-height: 300px;
+
         padding: 24px 16px 0;
       }
       &__footer {

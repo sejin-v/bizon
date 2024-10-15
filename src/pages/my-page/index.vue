@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const router = useRouter();
+const userStore = useUserStore();
 
 const myPageData = [
   {
     date: '2024-05-03',
     before: {
-      download: '200',
+      download: '100',
       upload: '200',
     },
     after: {
@@ -15,20 +16,23 @@ const myPageData = [
     status: '완료',
   },
   {
-    date: '2014-05-03',
+    date: '2014-05-04',
     before: {
       download: '200',
       upload: '200',
     },
     after: {
       download: '200',
-      upload: '200',
+      upload: '250',
     },
     status: '미완료',
   },
 ];
 
-const pageOption = reactive({});
+const pageData = reactive({
+  currentPage: 1,
+  totalCount: 0,
+});
 
 const goChangePwPage = () => {
   router.push('my-page/changePw');
@@ -40,10 +44,9 @@ const goChangePwPage = () => {
     <h2 class="title">마이페이지</h2>
     <div class="title--sm">
       <span>상세정보</span>
-      <span>비즈온</span>
-      <span>고객번호(50000123456)</span>
+      <span>{{ userStore.serviceData?.svcNm }}</span>
+      <span>고객번호({{ userStore.serviceData?.entrNo }})</span>
     </div>
-
     <el-table :data="myPageData" style="width: 100%">
       <el-table-column
         prop="date"
@@ -59,7 +62,8 @@ const goChangePwPage = () => {
       >
         <template #default="scope">
           <span>{{ scope.row.before.download }}</span
-          >&nbsp;&#47;&nbsp;<span>{{ scope.row.before.upload }}</span>
+          >&nbsp;&#47;&nbsp;
+          <span>{{ scope.row.before.upload }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -69,8 +73,19 @@ const goChangePwPage = () => {
         min-width="200"
       >
         <template #default="scope">
-          <span class="font-color--pink">{{ scope.row.before.download }}</span
-          >&nbsp;&#47;&nbsp;<span>{{ scope.row.before.upload }}</span>
+          <span
+            :class="{
+              'font-color--pink':
+                scope.row.after.download !== scope.row.before.download,
+            }"
+            >{{ scope.row.after.download }}</span
+          >&nbsp;&#47;&nbsp;<span
+            :class="{
+              'font-color--pink':
+                scope.row.after.upload !== scope.row.before.upload,
+            }"
+            >{{ scope.row.after.upload }}</span
+          >
         </template>
       </el-table-column>
       <el-table-column
@@ -87,7 +102,10 @@ const goChangePwPage = () => {
       </el-table-column>
     </el-table>
     <div class="relative flex flex-wrap justify-center">
-      <Pagination />
+      <Pagination
+        v-model="pageData.currentPage"
+        :total-count="pageData.totalCount"
+      />
       <a
         href="javascript:void(0);"
         class="btn__line--primary-md"

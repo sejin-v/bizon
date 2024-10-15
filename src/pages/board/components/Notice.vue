@@ -27,6 +27,7 @@ onMounted(async () => {
   const result = await request.get('/mock/api/noticeList');
   console.log('>>>', result);
 });
+
 </script>
 
 <template>
@@ -44,6 +45,7 @@ onMounted(async () => {
         align="center"
         width="60"
       />
+
       <el-table-column label="제목">
         <template #default="scope">
           <p class="font-color--dark-gray">

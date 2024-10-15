@@ -1,8 +1,55 @@
 <script lang="ts" setup>
-withDefaults(defineProps<{ entrNo: string }>(), {
+import { IStandardParameter } from '~/types';
+
+const props = withDefaults(defineProps<IStandardParameter>(), {
   entrNo: '',
+  svcCd: '',
+  sbscDownSpedVlue: '',
+  sbscUpldSpedVlue: '',
+  icspRqstKdCd: '03',
+  trfEvetOccrDt: '',
 });
-onMounted(() => {});
+
+const increaseData = reactive({
+  icspRqstUpldSped: 0,
+  icspRqstDownSped: 0,
+  icspRqstKdCd: '03',
+  trfEvetOccrDt: props.trfEvetOccrDt,
+});
+
+const getStandardData = async (data: IStandardParameter) => {
+  try {
+    const result = await request.get('/mock/api/icsp/standard', { data });
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getParamsData = () => {
+  return {
+    svcCd: props.svcCd, // 서비스 코드(basic: Basic, standard: Standard, premium: Premium)
+    occrTrfDivsCd: '03', // 발생 트래픽 구분 코드(01: 업로드, 02: 다운로드, 03: 업다운로드)
+    sbscDownSpedVlue: props.sbscDownSpedVlue, // 청약 다운로드 속도값(MB)
+    sbscUpldSpedVlue: props.sbscUpldSpedVlue, // 청약 업로드 속도값(MB)
+  };
+};
+
+const getRequestData = () => {
+  return increaseData;
+};
+
+onMounted(async () => {
+  try {
+    const data = getParamsData();
+    const result = await getStandardData(data);
+    increaseData.icspRqstUpldSped = result.icspRqstUpldSped;
+    increaseData.icspRqstDownSped = result.icspRqstDownSped;
+  } catch (error) {
+    console.error(error);
+  }
+});
+defineExpose({ getRequestData });
 </script>
 
 <template>
@@ -21,7 +68,7 @@ onMounted(() => {});
             height="24"
             alt="변경 후"
           />
-          <em>1G</em>
+          <em>{{ increaseData.icspRqstDownSped }}M</em>
         </div>
       </FormItem>
       <FormItem label="업로드">
@@ -33,7 +80,7 @@ onMounted(() => {});
             height="24"
             alt="변경 후"
           />
-          <em>300M</em>
+          <em>{{ increaseData.icspRqstUpldSped }}M</em>
         </div>
       </FormItem>
       <FormItem label="속도 증속기간">
