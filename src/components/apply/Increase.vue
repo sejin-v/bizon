@@ -6,21 +6,23 @@ const props = withDefaults(defineProps<IStandardParameter>(), {
   svcCd: '',
   sbscDownSpedVlue: '',
   sbscUpldSpedVlue: '',
-  icspRqstKdCd: '03',
+  occrTrfDivsCd: '01',
   trfEvetOccrDt: '',
+  icspRqstKdCd: '',
 });
 
 const increaseData = reactive({
-  icspRqstUpldSped: 0,
   icspRqstDownSped: 0,
-  icspRqstKdCd: '03',
+  icspRqstUpldSped: 0,
+  icspRqstKdCd: '',
+  occrTrfDivsCd: props.occrTrfDivsCd,
   trfEvetOccrDt: props.trfEvetOccrDt,
 });
 
-const getStandardData = async (data: IStandardParameter) => {
+const getStandardData = async (params: IStandardParameter) => {
   try {
-    const result = await request.get('/mock/api/icsp/standard', { data });
-    return result.data;
+    const result = await request.get('/bizon/api/icsp/standard', { params });
+    return result.data.data;
   } catch (error) {
     throw error;
   }
@@ -29,14 +31,19 @@ const getStandardData = async (data: IStandardParameter) => {
 const getParamsData = () => {
   return {
     svcCd: props.svcCd, // 서비스 코드(basic: Basic, standard: Standard, premium: Premium)
-    occrTrfDivsCd: '03', // 발생 트래픽 구분 코드(01: 업로드, 02: 다운로드, 03: 업다운로드)
+    occrTrfDivsCd: props.occrTrfDivsCd, // 발생 트래픽 구분 코드(01: 업로드, 02: 다운로드, 03: 업다운로드)
     sbscDownSpedVlue: props.sbscDownSpedVlue, // 청약 다운로드 속도값(MB)
     sbscUpldSpedVlue: props.sbscUpldSpedVlue, // 청약 업로드 속도값(MB)
   };
 };
 
 const getRequestData = () => {
-  return increaseData;
+  return {
+    trfEvetOccrDt: increaseData.trfEvetOccrDt,
+    icspRqstKdCd: increaseData.icspRqstKdCd,
+    icspRqstDownSped: increaseData.icspRqstDownSped,
+    icspRqstUpldSped: increaseData.icspRqstUpldSped,
+  };
 };
 
 onMounted(async () => {
@@ -45,6 +52,7 @@ onMounted(async () => {
     const result = await getStandardData(data);
     increaseData.icspRqstUpldSped = result.icspRqstUpldSped;
     increaseData.icspRqstDownSped = result.icspRqstDownSped;
+    increaseData.icspRqstKdCd = result.icspRqstKdCd;
   } catch (error) {
     console.error(error);
   }
@@ -61,26 +69,38 @@ defineExpose({ getRequestData });
     <form class="form">
       <FormItem label="다운로드">
         <div class="box--f3f">
-          <span>500M</span>
+          <span>{{ props.sbscDownSpedVlue }}M</span>
           <icon
             name="arrow-r__line--7f8"
             width="24"
             height="24"
             alt="변경 후"
           />
-          <em>{{ increaseData.icspRqstDownSped }}M</em>
+          <em
+            >{{
+              increaseData.icspRqstDownSped
+                ? increaseData.icspRqstDownSped
+                : props.sbscDownSpedVlue
+            }}M</em
+          >
         </div>
       </FormItem>
       <FormItem label="업로드">
         <div class="box--f3f">
-          <span>500M</span>
+          <span>{{ props.sbscUpldSpedVlue }}M</span>
           <icon
             name="arrow-r__line--7f8"
             width="24"
             height="24"
             alt="변경 후"
           />
-          <em>{{ increaseData.icspRqstUpldSped }}M</em>
+          <em
+            >{{
+              increaseData.icspRqstUpldSped
+                ? increaseData.icspRqstUpldSped
+                : props.sbscUpldSpedVlue
+            }}M</em
+          >
         </div>
       </FormItem>
       <FormItem label="속도 증속기간">

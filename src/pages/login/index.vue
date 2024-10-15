@@ -61,7 +61,9 @@ const getParams = () => {
 // 로그인 실행
 const fetchLogin = async (data: ILoginParams) => {
   try {
-    const result = await request.get('/api/login', { data });
+    const result = await request.post('/bizon/api/account/login', {
+      ...data,
+    });
     return result.data;
   } catch (e: any) {
     throw e;
@@ -70,7 +72,7 @@ const fetchLogin = async (data: ILoginParams) => {
 
 const getUserData = async () => {
   try {
-    const result = await request.get('/mock/api/customer/customer');
+    const result = await request.get('/bizon/api/customer');
     return result.data;
   } catch (e: any) {
     throw e;
@@ -107,7 +109,7 @@ const handleLogin = async () => {
   try {
     await fetchLogin(params);
     const result = await getUserData();
-    setUser(result);
+    setUser(result.data);
     router.push('/apply');
   } catch (error) {
     console.error(error);

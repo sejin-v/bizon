@@ -1,42 +1,41 @@
 <script setup lang="ts">
+import { IMyPageData } from '~/types';
+
 const router = useRouter();
 const userStore = useUserStore();
 
-const myPageData = [
-  {
-    date: '2024-05-03',
-    before: {
-      download: '100',
-      upload: '200',
-    },
-    after: {
-      download: '200',
-      upload: '200',
-    },
-    status: '완료',
-  },
-  {
-    date: '2014-05-04',
-    before: {
-      download: '200',
-      upload: '200',
-    },
-    after: {
-      download: '200',
-      upload: '250',
-    },
-    status: '미완료',
-  },
-];
+const serviceData = reactive({
+  svcNm: '',
+  entrNo: '',
+});
+const myPageData = ref<IMyPageData[]>([]);
 
 const pageData = reactive({
   currentPage: 1,
   totalCount: 0,
 });
 
+const getMyPageData = async () => {
+  const result = await request.get('/bizon/api/mypage/speed-increase-history', {
+    params: {
+      perPageNum: 10,
+      page: pageData.currentPage,
+    },
+  });
+  return result.data.data;
+};
+
 const goChangePwPage = () => {
   router.push('my-page/changePw');
 };
+
+onMounted(async () => {
+  const result = await getMyPageData();
+  serviceData.entrNo = result.entrNo;
+  serviceData.svcNm = result.svcNm;
+  pageData.totalCount = result.totalCount;
+  myPageData.value = result.myPageSpeedIncreaseHistoryDTOList;
+});
 </script>
 
 <template>
@@ -44,12 +43,12 @@ const goChangePwPage = () => {
     <h2 class="title">마이페이지</h2>
     <div class="title--sm">
       <span>상세정보</span>
-      <span>{{ userStore.serviceData?.svcNm }}</span>
-      <span>고객번호({{ userStore.serviceData?.entrNo }})</span>
+      <span>{{ serviceData.svcNm }}</span>
+      <span>고객번호({{ serviceData.entrNo }})</span>
     </div>
     <el-table :data="myPageData" style="width: 100%">
       <el-table-column
-        prop="date"
+        prop="regDttm"
         label="변경 요청 일자"
         align="center"
         min-width="150"
@@ -61,9 +60,13 @@ const goChangePwPage = () => {
         min-width="200"
       >
         <template #default="scope">
-          <span>{{ scope.row.before.download }}</span
-          >&nbsp;&#47;&nbsp;
-          <span>{{ scope.row.before.upload }}</span>
+          <span>
+            {{ scope.row.sbscDownSpedVlue ? scope.row.sbscDownSpedVlue : 0 }}M
+          </span>
+          &nbsp;&#47;&nbsp;
+          <span>
+            {{ scope.row.sbscUpldSpedVlue ? scope.row.sbscUpldSpedVlue : 0 }}M
+          </span>
         </template>
       </el-table-column>
       <el-table-column
@@ -76,28 +79,33 @@ const goChangePwPage = () => {
           <span
             :class="{
               'font-color--pink':
-                scope.row.after.download !== scope.row.before.download,
+                scope.row.icspRqstDownSped !== scope.row.sbscDownSpedVlue,
             }"
-            >{{ scope.row.after.download }}</span
-          >&nbsp;&#47;&nbsp;<span
+          >
+            {{ scope.row.icspRqstDownSped }}M
+          </span>
+          &nbsp;&#47;&nbsp;
+          <span
             :class="{
               'font-color--pink':
-                scope.row.after.upload !== scope.row.before.upload,
+                scope.row.icspRqstUpldSped !== scope.row.sbscUpldSpedVlue,
             }"
-            >{{ scope.row.after.upload }}</span
           >
+            {{ scope.row.icspRqstUpldSped }}M
+          </span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="status"
+        prop="taskStatus"
         label="작업 상태"
         align="center"
         min-width="150"
       >
         <template #default="scope">
-          <em :class="{ 'font-color--blue': scope.row.status === '미완료' }">{{
-            scope.row.status
-          }}</em>
+          <em
+            :class="{ 'font-color--blue': scope.row.taskStatus === '미완료' }"
+            >{{ scope.row.taskStatus }}</em
+          >
         </template>
       </el-table-column>
     </el-table>

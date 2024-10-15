@@ -11,8 +11,8 @@ const applyData = ref<IApplyData>({
   svcCd: '',
   cucoNm: '',
   cntcStrtDt: '',
-  sbscUpldSped: 0,
-  sbscDownSped: 0,
+  sbscUpldSped: '',
+  sbscDownSped: '',
   occrTrfUpldSpedVlue: 0,
   occrTrfDownSpedVlue: 0,
   icspRqstDdayDt: '',
@@ -37,10 +37,10 @@ const confirmOption = reactive({
   hideCancelButton: true,
 });
 
-const geIApplyData = async () => {
+const getApplyData = async () => {
   try {
-    const result = await request.get('/mock/api/icsp/status');
-    return result.data;
+    const result = await request.get('/bizon/api/icsp/status');
+    return result.data.data;
   } catch (error) {
     console.error(error);
   }
@@ -60,10 +60,11 @@ const handleApplyButton = () => {
 const handleConfirmApply = async () => {
   const data = applyIncreaseRef.value.getRequestData();
   try {
-    const result = await request.get('/mock/api/icsp/request', { data });
+    const result = await request.post('/bizon/api/icsp/request', { ...data });
+    console.log('>>', result);
     confirmOpen(result.data.message);
     applyPopupShow.value = false;
-    satisfactionPopupShow.value = true;
+    // satisfactionPopupShow.value = true;
   } catch (error) {
     console.error(error);
   }
@@ -90,9 +91,8 @@ const dateFormatter = (date: string) => {
 };
 
 onMounted(async () => {
-  const result = await geIApplyData();
+  const result = await getApplyData();
   applyData.value = result;
-  userStore.setServiceData(result);
 });
 </script>
 
@@ -195,6 +195,9 @@ onMounted(async () => {
             @click="handleApplyButton"
           >
             신청하기
+            <!--
+            
+             -->
           </button>
         </div>
       </li>
@@ -261,9 +264,10 @@ onMounted(async () => {
           ref="applyIncreaseRef"
           :entrNo="applyData.entrNo"
           :svcCd="applyData.svcCd"
-          :sbscDownSpedVlue="applyData.sbscDownSpedVlue"
-          :sbscUpldSpedVlue="applyData.sbscUpldSpedVlue"
+          :sbscDownSpedVlue="applyData.sbscDownSped"
+          :sbscUpldSpedVlue="applyData.sbscUpldSped"
           :trfEvetOccrDt="applyData.trfEvetOccrDt"
+          :occrTrfDivsCd="applyData.occrTrfDivsCd"
         />
       </template>
     </common-modal>

@@ -6,8 +6,8 @@ export interface IApplyData {
   svcCd: string
   cucoNm: string
   cntcStrtDt: string
-  sbscUpldSped: number
-  sbscDownSped: number
+  sbscUpldSped: string
+  sbscDownSped: string
   occrTrfUpldSpedVlue: number
   occrTrfDownSpedVlue: number
   icspRqstDdayDt: string
@@ -29,10 +29,11 @@ export interface IStandardData {
 export interface IStandardParameter {
   entrNo?: string
   svcCd: string
-  sbscDownSpedVlue: string
-  sbscUpldSpedVlue: string
-  icspRqstKdCd?: string
+  sbscDownSpedVlue: string | null
+  sbscUpldSpedVlue: string | null
+  occrTrfDivsCd?: string
   trfEvetOccrDt?: string
+  icspRqstKdCd?: string
 }
 
 

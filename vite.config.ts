@@ -49,10 +49,10 @@ export default defineConfig({
     port: 8080,
     open: true,
     proxy: {
-      // '/api': {
-      // target: 'https://sc-ixistudio.temp-sp.violet.uplus.co.kr/',
-      // changeOrigin: true,
-      // },
+      '/bizon/api': {
+        target: 'http://52.78.21.225',
+        changeOrigin: true,
+      },
 
     },
   },

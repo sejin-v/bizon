@@ -58,6 +58,12 @@ service.interceptors.response.use(
       response.data = result.value
       return response
     }
+
+    if (response.data.code.substr(0, 2) !== '20') {
+      return Promise.reject(response.data)
+    }
+
+
     return response
   },
 

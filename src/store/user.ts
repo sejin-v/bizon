@@ -10,19 +10,13 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
-  const serviceData = shallowRef<IServiceData | null>()
-  const setServiceData = (service: IServiceData) => {
-    serviceData.value = {
-      ...service
-    }
-  }
 
   const initUser = async () => {
     try {
-      const result = await request.get('/mock/api/customer');
-      const serviceData = await request.get('/mock/api/speedup/status');
-      setUser(result.data);
-      setServiceData(serviceData.data)
+      const result = await request.get('/bizon/api/customer');
+      // const serviceData = await request.get('/bizon/api/speedup/status');
+      setUser(result.data.data);
+      // setServiceData(serviceData.data)
     } catch (e: any) {
       console.error(e);
     }
@@ -34,8 +28,6 @@ export const useUserStore = defineStore('userStore', () => {
   return {
     setUser,
     user,
-    setServiceData,
-    serviceData,
     logout,
     initUser
   }

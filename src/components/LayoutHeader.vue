@@ -49,7 +49,6 @@ const handleMenuClick = (target: string) => {
           :index="menu.menuId"
           @click="handleMenuClick(menu.menuId)"
         >
-
           {{ menu.menuName }}
         </el-menu-item>
       </el-menu>
@@ -63,7 +62,6 @@ const handleMenuClick = (target: string) => {
           aria-hidden="true"
         />
         <span class="ml-1">{{ userStore.user?.cucoChrrNm }}</span>
-
       </button>
       <button type="button">
         <icon name="logout__line--181" width="24" height="24" alt="로그아웃" />
