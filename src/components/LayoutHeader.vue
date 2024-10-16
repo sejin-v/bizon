@@ -27,6 +27,15 @@ const menuList = ref<IMenu[]>([
 const handleMenuClick = (target: string) => {
   router.push(target);
 };
+
+const handleLogout = () => {
+  try {
+    request.post('/bizon/api/account/logout');
+    router.push('/login');
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <template>
@@ -63,7 +72,7 @@ const handleMenuClick = (target: string) => {
         />
         <span class="ml-1">{{ userStore.user?.cucoChrrNm }}</span>
       </button>
-      <button type="button">
+      <button type="button" @click="handleLogout">
         <icon name="logout__line--181" width="24" height="24" alt="로그아웃" />
       </button>
     </div>

@@ -22,7 +22,6 @@ declare module 'axios' {
 }
 
 const baseUrl: string = import.meta.env.VITE_API_CONTEXT_PATH
-
 const service = axios.create({
   baseURL: baseUrl,
   headers: {
@@ -59,6 +58,12 @@ service.interceptors.response.use(
       return response
     }
 
+
+    const { router } = useRouterStore()
+    if (response.data.statusCode === 401) {
+      router.push('/login')
+      return
+    }
     if (response.data.code.substr(0, 2) !== '20') {
       return Promise.reject(response.data)
     }
