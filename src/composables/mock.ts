@@ -77,7 +77,38 @@ export function useMock(url: string) {
       "code": "20121001",
       "message": "속도 변경 신청 접수가 완료되었습니다.",
       "data": null
-    }
+    },
+    items:
+      [{
+        "evalQstnNo": 1,
+        "evalQstnMtchYn": "Y",
+        "evalQstnCntn": "비즈온 증속 서비스를 얼마나 만족하시나요?"
+      },
+      {
+        "evalQstnNo": 2,
+        "evalQstnMtchYn": "Y",
+        "evalQstnCntn": "트래픽 초과 알림 방식(문자/이메일)에 대해 얼마나 만족하시나요?"
+      },
+      {
+        "evalQstnNo": 3,
+        "evalQstnMtchYn": "Y",
+        "evalQstnCntn": "홈페이지를 통한 증속절차에 얼마나 만족하시나요?"
+      },
+      {
+        "evalQstnNo": 4,
+        "evalQstnMtchYn": "Y",
+        "evalQstnCntn": "증속 체험 후 실제 사용중인 서비스 속도를 변경 신청할 의향이 있으신가요?"
+      },
+      {
+        "evalQstnNo": 5,
+        "evalQstnMtchYn": "Y",
+        "evalQstnCntn": "(모바일 사용자 중) 모바일을 통한 서비스 신청에 만족하시나요?"
+      },
+      {
+        "evalQstnNo": 6,
+        "evalQstnMtchYn": "N",
+        "evalQstnCntn": "더 나은 서비스를 위해 추가적으로 하고 싶은 말씀을 자유롭게 써주시기 바랍니다. (선택)"
+      }]
 
   }
   const result = ref()

@@ -3,7 +3,6 @@ import { MODAL_SIZE } from '~/types';
 import { IApplyData } from '~/types';
 import dayjs from 'dayjs';
 
-const userStore = useUserStore();
 const applyData = ref<IApplyData>({
   entrNo: '',
   trfEvetOccrDt: '',
@@ -26,7 +25,7 @@ const applyData = ref<IApplyData>({
 // 팝업
 const applyPopupShow = ref(false);
 const satisfactionPopupShow = ref(false);
-const satisfaction = ref();
+const satisfactionRef = ref();
 const applyIncreaseRef = ref();
 
 const confirmOption = reactive({
@@ -61,10 +60,11 @@ const handleConfirmApply = async () => {
   const data = applyIncreaseRef.value.getRequestData();
   try {
     const result = await request.post('/bizon/api/icsp/request', { ...data });
-    console.log('>>', result);
-    confirmOpen(result.data.message);
+    await confirmOpen(result.data.message);
     applyPopupShow.value = false;
-    // satisfactionPopupShow.value = true;
+    const test = await getApplyData();
+    applyData.value = test;
+    satisfactionPopupShow.value = true;
   } catch (error) {
     console.error(error);
   }
@@ -75,8 +75,20 @@ const handleCancelApply = () => {
 };
 
 const handleConfirmSatisfaction = () => {
-  const result = satisfaction.value.getSatisfactionData();
-  satisfactionPopupShow.value = false;
+  const result = satisfactionRef.value.getSatisfactionData();
+  const data = {
+    trfEvetOccrDt: applyData.value.trfEvetOccrDt, // 트래픽 이벤트 발생 일자
+    satisfactionEvaluationResultList: [
+      // 만족도 평가 결과 목록
+      ...result.data,
+    ],
+  };
+  try {
+    request.post('/bizon/api/survey/submit', data);
+    satisfactionPopupShow.value = false;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const handleCancelSatisfaction = () => {
@@ -100,6 +112,7 @@ onMounted(async () => {
   <div class="box--fff apply">
     <h2 class="title">비즈온 증속 신청</h2>
     <p class="title--sm">상세정보</p>
+
     <ul class="apply__info">
       <li>
         <label>서비스</label>
@@ -195,9 +208,6 @@ onMounted(async () => {
             @click="handleApplyButton"
           >
             신청하기
-            <!--
-            
-             -->
           </button>
         </div>
       </li>
@@ -284,7 +294,7 @@ onMounted(async () => {
       @confirm="handleConfirmSatisfaction"
     >
       <template #content>
-        <apply-satisfaction ref="satisfaction" />
+        <apply-satisfaction ref="satisfactionRef" />
       </template>
     </common-modal>
   </div>

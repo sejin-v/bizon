@@ -37,3 +37,11 @@ export interface IStandardParameter {
 }
 
 
+
+export interface IQuestionData {
+  evalQstnCntn: string;
+  evalQstnMtchYn: string;
+  evalQstnNo: number;
+  score: number;
+  evalAnsr: string;
+}

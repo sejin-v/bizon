@@ -2,8 +2,6 @@
 import { IMyPageData } from '~/types';
 
 const router = useRouter();
-const userStore = useUserStore();
-
 const serviceData = reactive({
   svcNm: '',
   entrNo: '',
