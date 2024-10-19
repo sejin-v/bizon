@@ -1,17 +1,31 @@
 .my-page {
-  .btn__line--primary-md {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  &__table-footer {
+    @apply flex flex-wrap justify-end;
+    position: relative;
+    .pagination {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .btn__line--primary-md {
+      margin-top: 25px;
+    }
   }
+  
 }
 
 @include breakpoint(laptop) {
   .my-page {
-    .btn__line--primary-md {
-      position: relative;
-      margin-top: 24px;
+    &__table-footer {
+      @apply flex-col items-center justify-center;
+      .pagination{
+        position: unset;
+        transform: unset;
+      }
+      .btn__line--primary-md {
+        margin-top: 24px;
+      }
     }
   }
-
 }
