@@ -2,10 +2,11 @@ import { defineStore } from 'pinia'
 
 export const useRouterStore = defineStore('commonStore', () => {
   const router = useRouter()
+  const route = useRoute()
 
 
   return {
-    router,
+    router, route
   }
 })
 

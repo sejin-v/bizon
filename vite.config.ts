@@ -50,7 +50,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/bizon/api': {
-        target: 'http://52.78.21.225',
+        target: 'http://15.197.162.87/',
         changeOrigin: true,
       },
 

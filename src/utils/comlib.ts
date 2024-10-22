@@ -16,6 +16,8 @@
 //   }
 // }
 
+import dayjs from "dayjs"
+
 export function scriptLoader(url: string, key: string) {
   return new Promise<void>((resolve, reject) => {
     // const existing = document.querySelector('script#someUniqueId')
@@ -511,4 +513,14 @@ export function enumToArr<T>(e: T): T[keyof T][] {
   }
 
   return enumItems
+}
+
+
+export function dateFormatter(date: string) {
+  return dayjs(date).format('YYYY-MM-DD');
+};
+
+export function isLoginError(code: string) {
+  const errorCodeData = ['40001006', '42301005', '42301007', '50001002', '50001003', '50001004',]
+  return errorCodeData.includes(code)
 }

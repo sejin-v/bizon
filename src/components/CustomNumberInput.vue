@@ -2,7 +2,7 @@
 import type { IInputProps } from '~/types/custom-input';
 
 const props = withDefaults(defineProps<IInputProps>(), {
-  modelValue: '',
+  value: '',
   type: 'text',
   width: '100%',
   maxLength: '',
@@ -19,12 +19,12 @@ const props = withDefaults(defineProps<IInputProps>(), {
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number | undefined): void;
+  // (e: 'update:modelValue', value: string | number | undefined): void;
+  (e: 'update', value: string | number | undefined): void;
   (e: 'update:validMessage', value: string | number | undefined): void;
   (e: 'blur'): void;
   (e: 'keyupEnter'): void;
   (e: 'focus'): void;
-  (e: 'endTimer'): void;
 }>();
 const inputModelValueRef = ref<HTMLInputElement | null>(null);
 const showingPassword = ref<boolean>(false);
@@ -39,18 +39,13 @@ const getInputType = computed(() => {
 
 const getInputValue = (e: Event) => {
   const event = e.target as HTMLInputElement;
-  let formatValue: string | number = event.value;
-  if (props.type === 'number') formatValue = onlyNumbers(event.value);
+  event.value = event.value.replace(/[^0-9]/g, '');
+  emit('update', event.value.replace(/[^0-9]/g, ''));
 
-  if (props.type === 'number' && props.useComma)
-    formatValue = convertThousandComma(event.value);
-
-  emit('update:modelValue', formatValue);
   emit('update:validMessage', '');
 };
 
 const clearInput = () => {
-  emit('update:modelValue', '');
   emit('update:validMessage', '');
   inputModelValueRef.value?.focus();
 };
@@ -67,37 +62,9 @@ const focusInput = () => {
   inputModelValueRef.value?.focus();
 };
 
-const timer = ref(10);
-const timerText = computed(() => {
-  const minutes = Math.floor(timer.value / 60);
-  const seconds = timer.value % 60;
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-});
-
 defineExpose({
   focusInput,
 });
-
-watch(
-  () => props.useTimer,
-  (target) => {
-    if (target) {
-      timer.value = 10;
-      const intervalId = setInterval(() => {
-        if (timer.value > 0) {
-          timer.value -= 1;
-          if (timer.value === 0) {
-          }
-        } else {
-          nextTick(() => {
-            clearInterval(intervalId);
-            emit('endTimer');
-          });
-        }
-      }, 1000);
-    }
-  }
-);
 </script>
 
 <template>
@@ -109,7 +76,7 @@ watch(
 
       <input
         ref="inputModelValueRef"
-        :value="modelValue"
+        :value="props.value"
         :type="getInputType"
         :readonly="props.readonly"
         :disabled="props.disabled"
@@ -119,7 +86,7 @@ watch(
           'is-error': props.validMessage,
           '!pr-11': props.useDelete || props.validMessage || props.useTimer,
         }"
-        :title="modelValue?.toLocaleString() ?? ''"
+        :title="props.value?.toLocaleString() ?? ''"
         @blur="emit('blur')"
         @focus="emit('focus')"
         @input="getInputValue"
@@ -129,7 +96,7 @@ watch(
       <button
         v-if="
           props.useDelete &&
-          modelValue &&
+          props.value &&
           !props.useCount &&
           !props.disabled &&
           !props.readonly
@@ -179,7 +146,7 @@ watch(
       </button>
 
       <!-- FIXME :: 인증하기에 사용될 타이머 영역입니다. -->
-      <p v-if="props.useTimer" class="custom-input__time">{{ timerText }}</p>
+      <p v-if="props.useTimer" class="custom-input__time">4:59</p>
 
       <!-- <div v-if="props.useCount && props.maxLength">
         <em>{{ props.modelValue.toString().length }}</em>/<span>{{ props.maxLength }}</span>

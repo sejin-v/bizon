@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import { KEY_SAVED_ID, KEY_SEAVED_ID_YN } from '~/config';
-import { IToastType, MODAL_SIZE, ILoginForm, ILoginParams } from '~/types';
+import { KEY_SAVED_ID } from '~/config';
+import { IToastType, MODAL_SIZE, ILoginParams } from '~/types';
 
 const router = useRouter();
 const { setUser } = useUserStore();
 
-// const loginForm = reactive<ILoginForm>({
-//   email: '',
-//   password: '',
-// });
-
 const userId = ref('');
 const password = ref('');
-const rememberId = ref('N');
+const rememberId = ref(false);
 const guidePopupShow = ref(false);
-const savedUserIdYn = ref('N');
 
 const confirmOption = reactive({
   content: '',
@@ -26,16 +20,9 @@ const confirmOption = reactive({
 
 // 아이디 기억하기 여부에 따른 아이디 값 초기 셋팅
 const checkRemeberLoginData = () => {
-  const isSavedUserId = localStorage.getItem(KEY_SEAVED_ID_YN);
-  if (isSavedUserId) {
-    const savedUserId = localStorage.getItem(KEY_SAVED_ID);
-
-    if (!savedUserId) {
-      return;
-    }
-
-    savedUserIdYn.value = isSavedUserId;
-    // loginForm.email = savedUserId;
+  if (localStorage.getItem(KEY_SAVED_ID)) {
+    userId.value = localStorage.getItem(KEY_SAVED_ID) ?? '';
+    rememberId.value = true;
   }
 };
 
@@ -66,6 +53,78 @@ const fetchLogin = async (data: ILoginParams) => {
     });
     return result.data;
   } catch (e: any) {
+    const option: any = {
+      content: '',
+      center: true,
+      closeOnClickModal: true,
+      closeOnPressEscape: true,
+      hideCancelButton: false,
+      confirmButtonText: '예',
+      cancelButtonText: '아니오',
+    };
+    if (e.code === '20001004') {
+      router.push('login/changePw');
+      return;
+    }
+    if (e.code === '40901008') {
+      option.content = h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '현재 다른 pc에서 로그인 중입니다'
+        ),
+        h('div', { style: 'text-align: center;' }, '강제 로그아웃하고'),
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '현재PC에서 로그인 하시겠습니까?'
+        ),
+      ]);
+      try {
+        await openConfirm(option);
+        request.post('/bizon/api/account/login/duplicate-next');
+      } catch (error) {}
+    } else if (e.code === '20001005') {
+      option.confirmButtonText = '지금 변경하기';
+      option.cancelButtonText = '3개월후 변경하기';
+      option.content = h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '3개월간 비밀번호를 변경하지 않으셨습니다.'
+        ),
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '개인정보 보호를 위해 비밀번호를 변경해 주십시오.'
+        ),
+      ]);
+      try {
+        await openConfirm(option);
+        router.push('login/changePw');
+      } catch (error) {
+        request.post('/bizon/api/account/login/password-remind-next');
+      }
+    } else if (e.code === '42301005') {
+      option.content = h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '로그인을 5회 실패하셨습니다.'
+        ),
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '개인정보보호를 위해 비밀 번호를'
+        ),
+        h('div', { style: 'text-align: center;' }, '변경해 주십시오'),
+      ]);
+      await confirmOpen(option.content);
+      return;
+    }
+    if (isLoginError(e.code)) {
+      confirmOpen(e.message);
+    }
     throw e;
   }
 };
@@ -78,29 +137,11 @@ const getUserData = async () => {
     throw e;
   }
 };
-// 로그인 실패 시 입력 영역 초기화
-const resetForm = () => {
-  // if (
-  //   localStorage.getItem(KEY_SAVED_ID) &&
-  //   localStorage.getItem(KEY_SEAVED_ID_YN) === 'Y'
-  // ) {
-  //   loginForm.email = localStorage.getItem(KEY_SAVED_ID) ?? '';
-  //   savedUserIdYn.value = localStorage.getItem(KEY_SEAVED_ID_YN) ?? 'Y';
-  // } else {
-  //   loginForm.email = '';
-  //   savedUserIdYn.value = 'N';
-  // }
-  // loginForm.password = '';
-};
 
 // 로그인 버튼 클릭
 const handleLogin = async () => {
   if (!validateLogin()) {
     confirmOpen('아이디 또는 비밀번호를 입력하세요.');
-    // confirmOption.content = '아이디 또는 비밀번호를 입력하세요.';
-    // try {
-    //   await openConfirm(confirmOption);
-    // } catch (error) {}
     return;
   }
 
@@ -110,8 +151,12 @@ const handleLogin = async () => {
     await fetchLogin(params);
     const result = await getUserData();
     setUser(result.data);
+    if (rememberId) {
+      console.log('??', rememberId);
+      localStorage.setItem(KEY_SAVED_ID, userId.value);
+    }
     router.push('/apply');
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
   }
   //   if (typeof response === 'string') {
@@ -158,10 +203,6 @@ const handleAgreeBtnClick = () => {
   router.push('/mgmt/project');
 };
 
-onMounted(() => {
-  checkRemeberLoginData();
-});
-
 function openModal() {
   guidePopupShow.value = true;
 }
@@ -169,9 +210,13 @@ function handleCancel() {
   guidePopupShow.value = false;
 }
 
-const gofindPwPage = () => {
+const handleFindPwPage = () => {
   router.push('login/findPw');
 };
+
+onMounted(() => {
+  checkRemeberLoginData();
+});
 
 // const popup = reactive({
 //   show: false,
@@ -219,10 +264,8 @@ const gofindPwPage = () => {
             @keyup.enter="handleLogin"
           />
           <div class="flex items-center justify-between">
-            <el-checkbox v-model="rememberId" true-value="Y" false-value="N">
-              아이디 기억하기
-            </el-checkbox>
-            <a href="javascript:void(0);" @click="gofindPwPage"
+            <el-checkbox v-model="rememberId"> 아이디 기억하기 </el-checkbox>
+            <a href="javascript:void(0);" @click="handleFindPwPage"
               >비밀번호 찾기</a
             >
           </div>

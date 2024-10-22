@@ -1,4 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const route = useRoute();
+
+const isChangePasswordPage = computed(() => {
+  return route.fullPath === '/login/changePw';
+});
+</script>
 
 <template>
   <main class="layout layout--login">
@@ -9,6 +15,9 @@
           <span>비즈온 증속 신청</span>
         </a>
       </h1>
+      <button type="button" v-if="isChangePasswordPage">
+        <span class="ml-1">로그인</span>
+      </button>
     </header>
     <div class="containers">
       <div class="content">

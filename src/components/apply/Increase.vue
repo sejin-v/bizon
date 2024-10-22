@@ -43,6 +43,7 @@ const getRequestData = () => {
     icspRqstKdCd: increaseData.icspRqstKdCd,
     icspRqstDownSped: increaseData.icspRqstDownSped,
     icspRqstUpldSped: increaseData.icspRqstUpldSped,
+    occrTrfDivsCd: props.occrTrfDivsCd,
   };
 };
 

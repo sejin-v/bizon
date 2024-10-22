@@ -12,4 +12,3 @@ export interface ILoginParams {
   info1: string;
   info2: string;
 }
-

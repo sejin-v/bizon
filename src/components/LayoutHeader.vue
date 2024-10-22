@@ -7,7 +7,6 @@ const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const defaultMenu = ref(route.fullPath);
-console.log(route);
 
 const menuList = ref<IMenu[]>([
   {

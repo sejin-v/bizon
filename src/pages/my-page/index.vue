@@ -107,7 +107,7 @@ onMounted(async () => {
         </template>
       </el-table-column>
     </el-table>
-    <div class="relative flex flex-wrap justify-center">
+    <div class="relative flex flex-wrap justify-end mt-10">
       <Pagination
         v-model="pageData.currentPage"
         :total-count="pageData.totalCount"

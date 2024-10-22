@@ -1,18 +1,5 @@
 <script setup lang="ts">
-const faqList = [
-  {
-    id: 1,
-    title: '최대이십글최대이십글최대이십글자최대이십글자',
-    date: '2024-09-09',
-    content: '내용',
-  },
-  {
-    id: 2,
-    title: '증속서비스에 관한 규정안내',
-    date: '2024-09-09',
-    content: '안녕',
-  },
-];
+const faqList = ref();
 const pageData = reactive({
   currentPage: 1,
   totalCount: 0,
@@ -22,6 +9,32 @@ const breakpoints = useBreakpoints({
   mobile: 480,
 });
 const isMobile = breakpoints.smaller('mobile');
+
+const getParams = () => {
+  return {
+    atclKdCd: 'FAQ',
+    page: pageData.currentPage,
+    perPageNum: 10,
+  };
+};
+
+const getFaqList = async (params) => {
+  const result = await request.get('/bizon/api/board/list', {
+    params,
+  });
+  return result.data.data;
+};
+
+const handleSearch = async () => {
+  const params = getParams();
+  const result = await getFaqList(params);
+  faqList.value = result.articleList;
+  pageData.totalCount = result.totalCount;
+};
+
+onMounted(async () => {
+  handleSearch();
+});
 </script>
 
 <template>
@@ -32,31 +45,26 @@ const isMobile = breakpoints.smaller('mobile');
       <p>등록일</p>
     </div>
     <el-collapse>
-      <el-collapse-item
-        v-for="(faq, index) in faqList"
-        :key="`faq-list-${faq.id}`"
-      >
-
+      <el-collapse-item v-for="faq in faqList" :key="`faq-list-${faq.atclSno}`">
         <template #title>
           <p v-if="!isMobile" class="faq-list__num">
-            {{ index + 1 }}
+            {{ faq.rowNum }}
           </p>
           <div class="faq-list__title-wrap">
             <p class="faq-list__title">
-              {{ faq.title }}
+              {{ faq.atclTit }}
             </p>
             <p class="faq-list__date">
-              {{ faq.date }}
+              {{ dateFormatter(faq.regDt) }}
             </p>
           </div>
         </template>
-        <div>{{ faq.content }}</div>
+        <div>{{ faq.atclCntn }}</div>
       </el-collapse-item>
     </el-collapse>
     <Pagination
       v-model="pageData.currentPage"
       :total-count="pageData.totalCount"
     />
-
   </div>
 </template>

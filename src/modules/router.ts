@@ -4,7 +4,8 @@ export const install: UserModule = async ({ router }) => {
 
   const userSotre = useUserStore()
   router.beforeResolve(async (to, from, next) => {
-    if (!userSotre.user) userSotre.initUser()
+
+    if (!to.fullPath.includes('/login') && !userSotre.user) userSotre.initUser()
     // >>> setup >>>
     //   const userStore = useUserStore()
     //   if (to.fullPath === '/mgmt/user-mgmt' && !useUserStore().user?.isSuperuser) {

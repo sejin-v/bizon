@@ -1,11 +1,10 @@
 <script lang="ts" setup>
+const router = useRouter();
 const password = ref('');
 const confirmPassword = ref('');
 
 const passwordError = ref('');
 const confirmPasswordError = ref('');
-
-const router = useRouter();
 
 const handleChangePassword = async () => {
   if (!password.value) return;
@@ -35,7 +34,7 @@ const handleChangePassword = async () => {
 };
 
 const handleCancelButton = () => {
-  router.push('/my-page');
+  router.push('/login');
 };
 </script>
 
@@ -162,6 +161,8 @@ const handleCancelButton = () => {
 <style lang="scss"></style>
 
 <route lang="yaml">
-name: change-pw
+name: change-pw-login
 meta:
+  isPublicPath: true
+  layout: login
 </route>

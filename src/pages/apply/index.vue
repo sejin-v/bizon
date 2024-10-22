@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { MODAL_SIZE } from '~/types';
 import { IApplyData } from '~/types';
-import dayjs from 'dayjs';
 
 const applyData = ref<IApplyData>({
   entrNo: '',
@@ -65,8 +64,15 @@ const handleConfirmApply = async () => {
     const test = await getApplyData();
     applyData.value = test;
     satisfactionPopupShow.value = true;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    await openConfirm({
+      content: error.message,
+      center: true,
+      closeOnClickModal: true,
+      closeOnPressEscape: true,
+      hideCancelButton: true,
+    });
   }
 };
 
@@ -74,20 +80,28 @@ const handleCancelApply = () => {
   applyPopupShow.value = false;
 };
 
-const handleConfirmSatisfaction = () => {
+const handleConfirmSatisfaction = async () => {
   const result = satisfactionRef.value.getSatisfactionData();
   const data = {
     trfEvetOccrDt: applyData.value.trfEvetOccrDt, // 트래픽 이벤트 발생 일자
+    occrTrfDivsCd: applyData.value.occrTrfDivsCd,
     satisfactionEvaluationResultList: [
       // 만족도 평가 결과 목록
       ...result.data,
     ],
   };
   try {
-    request.post('/bizon/api/survey/submit', data);
+    await request.post('/bizon/api/survey/submit', data);
     satisfactionPopupShow.value = false;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    openConfirm({
+      content: error.message,
+      center: true,
+      closeOnClickModal: true,
+      closeOnPressEscape: true,
+      hideCancelButton: true,
+    });
   }
 };
 
@@ -98,12 +112,10 @@ const kbToMb = (kb: number) => {
   return Math.floor(kb / 1024 / 1024);
 };
 
-const dateFormatter = (date: string) => {
-  return dayjs(date).format('YYYY-MM-DD');
-};
-
 onMounted(async () => {
   const result = await getApplyData();
+  console.log(result);
+
   applyData.value = result;
 });
 </script>
@@ -112,7 +124,6 @@ onMounted(async () => {
   <div class="box--fff apply">
     <h2 class="title">비즈온 증속 신청</h2>
     <p class="title--sm">상세정보</p>
-
     <ul class="apply__info">
       <li>
         <label>서비스</label>

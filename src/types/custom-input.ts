@@ -1,5 +1,5 @@
 export interface IInputProps {
-  modelValue: string | number | undefined
+  modelValue?: string | number | undefined
   type?: 'text' | 'number' | 'password'
   width?: string
   maxLength?: string
@@ -13,4 +13,5 @@ export interface IInputProps {
   useCount?: boolean
   useDelete?: boolean
   useTimer?: boolean
+  value?: string
 }
