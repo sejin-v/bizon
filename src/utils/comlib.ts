@@ -17,7 +17,6 @@
 // }
 
 import dayjs from "dayjs"
-
 export function scriptLoader(url: string, key: string) {
   return new Promise<void>((resolve, reject) => {
     // const existing = document.querySelector('script#someUniqueId')
@@ -521,6 +520,72 @@ export function dateFormatter(date: string) {
 };
 
 export function isLoginError(code: string) {
-  const errorCodeData = ['40001006', '42301005', '42301007', '50001002', '50001003', '50001004',]
+  const errorCodeData = ['40401003', '40001006', '42301005', '42301007', '50001002', '50001003', '50001004',]
   return errorCodeData.includes(code)
 }
+
+export function getErrorMessage(code: string) {
+  const router = useRouter()
+  const userError = ['40001004', '40001005', '40001018', '40001019', '40101016', '40401003', '50001002']
+  if (userError.includes(code)) {
+    console.log('userError');
+    return {
+      message: h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '아이디 또는 비밀번호를'
+        ),
+        h('div', { style: 'text-align: center;' }, '다시 확인하세요.'),
+      ]),
+      next: false,
+      confirmAction: () => {
+        router.push('/login')
+      }
+    }
+  }
+}
+
+// No links
+
+// {
+// No links
+// 40001008	
+// 잠긴 계정입니다.
+// }
+
+
+// 42301015
+// 5회 초과시 
+
+// { 
+//아이디 또는 비밀번호를 확인하세요 
+// No links
+// 40001004	
+// 잘못된 암호화 규격입니다.
+
+// No links
+// 40001005	
+// 잘못된 암호화 규격(padding)입니다.
+
+// 40001018	
+// 고객의 가입상태코드가 비어있습니다 (null)
+
+// No links
+// 40001019	
+// 고객의 가입상태코드가 비어있습니다
+
+// No links
+// 40101016	
+// 비밀번호가 일치하지 않습니다.
+
+// No links
+// 40401003	
+// 존재하지 않은 고객입니다.
+
+// No links
+// 50001002	
+// 고객 존재 여부 확인중 오류가 발생하였습니다.
+
+// }
+

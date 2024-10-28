@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { KEY_SAVED_ID } from '~/config';
 import { IToastType, MODAL_SIZE, ILoginParams } from '~/types';
+import JSEncrypt from 'jsencrypt';
 
 const router = useRouter();
 const { setUser } = useUserStore();
@@ -38,11 +39,19 @@ const confirmOpen = async (message: string) => {
   } catch (error) {}
 };
 
-const getParams = () => {
+const getParams = (publicKey: string) => {
+  const encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey);
+  const encryptedPassword = encrypt.encrypt(password.value);
   return {
     info1: userId.value,
-    info2: password.value,
+    info2: encryptedPassword,
   };
+};
+
+const getPublicKey = async () => {
+  const result = await request.get('/bizon/api/account/public-key');
+  return result.data.data;
 };
 
 // 로그인 실행
@@ -62,11 +71,16 @@ const fetchLogin = async (data: ILoginParams) => {
       confirmButtonText: '예',
       cancelButtonText: '아니오',
     };
-    if (e.code === '20001004') {
+
+    // console.log(getErrorMessage(e.code));
+    // option.content = getErrorMessage(e.code);
+    // await openConfirm(option);
+
+    if (e.code === '20001003') {
       router.push('login/changePw');
       return;
     }
-    if (e.code === '40901008') {
+    if (e.code === '20001005') {
       option.content = h('p', null, [
         h(
           'div',
@@ -84,7 +98,7 @@ const fetchLogin = async (data: ILoginParams) => {
         await openConfirm(option);
         request.post('/bizon/api/account/login/duplicate-next');
       } catch (error) {}
-    } else if (e.code === '20001005') {
+    } else if (e.code === '20001004') {
       option.confirmButtonText = '지금 변경하기';
       option.cancelButtonText = '3개월후 변경하기';
       option.content = h('p', null, [
@@ -146,8 +160,9 @@ const handleLogin = async () => {
   }
 
   // try {
-  const params = getParams();
   try {
+    const publicKey = await getPublicKey();
+    const params = getParams(publicKey);
     await fetchLogin(params);
     const result = await getUserData();
     setUser(result.data);
