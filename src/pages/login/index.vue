@@ -45,42 +45,38 @@ const getParams = (publicKey: string) => {
   const encryptedPassword = encrypt.encrypt(password.value);
   return {
     info1: userId.value,
-    info2: encryptedPassword,
+    info2: encryptedPassword as string,
   };
 };
 
 const getPublicKey = async () => {
-  const result = await request.get('/bizon/api/account/public-key');
-  return result.data.data;
+  try {
+    const result = await request.get('/bizon/api/account/public-key');
+    return result.data.data;
+  } catch (error) {}
 };
 
 // 로그인 실행
 const fetchLogin = async (data: ILoginParams) => {
+  const option: any = {
+    content: '',
+    center: true,
+    closeOnClickModal: true,
+    closeOnPressEscape: true,
+    hideCancelButton: false,
+    confirmButtonText: '예',
+    cancelButtonText: '아니오',
+  };
   try {
     const result = await request.post('/bizon/api/account/login', {
       ...data,
     });
-    return result.data;
-  } catch (e: any) {
-    const option: any = {
-      content: '',
-      center: true,
-      closeOnClickModal: true,
-      closeOnPressEscape: true,
-      hideCancelButton: false,
-      confirmButtonText: '예',
-      cancelButtonText: '아니오',
-    };
 
-    // console.log(getErrorMessage(e.code));
-    // option.content = getErrorMessage(e.code);
-    // await openConfirm(option);
-
-    if (e.code === '20001003') {
+    if (result.data.code === '20001003') {
       router.push('login/changePw');
       return;
     }
-    if (e.code === '20001005') {
+    if (result.data.code === '20001005') {
       option.content = h('p', null, [
         h(
           'div',
@@ -98,7 +94,7 @@ const fetchLogin = async (data: ILoginParams) => {
         await openConfirm(option);
         request.post('/bizon/api/account/login/duplicate-next');
       } catch (error) {}
-    } else if (e.code === '20001004') {
+    } else if (result.data.code === '20001004') {
       option.confirmButtonText = '지금 변경하기';
       option.cancelButtonText = '3개월후 변경하기';
       option.content = h('p', null, [
@@ -119,25 +115,21 @@ const fetchLogin = async (data: ILoginParams) => {
       } catch (error) {
         request.post('/bizon/api/account/login/password-remind-next');
       }
-    } else if (e.code === '42301005') {
-      option.content = h('p', null, [
-        h(
-          'div',
-          { style: 'text-align: center;' },
-          '로그인을 5회 실패하셨습니다.'
-        ),
-        h(
-          'div',
-          { style: 'text-align: center;' },
-          '개인정보보호를 위해 비밀 번호를'
-        ),
-        h('div', { style: 'text-align: center;' }, '변경해 주십시오'),
-      ]);
-      await confirmOpen(option.content);
-      return;
     }
-    if (isLoginError(e.code)) {
-      confirmOpen(e.message);
+
+    return result.data;
+  } catch (e: any) {
+    const { next, message, confirmAction, cancelAction, pass } =
+      getErrorMessage(e.code);
+
+    if (!pass) {
+      confirmOption.content = message;
+      try {
+        if (message) await openConfirm(confirmOption);
+        if (next) confirmAction!();
+      } catch (error) {
+        if (next) cancelAction!();
+      }
     }
     throw e;
   }
@@ -167,7 +159,6 @@ const handleLogin = async () => {
     const result = await getUserData();
     setUser(result.data);
     if (rememberId) {
-      console.log('??', rememberId);
       localStorage.setItem(KEY_SAVED_ID, userId.value);
     }
     router.push('/apply');
@@ -229,29 +220,11 @@ const handleFindPwPage = () => {
   router.push('login/findPw');
 };
 
-onMounted(() => {
+onMounted(async () => {
+  await useUserStore().initUser();
+  if (useUserStore().user?.entrNo) router.push('/');
   checkRemeberLoginData();
 });
-
-// const popup = reactive({
-//   show: false,
-//   title: '약관 동의',
-// });
-
-// 아이디 기억하기 여부에 따른 아이디 값 저장
-// watch(savedUserIdYn, () => {
-//   if (savedUserIdYn.value === 'N') {
-//     localStorage.removeItem(KEY_SAVED_ID);
-//   }
-
-//   localStorage.setItem(KEY_SEAVED_ID_YN, savedUserIdYn.value);
-// });
-
-// const guidePopup: IModalPopup = reactive({
-//   guideConfirmPhoneNm: {
-//     show: false,
-//   },
-// });
 </script>
 
 <template>
@@ -342,4 +315,5 @@ onMounted(() => {
 name: login
 meta:
   layout: login
+  isPublicPath: true
 </route>

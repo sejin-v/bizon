@@ -481,6 +481,25 @@ export function checkPassword2(value: string) {
     || regx4.test(value)
   )
 }
+export function formatPhoneNumber(phoneNumber: string): string {
+  const numericValue = phoneNumber.replace(/\D/g, '') // 숫자만 추출
+
+  // 0으로 시작하지 않으면 최대 12글자까지만 입력 허용
+  // if (!numericValue.startsWith('0')) {
+  //   return numericValue.slice(0, 11) // 숫자가 0으로 시작하지 않으면 -없이 12글자까지만 허용
+  // }
+
+  // 숫자가 4글자 이상일 때와 8글자 이상일 때 자동으로 - 추가
+  if (numericValue.length >= 8) {
+    return numericValue.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3')
+  }
+  else if (numericValue.length >= 4) {
+    return numericValue.replace(/(\d{3})(\d{1,4})/, '$1-$2')
+  }
+
+  // 기본적으로 숫자가 3글자 이하일 때는 그대로 반환
+  return numericValue
+}
 
 /**
  * 파일 다운로드
@@ -525,10 +544,12 @@ export function isLoginError(code: string) {
 }
 
 export function getErrorMessage(code: string) {
-  const router = useRouter()
-  const userError = ['40001004', '40001005', '40001018', '40001019', '40101016', '40401003', '50001002']
+
+  const { router } = useRouterStore()
+  const userError = ['40001004', '40001005', '40001018', '40001019', '40101016', '50001002']
+  const noUser = ['40401003', '40001008']
+
   if (userError.includes(code)) {
-    console.log('userError');
     return {
       message: h('p', null, [
         h(
@@ -540,10 +561,49 @@ export function getErrorMessage(code: string) {
       ]),
       next: false,
       confirmAction: () => {
-        router.push('/login')
+        // router.push('/login/changePw')
+      },
+      cancelAction: () => {
+        // console.log('cancel');
       }
     }
   }
+  if (noUser.includes(code)) {
+    return {
+      message: h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '입력하신 계정이 정지되었거나'
+        ),
+        h('div', { style: 'text-align: center;' }, '존재하지 않습니다.'),
+        h('div', { style: 'text-align: center;' }, '관리자에게 문의하세요.'),
+      ]),
+      next: false,
+
+    }
+  }
+
+  if (code === '42301005') {
+    return {
+      message: h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '로그인을 5회 실패하셨습니다.'
+        ),
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '개인정보보호를 위해 비밀 번호를'
+        ),
+        h('div', { style: 'text-align: center;' }, '변경해 주십시오'),
+      ]),
+      next: false,
+
+    }
+  }
+  return { pass: true }
 }
 
 // No links

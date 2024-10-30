@@ -50,7 +50,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/bizon/api': {
-        target: 'http://15.197.162.87/',
+        target: 'http://dev.bizon.uplus.co.kr/',
         changeOrigin: true,
       },
 

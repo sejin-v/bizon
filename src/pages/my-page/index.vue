@@ -47,13 +47,13 @@ onMounted(async () => {
     <el-table :data="myPageData" style="width: 100%">
       <el-table-column
         prop="regDttm"
-        label="변경 요청 일자"
+        label="증속 신청일자"
         align="center"
         min-width="150"
       />
       <el-table-column
         prop="before"
-        label="변경 전&#40;다운로드 &#47; 업로드&#41;"
+        label="증속 전&#40;다운로드 &#47; 업로드&#41;"
         align="center"
         min-width="200"
       >
@@ -69,7 +69,7 @@ onMounted(async () => {
       </el-table-column>
       <el-table-column
         prop="after"
-        label="변경 후&#40;다운로드 &#47; 업로드&#41;"
+        label="증속 후&#40;다운로드 &#47; 업로드&#41;"
         align="center"
         min-width="200"
       >
@@ -101,7 +101,9 @@ onMounted(async () => {
       >
         <template #default="scope">
           <em
-            :class="{ 'font-color--blue': scope.row.taskStatus === '미완료' }"
+            :class="{
+              'font-color--blue': scope.row.taskStatus === '증속 실패',
+            }"
             >{{ scope.row.taskStatus }}</em
           >
         </template>

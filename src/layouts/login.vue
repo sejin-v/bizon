@@ -12,7 +12,7 @@ const isChangePasswordPage = computed(() => {
       <h1 class="logo">
         <a href="javascript:void(0);">
           <icon name="logo-lg" alt="LG U+" class="mr-2.5" />
-          <span>비즈온 증속 신청</span>
+          <span>비즈온 증속신청</span>
         </a>
       </h1>
       <button type="button" v-if="isChangePasswordPage">

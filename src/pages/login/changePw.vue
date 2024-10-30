@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import JSEncrypt from 'jsencrypt';
+
 const router = useRouter();
 const password = ref('');
 const confirmPassword = ref('');
@@ -6,14 +8,24 @@ const confirmPassword = ref('');
 const passwordError = ref('');
 const confirmPasswordError = ref('');
 
+const getPublicKey = async () => {
+  const result = await request.get('/bizon/api/account/public-key');
+  return result.data.data;
+};
+
 const handleChangePassword = async () => {
   if (!password.value) return;
   if (password.value !== confirmPassword.value) {
     confirmPasswordError.value = '* 비밀번호를 다시 확인해주세요';
     return;
   }
+  const publicKey = await getPublicKey();
+
+  const encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey);
+  const encryptedPassword = encrypt.encrypt(password.value);
   const data = {
-    password: password.value,
+    password: encryptedPassword,
   };
   try {
     await request.post('/bizon/api/account/modify-password', {
@@ -26,6 +38,7 @@ const handleChangePassword = async () => {
       closeOnPressEscape: true,
       hideCancelButton: true,
     });
+
     router.push('/login');
   } catch (error: any) {
     passwordError.value = error.message;

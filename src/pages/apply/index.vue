@@ -21,6 +21,8 @@ const applyData = ref<IApplyData>({
   bizEmpEmalAddr: '',
   trfEvetOccrYn: '',
 });
+
+const userStore = useUserStore();
 // 팝업
 const applyPopupShow = ref(false);
 const satisfactionPopupShow = ref(false);
@@ -117,12 +119,13 @@ onMounted(async () => {
   console.log(result);
 
   applyData.value = result;
+  console.log(userStore);
 });
 </script>
 
 <template>
   <div class="box--fff apply">
-    <h2 class="title">비즈온 증속 신청</h2>
+    <h2 class="title">비즈온 증속신청</h2>
     <p class="title--sm">상세정보</p>
     <ul class="apply__info">
       <li>
@@ -130,22 +133,22 @@ onMounted(async () => {
         <div>{{ applyData.svcNm }}</div>
       </li>
       <li>
-        <label>고객번호</label>
+        <label>고객번호(가입번호)</label>
         <div>{{ applyData.entrNo }}</div>
       </li>
       <li>
         <label>고객사명</label>
-        <div>{{ applyData.cucoNm }}</div>
+        <div>{{ applyData.cucoNm }}({{ userStore.user?.brno }})</div>
       </li>
       <li>
         <label>서비스 개통일자</label>
         <div>{{ dateFormatter(applyData.cntcStrtDt) }}</div>
       </li>
       <li>
-        <label>청약 트래픽</label>
+        <label>기본 제공 속도</label>
         <div class="flex-col !items-start">
           <p class="flex items-center">
-            {{ applyData.sbscUpldSped }}M
+            업로드 {{ applyData.sbscUpldSped }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -155,7 +158,7 @@ onMounted(async () => {
             />
           </p>
           <p class="flex items-center">
-            {{ applyData.sbscDownSped }}M
+            다운로드 {{ applyData.sbscDownSped }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -167,10 +170,10 @@ onMounted(async () => {
         </div>
       </li>
       <li>
-        <label>발생 트래픽</label>
+        <label>사용 속도</label>
         <div class="flex-col !items-start">
           <p class="flex items-center">
-            {{ applyData.occrTrfUpldSpedVlue }}M
+            업로드 {{ applyData.occrTrfUpldSpedVlue }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -180,7 +183,7 @@ onMounted(async () => {
             />
           </p>
           <p class="flex items-center">
-            {{ applyData.occrTrfDownSpedVlue }}M
+            다운로드 {{ applyData.occrTrfDownSpedVlue }}M
             <icon
               name="triangle__full--525"
               width="11"
@@ -192,9 +195,13 @@ onMounted(async () => {
         </div>
       </li>
       <li>
-        <label>트래픽 상태</label>
+        <label>상태</label>
         <div>
-          {{ applyData.trfEvetOccrYn === 'Y' ? '임계치 초과' : '정상' }}
+          {{
+            applyData.trfEvetOccrYn === 'Y'
+              ? '기본 제공 속도의 80% 초과'
+              : '정상'
+          }}
         </div>
       </li>
       <li>
@@ -223,7 +230,7 @@ onMounted(async () => {
         </div>
       </li>
       <li>
-        <label>신청기한</label>
+        <label>증속 신청 가능한 날짜</label>
         <div>
           {{ dateFormatter(applyData.icspRqstDdayDt) }}
         </div>
@@ -246,12 +253,16 @@ onMounted(async () => {
           aria-hidden="true"
           class="mr-2"
         />
-        <p>
-          ‘비즈온’ 서비스를 사용 중이신 고객은 UP/DOWN 트래픽이 임계치 초과 시
-          신청완료 일자 기준 10일동안 무상증속 이용 가능합니다. 서비스 속도를
-          유지하고자 하실 경우 담당 영업사원을 통해 기한 내 속도변경 청약
-          접수바랍니다.
-        </p>
+        <div>
+          <p>
+            ‘비즈온’ 서비스를 사용 중이신 고객은 UP/DOWN 트래픽이 임계치 초과 시
+            신청완료 일자 기준 10일동안 무상증속 이용 가능합니다.
+          </p>
+          <p>
+            서비스 속도를 유지하고자 하실 경우 담당 영업사원을 통해 기한 내
+            속도변경 청약 접수바랍니다.
+          </p>
+        </div>
       </li>
       <li>
         <icon

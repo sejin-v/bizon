@@ -11,7 +11,7 @@ const defaultMenu = ref(route.fullPath);
 const menuList = ref<IMenu[]>([
   {
     menuId: '/apply',
-    menuName: '비즈온 증속 신청',
+    menuName: '비즈온 증속신청',
   },
   {
     menuId: '/my-page',
@@ -27,9 +27,10 @@ const handleMenuClick = (target: string) => {
   router.push(target);
 };
 
-const handleLogout = () => {
+const handleLogout = async () => {
   try {
-    request.post('/bizon/api/account/logout');
+    await request.post('/bizon/api/account/logout');
+    userStore.setUser(null);
     router.push('/login');
   } catch (error) {
     console.error(error);

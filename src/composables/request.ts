@@ -58,13 +58,11 @@ service.interceptors.response.use(
       return response
     }
 
-
     const { router, route } = useRouterStore()
-    if (!route.meta.isPublicPath && response.data.statusCode === 401) {
+    if (!route.meta.isPublicPath && (response.data.statusCode === 401)) {
       router.push('/login')
       return
     }
-
     if (response.data.code.substr(0, 2) !== '20') {
       return Promise.reject(response.data)
     }

@@ -10,8 +10,15 @@ const authNumberError = ref('');
 const checkAuthButtonDisabled = ref(true);
 const useTimer = ref(false);
 const authButtonDisabled = computed(() => {
-  return userId.value && phoneNumber.value.length === 11;
+  return userId.value && phoneNumber.value.length === 13;
 });
+
+// {
+// "info1": "500285825501",
+// "info2": "1238128751"
+// }
+// 010054874861
+// 010-5487-4861
 
 const confirmOpen = async (message: string) => {
   await openConfirm({
@@ -27,7 +34,7 @@ const handleAuthNumber = async () => {
   useTimer.value = false;
   const params = {
     userId: userId.value,
-    phoneNumber: phoneNumber.value,
+    phoneNumber: phoneNumber.value.replaceAll('-', ''),
   };
   try {
     await request.get('/bizon/api/account/send-otp', { params });
@@ -56,7 +63,12 @@ const handleAuth = async () => {
     await confirmOpen('인증되었습니다.');
     router.push('/login/changePw');
   } catch (error: any) {
-    await confirmOpen(error.message);
+    if (error.code === '40002005') {
+      authNumberError.value =
+        '* 인증번호를 잘못 입력했습니다. 다시 확인해주세요.';
+    } else {
+      await confirmOpen(error.message);
+    }
   }
 };
 </script>
@@ -77,8 +89,8 @@ const handleAuth = async () => {
         />
       </FormItem>
       <FormItem label="휴대폰 번호">
-        <CustomNumberInput
-          max-length="11"
+        <CustomPhoneInput
+          max-length="13"
           :value="phoneNumber"
           placeholder="&#45; 없이 숫자로만 입력"
           @update="handleUpdate"
@@ -89,7 +101,7 @@ const handleAuth = async () => {
     <button
       type="button"
       class="w-full btn__line--primary-md"
-      :disabled="!authButtonDisabled || !checkAuthButtonDisabled"
+      :disabled="!authButtonDisabled"
       @click="handleAuthNumber"
     >
       인증번호 발송
