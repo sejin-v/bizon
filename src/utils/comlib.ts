@@ -584,7 +584,7 @@ export function getErrorMessage(code: string) {
     }
   }
 
-  if (code === '42301005') {
+  if (code === '42301015') {
     return {
       message: h('p', null, [
         h(
@@ -599,7 +599,10 @@ export function getErrorMessage(code: string) {
         ),
         h('div', { style: 'text-align: center;' }, '변경해 주십시오'),
       ]),
-      next: false,
+      next: true,
+      confirmAction: () => {
+        router.push('/login/changePw')
+      },
 
     }
   }

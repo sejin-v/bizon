@@ -41,7 +41,11 @@ const handleChangePassword = async () => {
 
     router.push('/login');
   } catch (error: any) {
-    passwordError.value = error.message;
+    if (error.code === '40002006') {
+      passwordError.value = '* 비밀번호 생성 규칙을 확인하세요';
+    } else {
+      passwordError.value = error.message;
+    }
     console.error(error);
   }
 };
@@ -60,15 +64,18 @@ const handleCancelButton = () => {
     <form class="password__form form">
       <FormItem label="새 비밀번호">
         <CustomInput
+          type="password"
           v-model="password"
+          max-length="40"
           placeholder="새 비밀번호를 입력하세요."
           v-model:valid-message="passwordError"
         />
       </FormItem>
       <FormItem label="새 비밀번호 확인">
         <CustomInput
-          v-model="confirmPassword"
           type="password"
+          v-model="confirmPassword"
+          max-length="40"
           placeholder="새 비밀번호를 다시 입력하세요."
           v-model:valid-message="confirmPasswordError"
         />

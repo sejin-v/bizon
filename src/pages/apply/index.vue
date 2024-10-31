@@ -140,13 +140,13 @@ onMounted(async () => {
         <label>고객사명</label>
         <div>{{ applyData.cucoNm }}({{ userStore.user?.brno }})</div>
       </li>
-      <li>
+      <li style="height: 65px">
         <label>서비스 개통일자</label>
         <div>{{ dateFormatter(applyData.cntcStrtDt) }}</div>
       </li>
-      <li>
+      <li style="height: 65px">
         <label>기본 제공 속도</label>
-        <div class="flex-col !items-start">
+        <div class="flex-col !items-start justify-center">
           <p class="flex items-center">
             업로드 {{ applyData.sbscUpldSped }}M
             <icon
@@ -169,9 +169,10 @@ onMounted(async () => {
           </p>
         </div>
       </li>
-      <li>
+      <li style="height: 65px">
         <label>사용 속도</label>
         <div class="flex-col !items-start">
+          기준 일자: {{ dateFormatter(applyData.trfEvetOccrDt) }}
           <p class="flex items-center">
             업로드 {{ applyData.occrTrfUpldSpedVlue }}M
             <icon

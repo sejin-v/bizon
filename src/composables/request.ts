@@ -57,9 +57,10 @@ service.interceptors.response.use(
       response.data = result.value
       return response
     }
-
+    const userStore = useUserStore()
     const { router, route } = useRouterStore()
     if (!route.meta.isPublicPath && (response.data.statusCode === 401)) {
+      userStore.setUser(null);
       router.push('/login')
       return
     }

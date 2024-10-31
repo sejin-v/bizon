@@ -92,7 +92,8 @@ const fetchLogin = async (data: ILoginParams) => {
       ]);
       try {
         await openConfirm(option);
-        request.post('/bizon/api/account/login/duplicate-next');
+        await request.post('/bizon/api/account/login/duplicate-next');
+        router.push('/');
       } catch (error) {}
     } else if (result.data.code === '20001004') {
       option.confirmButtonText = '지금 변경하기';
@@ -114,6 +115,7 @@ const fetchLogin = async (data: ILoginParams) => {
         router.push('login/changePw');
       } catch (error) {
         request.post('/bizon/api/account/login/password-remind-next');
+        router.push('/');
       }
     }
 

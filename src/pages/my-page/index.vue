@@ -46,11 +46,18 @@ onMounted(async () => {
     </div>
     <el-table :data="myPageData" style="width: 100%">
       <el-table-column
+        prop="trfEvetOccrDt"
+        label="트래픽 초과 기준일자"
+        align="center"
+        min-width="150"
+      />
+      <el-table-column
         prop="regDttm"
         label="증속 신청일자"
         align="center"
         min-width="150"
       />
+
       <el-table-column
         prop="before"
         label="증속 전&#40;다운로드 &#47; 업로드&#41;"

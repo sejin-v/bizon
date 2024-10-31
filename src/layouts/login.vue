@@ -1,9 +1,16 @@
 <script setup lang="ts">
+const router = useRouter();
 const route = useRoute();
 
 const isChangePasswordPage = computed(() => {
-  return route.fullPath === '/login/changePw';
+  return (
+    route.fullPath === '/login/changePw' || route.fullPath === '/login/findPw'
+  );
 });
+
+const handleMoveLoginPage = () => {
+  router.push('/login');
+};
 </script>
 
 <template>
@@ -15,7 +22,11 @@ const isChangePasswordPage = computed(() => {
           <span>비즈온 증속신청</span>
         </a>
       </h1>
-      <button type="button" v-if="isChangePasswordPage">
+      <button
+        type="button"
+        v-if="isChangePasswordPage"
+        @click="handleMoveLoginPage"
+      >
         <span class="ml-1">로그인</span>
       </button>
     </header>
