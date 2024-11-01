@@ -29,7 +29,15 @@ const handleMenuClick = (target: string) => {
 
 const handleLogout = async () => {
   try {
-    await request.post('/bizon/api/account/logout');
+    await request.post(
+      '/bizon/api/account/logout',
+      {},
+      {
+        headers: {
+          'X-COMMAND': 'P07001',
+        },
+      }
+    );
     userStore.setUser(null);
     router.push('/login');
   } catch (error) {

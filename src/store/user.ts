@@ -11,9 +11,15 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
 
-  const initUser = async () => {
+  const initUser = async (command: string) => {
     try {
-      const result = await request.get('/bizon/api/customer');
+      const result = await request.get('/bizon/api/customer',
+        {
+          headers: {
+            'X-COMMAND': command,
+          },
+        }
+      );
       // const serviceData = await request.get('/bizon/api/speedup/status');
       setUser(result.data.data);
       // setServiceData(serviceData.data)

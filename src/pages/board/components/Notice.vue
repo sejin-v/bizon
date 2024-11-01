@@ -43,6 +43,9 @@ const getParams = () => {
 const getNoticeList = async (params: INoticeParameter) => {
   const result = await request.get('/bizon/api/board/list', {
     params,
+    headers: {
+      'X-COMMAND': 'P07008',
+    },
   });
   return result.data.data;
 };

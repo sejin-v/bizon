@@ -10,7 +10,11 @@ const confirmPasswordError = ref('');
 const router = useRouter();
 
 const getPublicKey = async () => {
-  const result = await request.get('/bizon/api/account/public-key');
+  const result = await request.get('/bizon/api/account/public-key', {
+    headers: {
+      'X-COMMAND': 'P07007',
+    },
+  });
   return result.data.data;
 };
 const handleChangePassword = async () => {
@@ -28,9 +32,17 @@ const handleChangePassword = async () => {
     password: encryptedPassword,
   };
   try {
-    await request.post('/bizon/api/account/modify-password', {
-      ...data,
-    });
+    await request.post(
+      '/bizon/api/account/modify-password',
+      {
+        ...data,
+      },
+      {
+        headers: {
+          'X-COMMAND': 'P07007',
+        },
+      }
+    );
     await openConfirm({
       content: '변경되었습니다.',
       center: true,

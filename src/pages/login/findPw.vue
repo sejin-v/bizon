@@ -37,7 +37,12 @@ const handleAuthNumber = async () => {
     phoneNumber: phoneNumber.value.replaceAll('-', ''),
   };
   try {
-    await request.get('/bizon/api/account/send-otp', { params });
+    await request.get('/bizon/api/account/send-otp', {
+      params,
+      headers: {
+        'X-COMMAND': 'P07003',
+      },
+    });
     checkAuthButtonDisabled.value = false;
     useTimer.value = true;
   } catch (error: any) {
@@ -59,7 +64,15 @@ const handleAuth = async () => {
     otp: authNumber.value,
   };
   try {
-    await request.post('/bizon/api/account/validate-otp', { ...data });
+    await request.post(
+      '/bizon/api/account/validate-otp',
+      { ...data },
+      {
+        headers: {
+          'X-COMMAND': 'P07003',
+        },
+      }
+    );
     await confirmOpen('인증되었습니다.');
     router.push('/login/changePw');
   } catch (error: any) {

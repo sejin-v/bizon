@@ -1,5 +1,6 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
+import { generateLogKey } from './utils'
 // import { KEY_ACCESS_TOKEN, KEY_REFRESH_TOKEN } from '~/config'
 
 // import type { AxiosResponse } from 'axios'
@@ -25,12 +26,12 @@ const baseUrl: string = import.meta.env.VITE_API_CONTEXT_PATH
 const service = axios.create({
   baseURL: baseUrl,
   headers: {
-    apiKey: '843227cfb6-fba97-b43b2-fa9c5-c59de18a6e',
   },
 })
 
 service.interceptors.request.use(
   async (config) => {
+    config.headers['X-LOGKEY'] = generateLogKey()
 
     // progressbar 시작
     NProgress.start()
@@ -49,14 +50,6 @@ service.interceptors.response.use(
   async (response) => {
     // request 결과값이 있을 시 progressbar 종료
     NProgress.done()
-    if (response.config.url?.includes('/mock')) {
-      const { result } = useMock(response.config.url)
-      if (result.value?.status === 400) {
-        throw new Error("error");
-      }
-      response.data = result.value
-      return response
-    }
     const userStore = useUserStore()
     const { router, route } = useRouterStore()
     if (!route.meta.isPublicPath && (response.data.statusCode === 401)) {

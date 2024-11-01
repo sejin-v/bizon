@@ -39,7 +39,11 @@ const confirmOption = reactive({
 
 const getApplyData = async () => {
   try {
-    const result = await request.get('/bizon/api/icsp/status');
+    const result = await request.get('/bizon/api/icsp/status', {
+      headers: {
+        'X-COMMAND': 'P07005',
+      },
+    });
     return result.data.data;
   } catch (error) {
     console.error(error);
@@ -60,11 +64,21 @@ const handleApplyButton = () => {
 const handleConfirmApply = async () => {
   const data = applyIncreaseRef.value.getRequestData();
   try {
-    const result = await request.post('/bizon/api/icsp/request', { ...data });
+    const result = await request.post(
+      '/bizon/api/icsp/request',
+      {
+        ...data,
+      },
+      {
+        headers: {
+          'X-COMMAND': 'P07101',
+        },
+      }
+    );
     await confirmOpen(result.data.message);
     applyPopupShow.value = false;
-    const test = await getApplyData();
-    applyData.value = test;
+    const apply = await getApplyData();
+    applyData.value = apply;
     satisfactionPopupShow.value = true;
   } catch (error: any) {
     console.error(error);
@@ -93,7 +107,11 @@ const handleConfirmSatisfaction = async () => {
     ],
   };
   try {
-    await request.post('/bizon/api/survey/submit', data);
+    await request.post('/bizon/api/survey/submit', data, {
+      headers: {
+        'X-COMMAND': 'P07102',
+      },
+    });
     satisfactionPopupShow.value = false;
   } catch (error: any) {
     console.error(error);

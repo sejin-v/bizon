@@ -19,6 +19,9 @@ const getMyPageData = async () => {
       perPageNum: 10,
       page: pageData.currentPage,
     },
+    headers: {
+      'X-COMMAND': 'P07006',
+    },
   });
   return result.data.data;
 };

@@ -6,7 +6,11 @@ import { IQuestionData } from '~/types';
 const questions = ref<IQuestionData[]>([]);
 
 const getSurveyItems = async () => {
-  const result = await request.get('/bizon/api/survey/items');
+  const result = await request.get('/bizon/api/survey/items', {
+    headers: {
+      'X-COMMAND': 'P07102',
+    },
+  });
   return result.data.data;
 };
 

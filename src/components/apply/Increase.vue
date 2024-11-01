@@ -21,7 +21,12 @@ const increaseData = reactive({
 
 const getStandardData = async (params: IStandardParameter) => {
   try {
-    const result = await request.get('/bizon/api/icsp/standard', { params });
+    const result = await request.get('/bizon/api/icsp/standard', {
+      params,
+      headers: {
+        'X-COMMAND': 'P07101',
+      },
+    });
     return result.data.data;
   } catch (error) {
     throw error;

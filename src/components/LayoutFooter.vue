@@ -8,7 +8,11 @@ const termsUse = ref('');
 const privacyPolicy = ref('');
 
 const getAgreementList = async () => {
-  const result = await request.get('/bizon/api/agreement/list');
+  const result = await request.get('/bizon/api/agreement/list', {
+    headers: {
+      'X-COMMAND': 'P07001',
+    },
+  });
   privacyPolicy.value = result.data.data.find((target: IAtreementData) => {
     return target.tadvPrvsLinkId === 'PNIF_PRSS';
   }).tadvPrvsLinkUrlAddr;

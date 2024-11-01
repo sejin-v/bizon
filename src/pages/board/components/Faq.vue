@@ -21,6 +21,9 @@ const getParams = () => {
 const getFaqList = async (params) => {
   const result = await request.get('/bizon/api/board/list', {
     params,
+    headers: {
+      'X-COMMAND': 'P07009',
+    },
   });
   return result.data.data;
 };

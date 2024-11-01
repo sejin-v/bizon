@@ -51,7 +51,11 @@ const getParams = (publicKey: string) => {
 
 const getPublicKey = async () => {
   try {
-    const result = await request.get('/bizon/api/account/public-key');
+    const result = await request.get('/bizon/api/account/public-key', {
+      headers: {
+        'X-COMMAND': 'P07002',
+      },
+    });
     return result.data.data;
   } catch (error) {}
 };
@@ -68,9 +72,17 @@ const fetchLogin = async (data: ILoginParams) => {
     cancelButtonText: '아니오',
   };
   try {
-    const result = await request.post('/bizon/api/account/login', {
-      ...data,
-    });
+    const result = await request.post(
+      '/bizon/api/account/login',
+      {
+        ...data,
+      },
+      {
+        headers: {
+          'X-COMMAND': 'P07002',
+        },
+      }
+    );
 
     if (result.data.code === '20001003') {
       router.push('login/changePw');
@@ -92,7 +104,15 @@ const fetchLogin = async (data: ILoginParams) => {
       ]);
       try {
         await openConfirm(option);
-        await request.post('/bizon/api/account/login/duplicate-next');
+        await request.post(
+          '/bizon/api/account/login/duplicate-next',
+          {},
+          {
+            headers: {
+              'X-COMMAND': 'P07002',
+            },
+          }
+        );
         router.push('/');
       } catch (error) {}
     } else if (result.data.code === '20001004') {
@@ -114,7 +134,15 @@ const fetchLogin = async (data: ILoginParams) => {
         await openConfirm(option);
         router.push('login/changePw');
       } catch (error) {
-        request.post('/bizon/api/account/login/password-remind-next');
+        request.post(
+          '/bizon/api/account/login/password-remind-next',
+          {},
+          {
+            headers: {
+              'X-COMMAND': 'P07002',
+            },
+          }
+        );
         router.push('/');
       }
     }
@@ -139,7 +167,11 @@ const fetchLogin = async (data: ILoginParams) => {
 
 const getUserData = async () => {
   try {
-    const result = await request.get('/bizon/api/customer');
+    const result = await request.get('/bizon/api/customer', {
+      headers: {
+        'X-COMMAND': 'P07002',
+      },
+    });
     return result.data;
   } catch (e: any) {
     throw e;
@@ -223,7 +255,7 @@ const handleFindPwPage = () => {
 };
 
 onMounted(async () => {
-  await useUserStore().initUser();
+  await useUserStore().initUser('P07002');
   if (useUserStore().user?.entrNo) router.push('/');
   checkRemeberLoginData();
 });
