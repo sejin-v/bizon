@@ -75,38 +75,34 @@ defineExpose({ getRequestData });
     <form class="form">
       <FormItem label="다운로드">
         <div class="box--f3f">
-          <span>{{ props.sbscDownSpedVlue }}M</span>
+          <span>{{ props.sbscDownSpedVlue }}</span>
           <icon
             name="arrow-r__line--7f8"
             width="24"
             height="24"
             alt="변경 후"
           />
-          <em
-            >{{
-              increaseData.icspRqstDownSped
-                ? increaseData.icspRqstDownSped
-                : props.sbscDownSpedVlue
-            }}M</em
-          >
+          <em>{{
+            increaseData.icspRqstDownSped
+              ? increaseData.icspRqstDownSped
+              : props.sbscDownSpedVlue
+          }}</em>
         </div>
       </FormItem>
       <FormItem label="업로드">
         <div class="box--f3f">
-          <span>{{ props.sbscUpldSpedVlue }}M</span>
+          <span>{{ props.sbscUpldSpedVlue }}</span>
           <icon
             name="arrow-r__line--7f8"
             width="24"
             height="24"
             alt="변경 후"
           />
-          <em
-            >{{
-              increaseData.icspRqstUpldSped
-                ? increaseData.icspRqstUpldSped
-                : props.sbscUpldSpedVlue
-            }}M</em
-          >
+          <em>{{
+            increaseData.icspRqstUpldSped
+              ? increaseData.icspRqstUpldSped
+              : props.sbscUpldSpedVlue
+          }}</em>
         </div>
       </FormItem>
       <FormItem label="속도 증속기간">

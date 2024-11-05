@@ -19,12 +19,20 @@ const pageData = reactive({
   currentPage: 1,
   totalCount: 0,
 });
-// FIXME :: 모바일 해상도 대응
+
 const breakpoints = useBreakpoints({
   mobile: 480,
 });
 
 const isMobile = breakpoints.smaller('mobile');
+
+const confirmOption = reactive({
+  content: '',
+  center: true,
+  closeOnClickModal: true,
+  closeOnPressEscape: true,
+  hideCancelButton: true,
+});
 
 // 팝업
 const popup = reactive({
@@ -57,10 +65,28 @@ const handleSearch = async () => {
   pageData.totalCount = result.totalCount;
 };
 
-function openNoticeDetail(target: INoticeData) {
-  noticeData.value = target;
-  popup.noticeDetailPopup.show = true;
-}
+const openNoticeDetail = async (target: INoticeData) => {
+  const params = {
+    atclKdCd: target.atclKdCd,
+    atclSno: target.atclSno,
+  };
+  try {
+    const result = await request.get('/bizon/api/board/detail', {
+      params,
+      headers: {
+        'X-COMMAND': 'P07103',
+      },
+    });
+    noticeData.value = result.data.data;
+    popup.noticeDetailPopup.show = true;
+  } catch (error: any) {
+    if (error.code === '40423001') {
+      confirmOption.content = '게시글이 존재하지 않습니다.';
+      await openConfirm(confirmOption);
+    }
+  }
+};
+
 function handleCancel() {
   popup.noticeDetailPopup.show = false;
 }

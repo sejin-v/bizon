@@ -69,11 +69,11 @@ onMounted(async () => {
       >
         <template #default="scope">
           <span>
-            {{ scope.row.sbscDownSpedVlue ? scope.row.sbscDownSpedVlue : 0 }}M
+            {{ scope.row.sbscDownSpedVlue ? scope.row.sbscDownSpedVlue : 0 }}
           </span>
           &nbsp;&#47;&nbsp;
           <span>
-            {{ scope.row.sbscUpldSpedVlue ? scope.row.sbscUpldSpedVlue : 0 }}M
+            {{ scope.row.sbscUpldSpedVlue ? scope.row.sbscUpldSpedVlue : 0 }}
           </span>
         </template>
       </el-table-column>
@@ -90,7 +90,7 @@ onMounted(async () => {
                 scope.row.icspRqstDownSped !== scope.row.sbscDownSpedVlue,
             }"
           >
-            {{ scope.row.icspRqstDownSped }}M
+            {{ scope.row.icspRqstDownSped }}
           </span>
           &nbsp;&#47;&nbsp;
           <span
@@ -99,7 +99,7 @@ onMounted(async () => {
                 scope.row.icspRqstUpldSped !== scope.row.sbscUpldSpedVlue,
             }"
           >
-            {{ scope.row.icspRqstUpldSped }}M
+            {{ scope.row.icspRqstUpldSped }}
           </span>
         </template>
       </el-table-column>

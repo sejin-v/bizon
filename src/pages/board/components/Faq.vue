@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const faqList = ref();
+const faqIdList = ref<string[]>([]);
 const pageData = reactive({
   currentPage: 1,
   totalCount: 0,
@@ -9,7 +10,13 @@ const breakpoints = useBreakpoints({
   mobile: 480,
 });
 const isMobile = breakpoints.smaller('mobile');
-
+const confirmOption = reactive({
+  content: '',
+  center: true,
+  closeOnClickModal: true,
+  closeOnPressEscape: true,
+  hideCancelButton: true,
+});
 const getParams = () => {
   return {
     atclKdCd: 'FAQ',
@@ -34,7 +41,31 @@ const handleSearch = async () => {
   faqList.value = result.articleList;
   pageData.totalCount = result.totalCount;
 };
+const handleClickFaq = async (target: any) => {
+  if (!target.length || faqList.value[target[target.length - 1]].atclCntn)
+    return;
+  faqIdList.value.push(target[target.length - 1]);
+  const params = {
+    atclKdCd: faqList.value[target[target.length - 1]].atclKdCd,
+    atclSno: faqList.value[target[target.length - 1]].atclSno,
+  };
+  try {
+    const result = await request.get('/bizon/api/board/detail', {
+      params,
+      headers: {
+        'X-COMMAND': 'P07009',
+      },
+    });
 
+    faqList.value[target[target.length - 1]].atclCntn =
+      result.data.data.atclCntn;
+  } catch (error: any) {
+    if (error.code === '40423001') {
+      confirmOption.content = '게시글이 존재하지 않습니다.';
+      await openConfirm(confirmOption);
+    }
+  }
+};
 onMounted(async () => {
   handleSearch();
 });
@@ -47,8 +78,12 @@ onMounted(async () => {
       <p>제목</p>
       <p>등록일</p>
     </div>
-    <el-collapse>
-      <el-collapse-item v-for="faq in faqList" :key="`faq-list-${faq.atclSno}`">
+    <el-collapse @change="handleClickFaq">
+      <el-collapse-item
+        v-for="(faq, i) in faqList"
+        :key="`faq-list-${faq.atclSno}`"
+        :name="i"
+      >
         <template #title>
           <p v-if="!isMobile" class="faq-list__num">
             {{ faq.rowNum }}

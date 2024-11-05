@@ -13,13 +13,6 @@ const authButtonDisabled = computed(() => {
   return userId.value && phoneNumber.value.length === 13;
 });
 
-// {
-// "info1": "500285825501",
-// "info2": "1238128751"
-// }
-// 010054874861
-// 010-5487-4861
-
 const confirmOpen = async (message: string) => {
   await openConfirm({
     content: message,

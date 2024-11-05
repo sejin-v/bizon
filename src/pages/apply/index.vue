@@ -166,7 +166,7 @@ onMounted(async () => {
         <label>기본 제공 속도</label>
         <div class="flex-col !items-start justify-center">
           <p class="flex items-center">
-            업로드 {{ applyData.sbscUpldSped }}M
+            업로드 {{ applyData.sbscUpldSped }}
             <icon
               name="triangle__full--525"
               width="11"
@@ -176,7 +176,7 @@ onMounted(async () => {
             />
           </p>
           <p class="flex items-center">
-            다운로드 {{ applyData.sbscDownSped }}M
+            다운로드 {{ applyData.sbscDownSped }}
             <icon
               name="triangle__full--525"
               width="11"
@@ -192,7 +192,7 @@ onMounted(async () => {
         <div class="flex-col !items-start">
           기준 일자: {{ dateFormatter(applyData.trfEvetOccrDt) }}
           <p class="flex items-center">
-            업로드 {{ applyData.occrTrfUpldSpedVlue }}M
+            업로드 {{ applyData.occrTrfUpldSpedVlue }}
             <icon
               name="triangle__full--525"
               width="11"
@@ -202,7 +202,7 @@ onMounted(async () => {
             />
           </p>
           <p class="flex items-center">
-            다운로드 {{ applyData.occrTrfDownSpedVlue }}M
+            다운로드 {{ applyData.occrTrfDownSpedVlue }}
             <icon
               name="triangle__full--525"
               width="11"
