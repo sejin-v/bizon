@@ -71,6 +71,7 @@ const handleCancelButton = () => {
     <form class="password__form form">
       <FormItem label="새 비밀번호">
         <CustomInput
+          type="password"
           v-model="password"
           placeholder="새 비밀번호를 입력하세요."
           v-model:valid-message="passwordError"

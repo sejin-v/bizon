@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const router = useRouter();
 const userId = ref('');
+const authUserId = ref('');
 const phoneNumber = ref('');
 const authNumber = ref('');
 
@@ -36,7 +37,9 @@ const handleAuthNumber = async () => {
         'X-COMMAND': 'P07003',
       },
     });
+
     checkAuthButtonDisabled.value = false;
+    authUserId.value = userId.value;
     useTimer.value = true;
   } catch (error: any) {
     confirmOpen(error.message);
@@ -55,6 +58,7 @@ const handleEndTimer = () => {
 const handleAuth = async () => {
   const data = {
     otp: authNumber.value,
+    userId: authUserId.value,
   };
   try {
     await request.post(
@@ -69,7 +73,7 @@ const handleAuth = async () => {
     await confirmOpen('인증되었습니다.');
     router.push('/login/changePw');
   } catch (error: any) {
-    if (error.code === '40002005') {
+    if (error.code === '40002019') {
       authNumberError.value =
         '* 인증번호를 잘못 입력했습니다. 다시 확인해주세요.';
     } else {
