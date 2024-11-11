@@ -322,9 +322,8 @@ onMounted(async () => {
       :size="MODAL_SIZE.LARGE"
     >
       <template #content>
-        <!-- TODO 퍼블 : 이미지 전달받아 넣기 -->
         <icon
-          name=""
+          name="guide"
           width="818px"
           height="554px"
           alt="고객번호는 이메일 또는 지로 청구서에 12자리 숫자로 표기되어 있습니다."

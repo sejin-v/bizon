@@ -50,7 +50,7 @@ const getApplyData = async () => {
   }
 };
 
-const confirmOpen = async (message: string) => {
+const confirmOpen = async (message: any) => {
   confirmOption.content = message;
   try {
     await openConfirm(confirmOption);
@@ -75,7 +75,12 @@ const handleConfirmApply = async () => {
         },
       }
     );
-    await confirmOpen(result.data.message);
+    await confirmOpen(
+      h('p', null, [
+        h('div', { style: 'text-align: center;' }, '속도변경 신청 접수가'),
+        h('div', { style: 'text-align: center;' }, '완료 되었습니다.'),
+      ])
+    );
     applyPopupShow.value = false;
     const apply = await getApplyData();
     applyData.value = apply;
@@ -292,8 +297,8 @@ onMounted(async () => {
         />
         <p>
           Basic(Down속도 200M)/ Standard(Down속도 500M) 사용 고객만 사용
-          가능하며, Premium(Down속도 1G) 사용 중이신 고객은 ‘비즈온＇이 아닌
-          ‘비즈넷＇으로만 변경 가능합니다.
+          가능하며, Premium(Down속도 1G) 사용 중이신 고객은 ‘비즈온' 이 아닌
+          ‘비즈넷' 으로만 변경 가능합니다.
         </p>
       </li>
     </ul>
