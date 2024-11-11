@@ -94,6 +94,7 @@ const handleConfirmApply = async () => {
 
 const handleCancelApply = () => {
   applyPopupShow.value = false;
+  satisfactionPopupShow.value = true;
 };
 
 const handleConfirmSatisfaction = async () => {
@@ -134,10 +135,7 @@ const kbToMb = (kb: number) => {
 
 onMounted(async () => {
   const result = await getApplyData();
-  console.log(result);
-
   applyData.value = result;
-  console.log(userStore);
 });
 </script>
 
@@ -319,10 +317,12 @@ onMounted(async () => {
           :sbscUpldSpedVlue="applyData.sbscUpldSped"
           :trfEvetOccrDt="applyData.trfEvetOccrDt"
           :occrTrfDivsCd="applyData.occrTrfDivsCd"
+          :bizEmpHpno="applyData.bizEmpHpno"
+          :bizEmpNm="applyData.bizEmpNm"
+          :bizEmpEmalAddr="applyData.bizEmpEmalAddr"
         />
       </template>
     </common-modal>
-
     <!-- 고객만족도 조사 팝업 -->
     <common-modal
       v-model="satisfactionPopupShow"

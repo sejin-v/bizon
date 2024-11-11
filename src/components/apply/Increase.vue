@@ -9,6 +9,9 @@ const props = withDefaults(defineProps<IStandardParameter>(), {
   occrTrfDivsCd: '01',
   trfEvetOccrDt: '',
   icspRqstKdCd: '',
+  bizEmpHpno: '',
+  bizEmpNm: '',
+  bizEmpEmalAddr: '',
 });
 
 const increaseData = reactive({
@@ -147,9 +150,11 @@ defineExpose({ getRequestData });
           class="mr-2"
         />
         <p>
-          증속 속도로 계속 사용원하시는 경우에는 영업
-          담당자<u>&#40;김비즈&#47;010-8080-1234&#47;bizon&#64;lguplus.co.kr&#41;</u>께
-          문의바랍니다.
+          증속 속도로 계속 사용원하시는 경우에는 영업 담당자<u
+            >&#40;{{ props.bizEmpNm }}&#47;{{ props.bizEmpHpno }}&#47;{{
+              props.bizEmpEmalAddr
+            }}&#41;</u
+          >께 문의바랍니다.
         </p>
       </li>
       <li>

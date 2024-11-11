@@ -34,6 +34,9 @@ export interface IStandardParameter {
   occrTrfDivsCd?: string
   trfEvetOccrDt?: string
   icspRqstKdCd?: string
+  bizEmpHpno: string
+  bizEmpNm: string
+  bizEmpEmalAddr: string
 }
 
 
