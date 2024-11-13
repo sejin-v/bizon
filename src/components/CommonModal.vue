@@ -46,7 +46,6 @@ const calculateModalWidth = computed(() => {
   else return 'var(--modal-width-md)';
 });
 
-
 const cancel = () => {
   emit('cancel');
 };
@@ -60,12 +59,12 @@ const confirm = () => {
   <el-dialog
     v-model="modalShow"
     :close-on-click-modal="closeOnClickModal"
+    :close-on-press-escape="closeOnClickModal"
     :width="calculateModalWidth"
     align-center
     destroy-on-close
     :show-close="showClose"
     :append-to-body="true"
-
     class="popup"
     :class="{ 'detail-popup': desc }"
   >

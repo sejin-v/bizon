@@ -7,7 +7,6 @@ const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const defaultMenu = ref(route.fullPath);
-
 const menuList = ref<IMenu[]>([
   {
     menuId: '/apply',
@@ -22,6 +21,7 @@ const menuList = ref<IMenu[]>([
     menuName: '게시판',
   },
 ]);
+const elmenu = ref();
 
 const handleMenuClick = (target: string) => {
   router.push(target);
@@ -44,11 +44,15 @@ const handleLogout = async () => {
     console.error(error);
   }
 };
+
+const handleClick = () => {
+  elmenu.value[0].handleClick('/apply');
+};
 </script>
 
 <template>
   <header class="header">
-    <h1 class="logo">
+    <h1 class="logo" @click="handleClick">
       <a href="javascript:void(0);">
         <icon name="logo-lg" alt="LG U+" class="mr-2.5" />
         <span>비즈온 증속신청</span>
@@ -61,6 +65,7 @@ const handleLogout = async () => {
         :default-active="defaultMenu"
       >
         <el-menu-item
+          ref="elmenu"
           v-for="(menu, index) in menuList"
           :key="`mgmt=menu-list-${menu.menuId}`"
           :index="menu.menuId"

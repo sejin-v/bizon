@@ -163,13 +163,15 @@ onMounted(async () => {
       </li>
       <li style="height: 65px">
         <label>서비스 개통일자</label>
-        <div>{{ dateFormatter(applyData.cntcStrtDt) }}</div>
+        <div>
+          {{ applyData.cntcStrtDt ? dateFormatter(applyData.cntcStrtDt) : '' }}
+        </div>
       </li>
       <li style="height: 65px">
         <label>기본 제공 속도</label>
         <div class="flex-col !items-start justify-center">
           <p class="flex items-center">
-            업로드 {{ applyData.sbscUpldSped }}
+            <span> 업로드 {{ applyData.sbscUpldSped }} </span>
             <icon
               name="triangle__full--525"
               width="11"
@@ -333,6 +335,7 @@ onMounted(async () => {
       v-model="satisfactionPopupShow"
       title="고객 만족도 조사"
       :size="MODAL_SIZE.LARGE"
+      :closeOnClickModal="false"
       class="satisfaction-p"
       cancel-text="다음에 참여할래요"
       confirm-text="참여하기"
