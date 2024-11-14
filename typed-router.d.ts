@@ -48,7 +48,7 @@ declare module 'vue-router/auto-routes' {
     'date-picker': RouteRecordInfo<'date-picker', '/example/vue-date-picker', Record<never, never>, Record<never, never>>,
     '/home': RouteRecordInfo<'/home', '/home', Record<never, never>, Record<never, never>>,
     'login': RouteRecordInfo<'login', '/login', Record<never, never>, Record<never, never>>,
-    'change-pw-login': RouteRecordInfo<'change-pw-login', '/login/changePw/:id(.*)', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    'change-pw-login': RouteRecordInfo<'change-pw-login', '/login/changePw/:userId(.*)', { userId: ParamValue<true> }, { userId: ParamValue<false> }>,
     'find-pw': RouteRecordInfo<'find-pw', '/login/findPw', Record<never, never>, Record<never, never>>,
     '/mgmt/': RouteRecordInfo<'/mgmt/', '/mgmt', Record<never, never>, Record<never, never>>,
     '/mgmt/preparing': RouteRecordInfo<'/mgmt/preparing', '/mgmt/preparing', Record<never, never>, Record<never, never>>,

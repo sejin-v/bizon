@@ -2,8 +2,10 @@
 const router = useRouter();
 const userId = ref('');
 const authUserId = ref('');
+const userName = ref('');
 const phoneNumber = ref('');
 const authNumber = ref('');
+const brno = ref('');
 
 const userIdError = ref('');
 const phoneNumberError = ref('');
@@ -24,11 +26,14 @@ const confirmOpen = async (message: string) => {
   });
   return;
 };
+
 const handleAuthNumber = async () => {
   useTimer.value = false;
   const params = {
     userId: userId.value,
     phoneNumber: phoneNumber.value.replaceAll('-', ''),
+    cucoChrrNm: userName.value,
+    brno: brno.value,
   };
   try {
     await request.get('/bizon/api/account/send-otp', {
@@ -71,7 +76,8 @@ const handleAuth = async () => {
       }
     );
     await confirmOpen('인증되었습니다.');
-    router.push('/login/changePw');
+
+    router.push(`/login/changePw/${userId.value}`);
   } catch (error: any) {
     if (error.code === '40002019') {
       authNumberError.value =
@@ -97,6 +103,20 @@ const handleAuth = async () => {
           placeholder="아이디를 입력하세요."
           max-length="40"
           v-model:valid-message="userIdError"
+        />
+      </FormItem>
+      <FormItem label="사업자번호">
+        <CustomInput
+          v-model="brno"
+          placeholder="사업자번호를 입력하세요."
+          max-length="40"
+        />
+      </FormItem>
+      <FormItem label="이름">
+        <CustomInput
+          v-model="userName"
+          placeholder="이름을 입력하세요."
+          max-length="40"
         />
       </FormItem>
       <FormItem label="휴대폰 번호">
@@ -130,7 +150,12 @@ const handleAuth = async () => {
       <button
         type="button"
         class="btn__full--primary-md"
-        :disabled="checkAuthButtonDisabled || authNumber.length !== 6"
+        :disabled="
+          checkAuthButtonDisabled ||
+          authNumber.length !== 6 ||
+          !brno ||
+          !userName
+        "
         @click="handleAuth"
       >
         인증하기

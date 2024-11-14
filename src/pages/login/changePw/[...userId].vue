@@ -1,28 +1,27 @@
 <script lang="ts" setup>
 import JSEncrypt from 'jsencrypt';
 
+const router = useRouter();
+const route = useRoute();
 const password = ref('');
 const confirmPassword = ref('');
 
 const passwordError = ref('');
 const confirmPasswordError = ref('');
 
-const router = useRouter();
-
-const userStore = useUserStore();
-
 const getPublicKey = async () => {
   const params = {
-    userId: userStore.user?.entrNo,
+    userId: route.params.userId,
   };
   const result = await request.get('/bizon/api/account/public-key', {
     params,
     headers: {
-      'X-COMMAND': 'P07007',
+      'X-COMMAND': 'P07004',
     },
   });
   return result.data.data;
 };
+
 const handleChangePassword = async () => {
   if (!password.value) return;
   if (password.value !== confirmPassword.value) {
@@ -45,7 +44,7 @@ const handleChangePassword = async () => {
       },
       {
         headers: {
-          'X-COMMAND': 'P07007',
+          'X-COMMAND': 'P07004',
         },
       }
     );
@@ -56,15 +55,20 @@ const handleChangePassword = async () => {
       closeOnPressEscape: true,
       hideCancelButton: true,
     });
+
     router.push('/login');
   } catch (error: any) {
-    passwordError.value = error.message;
+    if (error.code === '40002006') {
+      passwordError.value = '* 비밀번호 생성 규칙을 확인하세요';
+    } else {
+      passwordError.value = error.message;
+    }
     console.error(error);
   }
 };
 
 const handleCancelButton = () => {
-  router.push('/my-page');
+  router.push('/login');
 };
 </script>
 
@@ -79,14 +83,16 @@ const handleCancelButton = () => {
         <CustomInput
           type="password"
           v-model="password"
+          max-length="40"
           placeholder="새 비밀번호를 입력하세요."
           v-model:valid-message="passwordError"
         />
       </FormItem>
       <FormItem label="새 비밀번호 확인">
         <CustomInput
-          v-model="confirmPassword"
           type="password"
+          v-model="confirmPassword"
+          max-length="40"
           placeholder="새 비밀번호를 다시 입력하세요."
           v-model:valid-message="confirmPasswordError"
         />
@@ -192,6 +198,8 @@ const handleCancelButton = () => {
 <style lang="scss"></style>
 
 <route lang="yaml">
-name: change-pw
+name: change-pw-login
 meta:
+  isPublicPath: true
+  layout: login
 </route>
