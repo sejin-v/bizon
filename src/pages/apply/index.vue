@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import dayjs from 'dayjs';
 import { MODAL_SIZE } from '~/types';
 import { IApplyData } from '~/types';
 
@@ -159,7 +160,12 @@ onMounted(async () => {
       </li>
       <li>
         <label>고객사명</label>
-        <div>{{ applyData.cucoNm }}({{ userStore.user?.brno }})</div>
+        <div class="flex flex-col !items-start">
+          <p>
+            {{ applyData.cucoNm }}
+          </p>
+          <p>({{ userStore.user?.brno }})</p>
+        </div>
       </li>
       <li style="height: 65px">
         <label>서비스 개통일자</label>
@@ -195,7 +201,10 @@ onMounted(async () => {
       <li style="height: 65px">
         <label>사용 속도</label>
         <div class="flex-col !items-start">
-          기준 일자: {{ dateFormatter(applyData.trfEvetOccrDt) }}
+          기준 일자:
+          {{
+            dayjs(applyData.trfEvetOccrBaseDttm).format('YYYY-MM-DD HH시 mm분')
+          }}
           <p class="flex items-center">
             업로드 {{ applyData.occrTrfUpldSpedVlue }}
             <icon
@@ -256,7 +265,11 @@ onMounted(async () => {
       <li>
         <label>증속 신청 가능한 날짜</label>
         <div>
-          {{ dateFormatter(applyData.icspRqstDdayDt) }}
+          {{
+            applyData.icspRqstDdayDt
+              ? `${dateFormatter(applyData.icspRqstDdayDt)} 23시 59분`
+              : ''
+          }}
         </div>
       </li>
       <li>

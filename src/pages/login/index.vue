@@ -51,7 +51,11 @@ const getParams = (publicKey: string) => {
 
 const getPublicKey = async () => {
   try {
+    const params = {
+      userId: userId.value,
+    };
     const result = await request.get('/bizon/api/account/public-key', {
+      params,
       headers: {
         'X-COMMAND': 'P07002',
       },
