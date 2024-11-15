@@ -26,9 +26,7 @@ const getSatisfactionData = () => {
       evalQstnNo: target.evalQstnNo,
       evalQstnMtchYn: target.evalQstnMtchYn,
       [target.evalQstnMtchYn === 'N' ? 'evalAnsr' : 'evalScor']:
-        target.evalQstnMtchYn === 'N'
-          ? target.evalAnsr
-          : target.evalQstnNo * 20,
+        target.evalQstnMtchYn === 'N' ? target.evalAnsr : target.score * 20,
     };
   });
   return {
