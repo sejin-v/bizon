@@ -2,7 +2,6 @@
 const router = useRouter();
 const userId = ref('');
 const authUserId = ref('');
-const userName = ref('');
 const phoneNumber = ref('');
 const authNumber = ref('');
 const brno = ref('');
@@ -32,7 +31,6 @@ const handleAuthNumber = async () => {
   const params = {
     userId: userId.value,
     phoneNumber: phoneNumber.value.replaceAll('-', ''),
-    cucoChrrNm: userName.value,
     brno: brno.value,
   };
   try {
@@ -112,13 +110,7 @@ const handleAuth = async () => {
           max-length="40"
         />
       </FormItem>
-      <FormItem label="이름">
-        <CustomInput
-          v-model="userName"
-          placeholder="이름을 입력하세요."
-          max-length="40"
-        />
-      </FormItem>
+
       <FormItem label="휴대폰 번호">
         <CustomPhoneInput
           max-length="13"
@@ -150,12 +142,7 @@ const handleAuth = async () => {
       <button
         type="button"
         class="btn__full--primary-md"
-        :disabled="
-          checkAuthButtonDisabled ||
-          authNumber.length !== 6 ||
-          !brno ||
-          !userName
-        "
+        :disabled="checkAuthButtonDisabled || authNumber.length !== 6 || !brno"
         @click="handleAuth"
       >
         인증하기

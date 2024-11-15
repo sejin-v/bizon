@@ -308,7 +308,7 @@ onMounted(async () => {
         최초 로그인 시 아이디는 사용중인 서비스의 가입번호,<br />
         비밀번호는 고객사의 사업자번호 입니다.
         <button type="button" @click="openModal">
-          <span>고객번호 확인방법</span>
+          <span>가입번호 확인방법</span>
           <icon
             name="arrow-r__line--4c8"
             width="6"
@@ -321,7 +321,7 @@ onMounted(async () => {
     </div>
     <common-modal
       v-model="guidePopupShow"
-      title="고객번호 확인방법"
+      title="가입번호 확인방법"
       class="login-p"
       :size="MODAL_SIZE.LARGE"
     >
@@ -330,7 +330,7 @@ onMounted(async () => {
           name="guide"
           width="818px"
           height="554px"
-          alt="고객번호는 이메일 또는 지로 청구서에 12자리 숫자로 표기되어 있습니다."
+          alt="가입번호는 이메일 또는 지로 청구서에 12자리 숫자로 표기되어 있습니다."
         />
       </template>
       <template #footer>

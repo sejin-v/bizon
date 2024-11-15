@@ -46,14 +46,18 @@ const handleLogout = async () => {
 };
 
 const handleClick = () => {
-  elmenu.value[0].handleClick('/apply');
+  if (route.fullPath === '/apply') {
+    location.reload();
+  } else {
+    elmenu.value[0].handleClick('/apply');
+  }
 };
 </script>
 
 <template>
   <header class="header">
     <h1 class="logo" @click="handleClick">
-      <a href="javascript:void(0);">
+      <a>
         <icon name="logo-lg" alt="LG U+" class="mr-2.5" />
         <span>비즈온 증속신청</span>
       </a>
