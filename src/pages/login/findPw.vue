@@ -31,7 +31,7 @@ const handleAuthNumber = async () => {
   const params = {
     userId: userId.value,
     phoneNumber: phoneNumber.value.replaceAll('-', ''),
-    brno: brno.value,
+    brno: brno.value, 
   };
   try {
     await request.get('/bizon/api/account/send-otp', {

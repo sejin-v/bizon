@@ -201,10 +201,6 @@ onMounted(async () => {
       <li style="height: 65px">
         <label>사용 속도</label>
         <div class="flex-col !items-start">
-          기준 일자:
-          {{
-            dayjs(applyData.trfEvetOccrBaseDttm).format('YYYY-MM-DD HH시 mm분')
-          }}
           <p class="flex items-center">
             업로드 {{ applyData.occrTrfUpldSpedVlue }}
             <icon
@@ -225,6 +221,10 @@ onMounted(async () => {
               class="rotate-180 ml-2.5"
             />
           </p>
+          기준 일자:
+          {{
+            dayjs(applyData.trfEvetOccrBaseDttm).format('YYYY-MM-DD HH시 mm분')
+          }}
         </div>
       </li>
       <li>
@@ -263,13 +263,16 @@ onMounted(async () => {
         </div>
       </li>
       <li>
-        <label>증속 신청 가능한 날짜</label>
-        <div>
+        <label>증속 신청 가능 기한</label>
+        <div class="flex flex-col !items-start">
           {{
             applyData.icspRqstDdayDt
               ? `${dateFormatter(applyData.icspRqstDdayDt)} 23시 59분`
               : ''
           }}
+          <p v-if="applyData.icspRqstDdayDt">
+            기본 속도 80% 초과한 날로부터 5일 이내
+          </p>
         </div>
       </li>
       <li>
@@ -311,10 +314,29 @@ onMounted(async () => {
           class="mr-2"
         />
         <p>
-          Basic(Down속도 200M)/ Standard(Down속도 500M) 사용 고객만 사용
-          가능하며, Premium(Down속도 1G) 사용 중이신 고객은 ‘비즈온' 이 아닌
-          ‘비즈넷' 으로만 변경 가능합니다.
+          업로드/다운로드 1G를 초과하는 속도는 증속 신청 불가합니다. 1G 이상의
+          속도를 원하실 경우 ‘비즈온' 이 아닌 ‘비즈넷'으로 신청하시기 바랍니다.
         </p>
+      </li>
+      <li>
+        <icon
+          name="check-circle__line"
+          width="16"
+          height="16"
+          alt=""
+          aria-hidden="true"
+          class="mr-2"
+        />
+        <div>
+          <p>
+            원할한 서비스 운영을 위해 기본 제공 속도의 80%를 초과한 날로부터
+            5일이 경과한 경우 증속신청은 제한됩니다.
+          </p>
+          <p>
+            아울러 안정적인 인터넷 회신 서비스 제공을 위해 증속신청은 최대
+            월1회, 연간 2회 가능합니다.
+          </p>
+        </div>
       </li>
     </ul>
 

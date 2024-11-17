@@ -87,9 +87,8 @@ const fetchLogin = async (data: ILoginParams) => {
         },
       }
     );
-
     if (result.data.code === '20001003') {
-      router.push('login/changePw');
+      router.push(`login/changePw/${userId.value}`);
       return;
     }
     if (result.data.code === '20001005') {
@@ -136,7 +135,7 @@ const fetchLogin = async (data: ILoginParams) => {
       ]);
       try {
         await openConfirm(option);
-        router.push('login/changePw');
+        router.push(`login/changePw/${userId.value}`);
       } catch (error) {
         request.post(
           '/bizon/api/account/login/password-remind-next',

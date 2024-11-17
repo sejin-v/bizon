@@ -149,7 +149,7 @@ onMounted(async () => {
       :show-close="false"
     >
       <template #content>
-        {{ noticeData?.atclTit }}
+        {{ noticeData?.atclCntn }}
       </template>
       <template #footer>
         <button

@@ -547,7 +547,7 @@ export function getErrorMessage(code: string) {
 
   const { router } = useRouterStore()
   const userError = ['40001004', '40001005', '40001018', '40001019', '40101016', '50001002']
-  const noUser = ['40401003', '40001008']
+  const noUser = ['40401003',]
 
   if (userError.includes(code)) {
     return {
@@ -578,6 +578,22 @@ export function getErrorMessage(code: string) {
         ),
         h('div', { style: 'text-align: center;' }, '존재하지 않습니다.'),
         h('div', { style: 'text-align: center;' }, '관리자에게 문의하세요.'),
+      ]),
+      next: false,
+
+    }
+  }
+  if (code === '40001008') {
+    return {
+      message: h('p', null, [
+        h(
+          'div',
+          { style: 'text-align: center;' },
+          '입력하신 계정이 정지되었거나'
+        ),
+        h('div', { style: 'text-align: center;' }, '존재하지 않습니다.'),
+        h('div', { style: 'text-align: center;' }, '비밀번호 찾기 버튼을 클릭하셔서'),
+        h('div', { style: 'text-align: center;' }, '비밀번호를 초기화 해주세요.'),
       ]),
       next: false,
 
