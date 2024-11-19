@@ -31,7 +31,9 @@ onMounted(() => {
     <div class="footer__info">
       <div class="footer__legal">
         <a :href="termsUse" target="_blank">이용약관</a>
-        <a :href="privacyPolicy" target="_blank"> 개인정보처리방침 </a>
+        <a :href="privacyPolicy" target="_blank" class="!text-yellow-400">
+          개인정보처리방침
+        </a>
       </div>
       <p>
         ㈜엘지유플러스 서울특별시 용산구 한강대로 32 대표이사 황현식
