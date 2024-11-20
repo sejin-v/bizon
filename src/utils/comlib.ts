@@ -543,7 +543,7 @@ export function isLoginError(code: string) {
   return errorCodeData.includes(code)
 }
 
-export function getErrorMessage(code: string) {
+export function getErrorMessage(code: string,) {
 
   const { router } = useRouterStore()
   const userError = ['40001004', '40001005', '40001018', '40001019', '40101016', '50001002']
@@ -617,7 +617,7 @@ export function getErrorMessage(code: string) {
       ]),
       next: true,
       confirmAction: () => {
-        router.push('/login/changePw')
+        router.push(`/login/findPw`)
       },
 
     }

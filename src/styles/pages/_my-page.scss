@@ -17,6 +17,21 @@
 
 @include breakpoint(laptop) {
   .my-page {
+    .title--sm {
+      @apply flex-col;
+      span {
+        &::before {
+          content: none;
+        }
+        &:first-child {
+          margin-bottom: 8px;
+        }
+        &:not(:first-child) {
+          font-size: 16px;
+          line-height: 22px;
+        }
+      }
+    }
     &__table-footer {
       @apply flex-col items-center justify-center;
       .pagination{

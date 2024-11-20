@@ -85,7 +85,7 @@ onMounted(async () => {
         :name="i"
       >
         <template #title>
-          <p v-if="!isMobile" class="faq-list__num">
+          <p class="faq-list__num">
             {{ faq.rowNum }}
           </p>
           <div class="faq-list__title-wrap">

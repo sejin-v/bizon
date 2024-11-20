@@ -17,15 +17,16 @@
       @apply flex flex-1;
       min-width: 33.333%;
       max-width: 33.333%;
-      height: 48px;
+      min-height: 48px;
       border-left: 1px solid var(--color-gray-200);
       border-bottom: 1px solid var(--color-gray-200);
       box-sizing: border-box;
       &:last-child {
         max-width: 100%;
         > div {
+          // @apply flex items-center;
           @include truncate;
-          display: inline-block;
+          // display: inline-block;
           line-height: 35px;
         }
       }

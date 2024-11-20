@@ -45,7 +45,6 @@ onMounted(async () => {
     <div class="title--sm flex">
       <span>상세정보</span>
       <span>상품명: {{ serviceData.svcNm }}</span>
-      <p class="mx-2">|</p>
       <span>고객번호(가입번호): {{ serviceData.entrNo }}</span>
     </div>
     <el-table :data="myPageData" style="width: 100%">

@@ -103,13 +103,7 @@ onMounted(async () => {
       class="notice__list"
       @row-click="openNoticeDetail"
     >
-      <el-table-column
-        v-if="!isMobile"
-        prop="rowNum"
-        label="No"
-        align="center"
-        width="60"
-      />
+      <el-table-column prop="rowNum" label="No" align="center" width="60" />
 
       <el-table-column label="제목">
         <template #default="scope">

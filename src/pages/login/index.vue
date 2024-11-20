@@ -195,8 +195,10 @@ const handleLogin = async () => {
     await fetchLogin(params);
     const result = await getUserData();
     setUser(result.data);
-    if (rememberId) {
+    if (rememberId.value) {
       localStorage.setItem(KEY_SAVED_ID, userId.value);
+    } else {
+      localStorage.setItem(KEY_SAVED_ID, '');
     }
     router.push('/apply');
   } catch (error: any) {

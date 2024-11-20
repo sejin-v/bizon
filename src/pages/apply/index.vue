@@ -152,32 +152,40 @@ onMounted(async () => {
     <ul class="apply__info">
       <li>
         <label>서비스</label>
-        <div>{{ applyData.svcNm }}</div>
+        <div>{{ applyData.svcNm ? applyData.svcNm : '' }}</div>
       </li>
       <li>
         <label>고객번호(가입번호)</label>
-        <div>{{ applyData.entrNo }}</div>
+        <div>{{ applyData.entrNo ? applyData.entrNo : '' }}</div>
       </li>
       <li>
         <label>고객사명</label>
         <div class="flex flex-col !items-start">
           <p>
-            {{ applyData.cucoNm }}
+            {{ applyData.cucoNm ? applyData.cucoNm : '' }}
           </p>
-          <p>({{ userStore.user?.brno }})</p>
+          <p>
+            ({{
+              userStore.user?.brno
+                ? userStore.user?.brno
+                : userStore.user?.brno
+            }})
+          </p>
         </div>
       </li>
-      <li style="height: 65px">
+      <li>
         <label>서비스 개통일자</label>
         <div>
           {{ applyData.cntcStrtDt ? dateFormatter(applyData.cntcStrtDt) : '' }}
         </div>
       </li>
-      <li style="height: 65px">
+      <li>
         <label>기본 제공 속도</label>
         <div class="flex-col !items-start justify-center">
           <p class="flex items-center">
-            <span> 업로드 {{ applyData.sbscUpldSped }} </span>
+            <span>
+              업로드 {{ applyData.sbscUpldSped ? applyData.sbscUpldSped : 0 }}
+            </span>
             <icon
               name="triangle__full--525"
               width="11"
@@ -187,7 +195,7 @@ onMounted(async () => {
             />
           </p>
           <p class="flex items-center">
-            다운로드 {{ applyData.sbscDownSped }}
+            다운로드 {{ applyData.sbscDownSped ? applyData.sbscDownSped : 0 }}
             <icon
               name="triangle__full--525"
               width="11"
@@ -198,11 +206,14 @@ onMounted(async () => {
           </p>
         </div>
       </li>
-      <li style="height: 65px">
+      <li>
         <label>사용 속도</label>
         <div class="flex-col !items-start">
           <p class="flex items-center">
-            업로드 {{ applyData.occrTrfUpldSpedVlue }}
+            업로드
+            {{
+              applyData.occrTrfUpldSpedVlue ? applyData.occrTrfUpldSpedVlue : 0
+            }}
             <icon
               name="triangle__full--525"
               width="11"
@@ -212,7 +223,10 @@ onMounted(async () => {
             />
           </p>
           <p class="flex items-center">
-            다운로드 {{ applyData.occrTrfDownSpedVlue }}
+            다운로드
+            {{
+              applyData.occrTrfDownSpedVlue ? applyData.occrTrfDownSpedVlue : 0
+            }}
             <icon
               name="triangle__full--525"
               width="11"
@@ -278,7 +292,7 @@ onMounted(async () => {
       <li>
         <label>비고</label>
         <div>
-          {{ applyData.rqstUnableRsn }}
+          {{ applyData.rqstUnableRsn ? applyData.rqstUnableRsn : '' }}
         </div>
       </li>
     </ul>
@@ -367,6 +381,7 @@ onMounted(async () => {
     </common-modal>
     <!-- 고객만족도 조사 팝업 -->
     <common-modal
+      v-if="satisfactionPopupShow"
       v-model="satisfactionPopupShow"
       title="고객 만족도 조사"
       :size="MODAL_SIZE.LARGE"

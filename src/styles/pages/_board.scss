@@ -54,7 +54,7 @@
       border-top: 1px solid var(--color-gray-600);
       .el-table {
         &__header {
-          display: none;
+          // display: none;
         }
         &__body {
           .el-table__row {
@@ -77,7 +77,7 @@
     &-list {
       &__title {
         width: 100%;
-        padding-right: 16px;
+        padding: 0 16px 0 0;
         &-wrap {
           @apply flex-col items-start; 
         }
