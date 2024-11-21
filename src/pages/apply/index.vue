@@ -46,8 +46,28 @@ const getApplyData = async () => {
       },
     });
     return result.data.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+    if (error.code === '30001803') confirmOpen('증속 신청 대상건이 없습니다.');
+    return {
+      entrNo: '',
+      trfEvetOccrDt: '',
+      svcNm: '',
+      svcCd: '',
+      cucoNm: '',
+      cntcStrtDt: '',
+      sbscUpldSped: '',
+      sbscDownSped: '',
+      occrTrfUpldSpedVlue: 0,
+      occrTrfDownSpedVlue: 0,
+      icspRqstDdayDt: '',
+      rqstAbleYn: 'N',
+      rqstUnableRsn: '',
+      bizEmpNm: '',
+      bizEmpHpno: '',
+      bizEmpEmalAddr: '',
+      trfEvetOccrYn: '',
+    };
   }
 };
 
@@ -141,6 +161,7 @@ const kbToMb = (kb: number) => {
 
 onMounted(async () => {
   const result = await getApplyData();
+
   applyData.value = result;
 });
 </script>
@@ -164,7 +185,7 @@ onMounted(async () => {
           <p>
             {{ applyData.cucoNm ? applyData.cucoNm : '' }}
           </p>
-          <p>
+          <p v-if="applyData.cucoNm">
             ({{
               userStore.user?.brno
                 ? userStore.user?.brno
@@ -237,7 +258,11 @@ onMounted(async () => {
           </p>
           기준 일자:
           {{
-            dayjs(applyData.trfEvetOccrBaseDttm).format('YYYY-MM-DD HH시 mm분')
+            applyData.trfEvetOccrBaseDttm
+              ? dayjs(applyData.trfEvetOccrBaseDttm).format(
+                  'YYYY-MM-DD HH시 mm분'
+                )
+              : ''
           }}
         </div>
       </li>

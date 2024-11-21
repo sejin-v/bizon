@@ -73,10 +73,10 @@ onMounted(async () => {
 
 <template>
   <div class="faq-list">
-    <div v-if="!isMobile" class="faq-list__header">
+    <div class="faq-list__header">
       <p>No</p>
       <p>제목</p>
-      <p>등록일</p>
+      <p v-if="!isMobile">등록일</p>
     </div>
     <el-collapse @change="handleClickFaq">
       <el-collapse-item
