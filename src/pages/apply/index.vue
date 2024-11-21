@@ -268,7 +268,7 @@ onMounted(async () => {
       </li>
       <li>
         <label>상태</label>
-        <div>
+        <div v-if="applyData.trfEvetOccrYn">
           {{
             applyData.trfEvetOccrYn === 'Y'
               ? '기본 제공 속도의 80% 초과'
