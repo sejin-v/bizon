@@ -3,7 +3,7 @@ export interface IMyPageData {
   regDttm: string
   sbscUpldSpedVlue: string
   sbscDownSpedVlue: string
-  icspRqstUpldSped: number
-  icspRqstDownSped: number
+  icspRqstUpldSped: number | string
+  icspRqstDownSped: number | string
   taskStatus: string
 }

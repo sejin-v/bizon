@@ -159,6 +159,16 @@ const kbToMb = (kb: number) => {
   return Math.floor(kb / 1024 / 1024);
 };
 
+const brnoFormat = (brno: string) => {
+  const brnoString = brno.toString();
+  return (
+    brnoString.slice(0, 3) +
+    '-' +
+    brnoString.slice(3, 5) +
+    '-' +
+    brnoString.slice(5)
+  );
+};
 onMounted(async () => {
   const result = await getApplyData();
 
@@ -168,7 +178,13 @@ onMounted(async () => {
 
 <template>
   <div class="box--fff apply">
-    <h2 class="title">비즈온 증속신청</h2>
+    <div class="flex flex-col title">
+      <em>무료 제공</em>
+      <h2>비즈온 증속신청</h2>
+      <p class="mt-5 text-left title__desc">
+        기본 제공속도의 80% 초과 시 더 빠른 속도로 인터넷을 이용할 수 있습니다.
+      </p>
+    </div>
     <p class="title--sm">상세정보</p>
     <ul class="apply__info">
       <li>
@@ -180,17 +196,13 @@ onMounted(async () => {
         <div>{{ applyData.entrNo ? applyData.entrNo : '' }}</div>
       </li>
       <li>
-        <label>고객사명</label>
+        <label>고객사명(사업자번호)</label>
         <div class="flex flex-col !items-start">
           <p>
             {{ applyData.cucoNm ? applyData.cucoNm : '' }}
           </p>
           <p v-if="applyData.cucoNm">
-            ({{
-              userStore.user?.brno
-                ? userStore.user?.brno
-                : userStore.user?.brno
-            }})
+            ({{ userStore.user?.brno ? brnoFormat(userStore.user?.brno) : '' }})
           </p>
         </div>
       </li>
@@ -256,14 +268,16 @@ onMounted(async () => {
               class="rotate-180 ml-2.5"
             />
           </p>
-          기준 일자:
-          {{
-            applyData.trfEvetOccrBaseDttm
-              ? dayjs(applyData.trfEvetOccrBaseDttm).format(
-                  'YYYY-MM-DD HH시 mm분'
-                )
-              : ''
-          }}
+          <p style="font-size: 90%">
+            *기준 일자:
+            {{
+              applyData.trfEvetOccrBaseDttm
+                ? dayjs(applyData.trfEvetOccrBaseDttm).format(
+                    'YYYY-MM-DD HH시 mm분'
+                  )
+                : ''
+            }}
+          </p>
         </div>
       </li>
       <li>
@@ -271,7 +285,13 @@ onMounted(async () => {
         <div v-if="applyData.trfEvetOccrYn">
           {{
             applyData.trfEvetOccrYn === 'Y'
-              ? '기본 제공 속도의 80% 초과'
+              ? applyData.occrTrfDivsCd === '01'
+                ? '(업로드) 기본 제공 속도의 80% 초과'
+                : applyData.occrTrfDivsCd === '02'
+                  ? '(다운로드) 기본 제공 속도의 80% 초과'
+                  : applyData.occrTrfDivsCd === '03'
+                    ? '(업로드/다운로드) 기본 제공 속도의 80% 초과'
+                    : ''
               : '정상'
           }}
         </div>
@@ -309,7 +329,7 @@ onMounted(async () => {
               ? `${dateFormatter(applyData.icspRqstDdayDt)} 23시 59분`
               : ''
           }}
-          <p v-if="applyData.icspRqstDdayDt">
+          <p v-if="applyData.icspRqstDdayDt" style="font-size: 90%">
             기본 속도 80% 초과한 날로부터 5일 이내
           </p>
         </div>
@@ -323,59 +343,93 @@ onMounted(async () => {
     </ul>
 
     <ul class="list">
-      <li>
-        <icon
-          name="check-circle__line"
-          width="16"
-          height="16"
-          alt=""
-          aria-hidden="true"
-          class="mr-2"
-        />
-        <div>
-          <p>
-            ‘비즈온’ 서비스를 사용 중이신 고객은 UP/DOWN 트래픽이 임계치 초과 시
-            신청완료 일자 기준 10일동안 무상증속 이용 가능합니다.
-          </p>
-          <p>
-            서비스 속도를 유지하고자 하실 경우 담당 영업사원을 통해 기한 내
-            속도변경 청약 접수바랍니다.
-          </p>
-        </div>
-      </li>
-      <li>
-        <icon
-          name="check-circle__line"
-          width="16"
-          height="16"
-          alt=""
-          aria-hidden="true"
-          class="mr-2"
-        />
-        <p>
-          업로드/다운로드 1G를 초과하는 속도는 증속 신청 불가합니다. 1G 이상의
-          속도를 원하실 경우 ‘비즈온' 이 아닌 ‘비즈넷'으로 신청하시기 바랍니다.
+      <li class="flex-col">
+        <p class="flex items-center">
+          <icon
+            name="check-circle__line"
+            width="16"
+            height="16"
+            alt=""
+            aria-hidden="true"
+            class="mr-2"
+          />
+          <em>사용 조건</em>
         </p>
+        <ul class="list__depth">
+          <li>
+            이용하고 계신 인터넷 사용 속도가 기본 제공 속도의 80%를 초과한 경우
+            증속신청이 가능합니다.
+          </li>
+        </ul>
       </li>
-      <li>
-        <icon
-          name="check-circle__line"
-          width="16"
-          height="16"
-          alt=""
-          aria-hidden="true"
-          class="mr-2"
-        />
-        <div>
-          <p>
-            원할한 서비스 운영을 위해 기본 제공 속도의 80%를 초과한 날로부터
-            5일이 경과한 경우 증속신청은 제한됩니다.
-          </p>
-          <p>
-            아울러 안정적인 인터넷 회신 서비스 제공을 위해 증속신청은 최대
-            월1회, 연간 2회 가능합니다.
-          </p>
-        </div>
+      <li class="flex flex-col">
+        <p class="flex items-center">
+          <icon
+            name="check-circle__line"
+            width="16"
+            height="16"
+            alt=""
+            aria-hidden="true"
+            class="mr-2"
+          />
+          <em>신청 가능기한 및 무료 사용 기간</em>
+        </p>
+        <ul class="list__depth">
+          <li>
+            <p>
+              기본 제공속도의 80%를 초과한 날로부터 <em>5일</em> 동안 신청
+              가능합니다.
+            </p>
+            <p class="list__2depth">
+              안정적인 서비스 제공을 위해 신청 가능한 날짜가 지난 후에는 증속
+              신청이 제한됩니다.
+            </p>
+          </li>
+          <li>
+            <p>
+              증속이 완료 된 다음날로부터
+              <em>10일간 무료료 사용</em>&nbsp;가능합니다.
+            </p>
+            <p class="list__2depth">
+              <em>무료증속 제공 기간이 끝난 후 원래의 속도로 변경</em>됩니다.
+            </p>
+          </li>
+          <li>
+            <p>
+              계속 빠른 속도로 인터넷을 이용하고 싶으시다면,
+              <em>담당 영업사원에게 속도 변경 청약을 신청해 주세요.</em>
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li class="flex flex-col">
+        <p class="flex items-center">
+          <icon
+            name="check-circle__line"
+            width="16"
+            height="16"
+            alt=""
+            aria-hidden="true"
+            class="mr-2"
+          />
+          <em>유의 사항</em>
+        </p>
+        <ul class="list__depth">
+          <li>
+            <p>
+              업로드&#47;다운로드 최대 1G까지 증속가능하며, 1G를 초과하는 속도를
+              원하실 경우 &#39;비즈넷&#39;으로 서비스 변경하시기 바랍니다.
+            </p>
+            <p class="list__2depth">
+              기본 제공 속도에서
+              <em
+                >업로드는 100M, 다운로드는 200M &#8594; 500M &#47; 500M &#8594;
+                1G로 증속</em
+              >가능합니다.
+            </p>
+          </li>
+          <li>증속 신청은 최대 월 1회, 연간 2회 가능합니다</li>
+        </ul>
       </li>
     </ul>
 

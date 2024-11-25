@@ -44,8 +44,8 @@ onMounted(async () => {
     <h2 class="title">마이페이지</h2>
     <div class="title--sm flex">
       <span>상세정보</span>
-      <span>상품명: {{ serviceData.svcNm }}</span>
-      <span>고객번호(가입번호): {{ serviceData.entrNo }}</span>
+      <span>상품명&#58; {{ serviceData.svcNm }}</span>
+      <span>고객번호(가입번호)&#58; {{ serviceData.entrNo }}</span>
     </div>
     <el-table :data="myPageData" style="width: 100%">
       <el-table-column
@@ -53,7 +53,11 @@ onMounted(async () => {
         label="트래픽 초과 기준일자"
         align="center"
         min-width="150"
-      />
+      >
+        <template #default="scope">
+          <p class="!whitespace-normal">{{ scope.row.trfEvetOccrDt }}</p>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="regDttm"
         label="증속 신청일자"
@@ -101,6 +105,28 @@ onMounted(async () => {
           >
             {{ scope.row.icspRqstUpldSped }}
           </span>
+          <!-- <div class="flex flex-col items-center">
+            <p class="flex items-center">
+              {{ scope.row.sbscDownSpedVlue ? scope.row.sbscDownSpedVlue : 0 }}
+              <icon
+                name="triangle__full--525"
+                width="11"
+                height="9"
+                alt=""
+                class="ml-2.5"
+              />
+            </p>
+            <p class="flex items-center">
+              {{ scope.row.sbscUpldSpedVlue ? scope.row.sbscUpldSpedVlue : 0 }}
+              <icon
+                name="triangle__full--525"
+                width="11"
+                height="9"
+                alt=""
+                class="ml-2.5 rotate-180"
+              />
+            </p>
+          </div> -->
         </template>
       </el-table-column>
       <el-table-column
