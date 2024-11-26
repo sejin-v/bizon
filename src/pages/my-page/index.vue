@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import dayjs from 'dayjs';
 import { IMyPageData } from '~/types';
 
 const router = useRouter();
@@ -49,13 +50,60 @@ onMounted(async () => {
     </div>
     <el-table :data="myPageData" style="width: 100%">
       <el-table-column
-        prop="trfEvetOccrDt"
+        prop="trfEvetOccrBaseDttm"
         label="트래픽 초과 기준일자"
         align="center"
         min-width="150"
       >
         <template #default="scope">
-          <p class="!whitespace-normal">{{ scope.row.trfEvetOccrDt }}</p>
+          <p class="!whitespace-normal">
+            {{
+              scope.row.trfEvetOccrBaseDttm
+                ? dayjs(scope.row.trfEvetOccrBaseDttm).format(
+                    'YYYY-MM-DD HH시 mm분'
+                  )
+                : ''
+            }}
+          </p>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="사용 속도"
+        label="사용 속도"
+        align="center"
+        min-width="150"
+      >
+        <template #default="scope">
+          <div class="flex flex-col items-center">
+            <p class="flex items-center">
+              {{
+                scope.row.occrTrfUpldSpedVlue
+                  ? `업로드 ${scope.row.occrTrfUpldSpedVlue}`
+                  : 0
+              }}
+              <icon
+                name="triangle__full--525"
+                width="11"
+                height="9"
+                alt=""
+                class="ml-2.5"
+              />
+            </p>
+            <p class="flex items-center">
+              {{
+                scope.row.occrTrfDownSpedVlue
+                  ? `다운로드 ${scope.row.occrTrfDownSpedVlue}`
+                  : 0
+              }}
+              <icon
+                name="triangle__full--525"
+                width="11"
+                height="9"
+                alt=""
+                class="ml-2.5 rotate-180"
+              />
+            </p>
+          </div>
         </template>
       </el-table-column>
       <el-table-column
