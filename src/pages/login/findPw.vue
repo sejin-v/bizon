@@ -31,7 +31,7 @@ const handleAuthNumber = async () => {
   const params = {
     userId: userId.value,
     phoneNumber: phoneNumber.value.replaceAll('-', ''),
-    brno: brno.value, 
+    brno: brno.value,
   };
   try {
     await request.get('/bizon/api/account/send-otp', {
@@ -91,14 +91,14 @@ const handleAuth = async () => {
   <div class="password password--find">
     <h2 class="text-center title">비밀번호 찾기</h2>
     <p class="text-center title__desc">
-      회원 가입 시 입력한 아이디, 휴대폰번호(인증) 입력 후 <br />
+      회원 가입 시 입력한 가입번호, 휴대폰번호(인증) 입력 후 <br />
       인증을 완료하면 비밀번호를 변경할 수 있습니다.
     </p>
     <form class="password__form form">
-      <FormItem label="아이디">
+      <FormItem label="가입번호">
         <CustomInput
           v-model="userId"
-          placeholder="아이디를 입력하세요."
+          placeholder="가입번호를 입력하세요."
           max-length="40"
           v-model:valid-message="userIdError"
         />
