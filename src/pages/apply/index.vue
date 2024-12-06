@@ -213,7 +213,7 @@ onMounted(async () => {
         <p
           v-if="applyData.rqstStusCd === 'N'"
           style="font-size: 90%"
-          class="text-gray-500"
+          class="text-gray-500 mt-2"
         >
           {{ applyData.rqstUnableRsn ? applyData.rqstUnableRsn : '' }}
         </p>
