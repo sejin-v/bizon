@@ -190,26 +190,34 @@ onMounted(async () => {
           있습니다.
         </p>
       </div>
-      <button
-        type="button"
-        :class="{
-          'w-full': isMobile,
-          'btn__full--primary-sm': applyData.rqstStusCd === 'Y',
-          'btn__full--pending-sm': applyData.rqstStusCd === 'P',
-          'btn__full--negative-sm': applyData.rqstStusCd === 'N',
-        }"
-        style="margin-bottom: 40px"
-        :disabled="applyData.rqstStusCd === 'N'"
-        @click="handleApplyButton"
-      >
-        {{
-          applyData.rqstStusCd === 'Y'
-            ? '신청하기'
-            : applyData.rqstStusCd === 'P'
-              ? '사용중'
-              : '신청불가'
-        }}
-      </button>
+      <div style="margin-bottom: 40px">
+        <button
+          type="button"
+          :class="{
+            'w-full': isMobile,
+            'btn__full--primary-sm': applyData.rqstStusCd === 'Y',
+            'btn__full--pending-sm': applyData.rqstStusCd === 'P',
+            'btn__full--negative-sm': applyData.rqstStusCd === 'N',
+          }"
+          :disabled="applyData.rqstStusCd === 'N'"
+          @click="handleApplyButton"
+        >
+          {{
+            applyData.rqstStusCd === 'Y'
+              ? '신청하기'
+              : applyData.rqstStusCd === 'P'
+                ? '이미 사용 중입니다.'
+                : '신청할 수 없습니다.'
+          }}
+        </button>
+        <p
+          v-if="applyData.rqstStusCd === 'N'"
+          style="font-size: 90%"
+          class="text-gray-500"
+        >
+          {{ applyData.rqstUnableRsn ? applyData.rqstUnableRsn : '' }}
+        </p>
+      </div>
     </div>
     <p class="title--sm">상세정보</p>
     <ul class="apply__info">
