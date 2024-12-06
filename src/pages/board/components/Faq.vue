@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const faqList = ref();
-const faqIdList = ref<string[]>([]);
+const faqData = ref();
+
 const pageData = reactive({
   currentPage: 1,
   totalCount: 0,
@@ -17,6 +18,13 @@ const confirmOption = reactive({
   closeOnPressEscape: true,
   hideCancelButton: true,
 });
+
+const popup = reactive({
+  faqDetailPopup: {
+    show: false,
+  },
+});
+
 const getParams = () => {
   return {
     atclKdCd: 'FAQ',
@@ -25,7 +33,7 @@ const getParams = () => {
   };
 };
 
-const getFaqList = async (params) => {
+const getFaqList = async (params: any) => {
   const result = await request.get('/bizon/api/board/list', {
     params,
     headers: {
@@ -42,12 +50,9 @@ const handleSearch = async () => {
   pageData.totalCount = result.totalCount;
 };
 const handleClickFaq = async (target: any) => {
-  if (!target.length || faqList.value[target[target.length - 1]].atclCntn)
-    return;
-  faqIdList.value.push(target[target.length - 1]);
   const params = {
-    atclKdCd: faqList.value[target[target.length - 1]].atclKdCd,
-    atclSno: faqList.value[target[target.length - 1]].atclSno,
+    atclKdCd: target.atclKdCd,
+    atclSno: target.atclSno,
   };
   try {
     const result = await request.get('/bizon/api/board/detail', {
@@ -56,9 +61,8 @@ const handleClickFaq = async (target: any) => {
         'X-COMMAND': 'P07009',
       },
     });
-
-    faqList.value[target[target.length - 1]].atclCntn =
-      result.data.data.atclCntn;
+    faqData.value = result.data.data;
+    popup.faqDetailPopup.show = true;
   } catch (error: any) {
     if (error.code === '40423001') {
       confirmOption.content = '게시글이 존재하지 않습니다.';
@@ -66,6 +70,10 @@ const handleClickFaq = async (target: any) => {
     }
   }
 };
+
+function handleCancel() {
+  popup.faqDetailPopup.show = false;
+}
 onMounted(async () => {
   handleSearch();
 });
@@ -73,36 +81,65 @@ onMounted(async () => {
 
 <template>
   <div class="faq-list">
-    <div class="faq-list__header">
+    <!-- <div class="faq-list__header">
       <p>No</p>
       <p>제목</p>
       <p v-if="!isMobile">등록일</p>
-    </div>
-    <el-collapse @change="handleClickFaq">
-      <el-collapse-item
-        v-for="(faq, i) in faqList"
-        :key="`faq-list-${faq.atclSno}`"
-        :name="i"
-      >
-        <template #title>
-          <p class="faq-list__num">
-            {{ faq.rowNum }}
+    </div> -->
+    <el-table
+      :data="faqList"
+      style="width: 100%"
+      class="notice__list"
+      @row-click="handleClickFaq"
+    >
+      <el-table-column prop="rowNum" label="No" align="center" width="60" />
+
+      <el-table-column label="제목">
+        <template #default="scope">
+          <p class="font-color--dark-gray">
+            {{ scope.row.atclTit }}
           </p>
-          <div class="faq-list__title-wrap">
-            <p class="faq-list__title">
-              {{ faq.atclTit }}
-            </p>
-            <p class="faq-list__date">
-              {{ dateFormatter(faq.regDt) }}
-            </p>
-          </div>
+          <p v-if="isMobile">
+            {{ dateFormatter(scope.row.regDt) }}
+          </p>
         </template>
-        <div>{{ faq.atclCntn }}</div>
-      </el-collapse-item>
-    </el-collapse>
+      </el-table-column>
+      <el-table-column
+        v-if="!isMobile"
+        prop="regDt"
+        label="등록일"
+        align="center"
+        width="130"
+      >
+        <template #default="scope">
+          <p>
+            {{ dateFormatter(scope.row.regDt) }}
+          </p>
+        </template></el-table-column
+      >
+    </el-table>
     <Pagination
       v-model="pageData.currentPage"
       :total-count="pageData.totalCount"
     />
+    <common-modal
+      v-model="popup.faqDetailPopup.show"
+      :title="faqData?.atclTit"
+      :desc="dateFormatter(faqData?.regDt)"
+      :show-close="false"
+    >
+      <template #content>
+        {{ faqData?.atclCntn }}
+      </template>
+      <template #footer>
+        <button
+          type="button"
+          class="btn__full--primary-md"
+          @click="handleCancel"
+        >
+          목록보기
+        </button>
+      </template>
+    </common-modal>
   </div>
 </template>

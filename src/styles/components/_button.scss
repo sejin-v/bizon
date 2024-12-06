@@ -25,6 +25,10 @@ $button-solid-colors: (
   negative: (
     text: var(--color-gray-500),
     default: var(--color-gray-100)
+  ),
+   pending: (
+    text: var(--color-white),
+    default: var(--color-green-750)
   )
 );
 
@@ -36,6 +40,10 @@ $button-line-colors: (
   negative: (
     text: var(--color-gray-500),
     default: var(--color-gray-150)
+  ),
+   pending: (
+    text: var(--color-white),
+    default: var(--color-green-750)
   )
 );
 
@@ -140,4 +148,5 @@ $button-line-colors: (
       text-underline-offset: 2px;
     }
   }
+
 }

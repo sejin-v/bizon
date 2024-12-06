@@ -7,6 +7,14 @@ const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const defaultMenu = ref(route.fullPath);
+
+const confirmOption = reactive({
+  content: '',
+  center: true,
+  closeOnClickModal: true,
+  closeOnPressEscape: true,
+  hideCancelButton: false,
+});
 const menuList = ref<IMenu[]>([
   {
     menuId: '/apply',
@@ -29,6 +37,8 @@ const handleMenuClick = (target: string) => {
 
 const handleLogout = async () => {
   try {
+    confirmOption.content = '로그아웃 하시겠습니까?';
+    await openConfirm(confirmOption);
     await request.post(
       '/bizon/api/account/logout',
       {},

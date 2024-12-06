@@ -11,7 +11,7 @@ export interface IApplyData {
   occrTrfUpldSpedVlue: number
   occrTrfDownSpedVlue: number
   icspRqstDdayDt: string
-  rqstAbleYn: string
+  rqstStusCd: string
   rqstUnableRsn: string
   bizEmpNm: string
   bizEmpHpno: string

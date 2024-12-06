@@ -3,7 +3,7 @@
   @include typo(var(--font-size-36), 600, var(--color-gray-800));
   margin-bottom: 40px;
   em {
-    @include typo(var(--font-size-24),500, var(--color-secondary-800));
+    @include typo(var(--font-size-24),500, var(--color-primary-800));
     margin-bottom: 10px;
   }
   
@@ -40,6 +40,7 @@
 
 .list {
   @apply flex flex-col;
+  padding: 10px;
   @include space($y: 10px);
   li {
     @include typo(var(--font-size-15), $color: var(--color-gray-600), $line-height: 16px);
@@ -56,7 +57,7 @@
       @apply flex flex-col;
       em {
         font-weight: 400;
-        color: var(--color-secondary-800);
+        color: var(--color-primary-800);
       }
     }
   }
@@ -69,8 +70,8 @@
     }
     & {
       font-size: var(--font-size-14);
-      margin-top: 6px;
-      margin-left: 10px;
+      // margin-top: 6px;
+      // margin-left: 10px;
       padding-left: 15px;
     }
   }
