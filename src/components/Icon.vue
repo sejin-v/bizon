@@ -17,12 +17,19 @@ const props = defineProps({
   height: {
     type: String,
   },
-})
+});
 const imageSrc = computed(() => {
-  return `/icon/${props.name}.${props.extension}`
-})
+  return `/icon/${props.name}.${props.extension}`;
+});
 </script>
 
 <template>
-  <img :src="imageSrc" class="cm-icon" :alt="alt" :style="`width: ${width}px; height: ${height}px;`" />
+  <img
+    :src="imageSrc"
+    class="cm-icon"
+    :alt="alt"
+    :style="`width: ${width}px; height: ${height}px;`"
+  />
 </template>
+
+<style scoped></style>

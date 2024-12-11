@@ -181,48 +181,54 @@ onMounted(async () => {
 
 <template>
   <div class="box--fff apply">
-    <div :class="{ 'flex items-end justify-between': !isMobile }">
-      <div class="flex flex-col title">
-        <em>무료 제공</em>
-        <h2>비즈온 증속신청</h2>
-        <p class="mt-5 text-left title__desc !text-gray-500">
-          기본 제공속도의 80% 초과 시 더 빠른 속도로 인터넷을 이용할 수
-          있습니다.
-        </p>
-      </div>
-      <div style="margin-bottom: 40px">
-        <button
-          type="button"
-          :class="{
-            'w-full': isMobile,
-            'btn__full--primary-sm': applyData.rqstStusCd === 'Y',
-            'btn__full--pending-sm': applyData.rqstStusCd === 'P',
-            'btn__full--negative-sm': applyData.rqstStusCd === 'N',
-          }"
-          :disabled="applyData.rqstStusCd === 'N'"
-          @click="handleApplyButton"
-        >
-          {{
-            applyData.rqstStusCd === 'Y'
-              ? '신청하기'
-              : applyData.rqstStusCd === 'P'
-                ? '이미 사용 중입니다.'
-                : '신청할 수 없습니다.'
-          }}
-        </button>
-        <p
-          v-if="applyData.rqstStusCd === 'N'"
-          style="font-size: 90%"
-          class="text-gray-500 mt-2"
-        >
-          {{ applyData.rqstUnableRsn ? applyData.rqstUnableRsn : '' }}
-        </p>
+    <div class="flex flex-col title">
+      <em class="!font-bold">무료</em>
+      <h2>비즈온 증속 신청</h2>
+      <div :class="{ 'flex items-start justify-between': !isMobile }">
+        <div>
+          <p class="mt-5 text-left title__desc !text-gray-500">
+            기본 제공속도의 80% 초과 시 더 빠른 속도로 인터넷을 이용할 수
+            있습니다.
+          </p>
+          <div>
+            <button
+              type="button"
+              :class="{
+                'w-full mt-5': isMobile,
+                'btn__full--primary-md  !text-base':
+                  applyData.rqstStusCd === 'Y',
+                'btn__full--pending-md  !text-base':
+                  applyData.rqstStusCd === 'P',
+                'btn__full--negative-md !text-base ':
+                  applyData.rqstStusCd === 'N',
+              }"
+              :disabled="applyData.rqstStusCd === 'N'"
+              @click="handleApplyButton"
+            >
+              {{
+                applyData.rqstStusCd === 'Y'
+                  ? '신청하기'
+                  : applyData.rqstStusCd === 'P'
+                    ? '이미 사용 중입니다.'
+                    : '신청할 수 없습니다.'
+              }}
+            </button>
+            <p
+              v-if="applyData.rqstStusCd === 'N'"
+              class="mt-2 text-left title__desc !text-gray-500 !text-xs"
+            >
+              {{ applyData.rqstUnableRsn ? applyData.rqstUnableRsn : '' }}
+            </p>
+          </div>
+        </div>
+        <div></div>
       </div>
     </div>
-    <p class="title--sm">상세정보</p>
+
+    <p class="title--sm !font-bold">이용 정보</p>
     <ul class="apply__info">
       <li>
-        <label>서비스</label>
+        <label>요금제</label>
         <div>{{ applyData.svcNm ? applyData.svcNm : '' }}</div>
       </li>
       <li>
@@ -241,7 +247,7 @@ onMounted(async () => {
         </div>
       </li>
       <li>
-        <label>서비스 개통일자</label>
+        <label>개통일</label>
         <div>
           {{ applyData.cntcStrtDt ? dateFormatter(applyData.cntcStrtDt) : '' }}
         </div>
@@ -356,9 +362,9 @@ onMounted(async () => {
         </div>
       </li> -->
       <li>
-        <label>증속 신청 가능 기한</label>
+        <label>증속 신청 기한</label>
         <div class="flex flex-col !items-start">
-          <p style="color: var(--color-primary-800)">
+          <p>
             {{
               applyData.icspRqstDdayDt
                 ? `${dateFormatter(applyData.icspRqstDdayDt)} 23시 59분`
@@ -391,13 +397,16 @@ onMounted(async () => {
               aria-hidden="true"
               class="mr-2"
             /> -->
-            <em>사용 조건</em>
+            <em>신청 조건</em>
           </p>
           <ul class="list__depth">
             <li>
               <p class="list__2depth">
-                이용하고 계신 인터넷 사용 속도가 기본 제공 속도의 80%를 초과한
-                경우 증속신청이 가능합니다.
+                인터넷 사용 속도가 요금제 기본 제공 속도의 80% 초과하면 신청할
+                수 있어요 <br />
+                (예시) 요금제 기본 제공 속도가 업로드 100Mbps, 다운로드
+                200Mbps라면 사용 속도가 업로드 80Mbps 이상, 다운로드 160Mbps
+                이상일 때 신청 가능
               </p>
             </li>
           </ul>
@@ -412,62 +421,58 @@ onMounted(async () => {
               aria-hidden="true"
               class="mr-2"
             /> -->
-            <em>신청 가능기한 및 무료 사용 기간</em>
+            <em>신청 기한</em>
           </p>
           <ul class="list__depth">
             <li>
               <p class="list__2depth">
-                기본 제공속도의 80%를 초과한 날로부터
-                <em>5일동안 신청 가능</em> 합니다. <br />(안정적인 서비스 제공을
-                위해 신청 가능한 날짜가 지난 후에는 증속 신청이 제한됩니다.)
+                기본 제공 속도의 80%를 넘은 날로부터
+                <em>5일 동안 신청</em>할 수 있어요.
               </p>
             </li>
             <li>
               <p class="list__2depth">
-                증속이 완료 된 다음날로부터
-                <em>10일간 무료로 사용</em>&nbsp;가능합니다.
-                <br />
-                (무료증속 제공 기간이 끝난 후 원래의 속도로 변경됩니다.)
+                안정적인 서비스 운영을 위해 5일이 지나면 신청할 수 없어요.
               </p>
             </li>
             <li>
               <p class="list__2depth">
-                계속 빠른 속도로 인터넷을 이용하고 싶으시다면,
-                <em>담당 영업사원에게 속도 변경 청약을 신청</em>해 주세요.
+                증속이 적용된 날로부터
+                <em>10일 동안 추가 요금 없이</em>, 더 빠른 속도로 이용할 수
+                있어요.
+              </p>
+            </li>
+            <li>
+              <p class="list__2depth">
+                무료 증속 기간 10일이 지난 후에 계속 빠른 속도로 인터넷을
+                이용하고 싶다면,
+                <em>담당 영업사원에게 속도 변경 청약을 신청해 주세요.</em>
               </p>
             </li>
           </ul>
         </li>
         <li class="flex flex-col">
           <p class="flex items-center">
-            <!-- <icon
-              name="check-circle__line"
-              width="16"
-              height="16"
-              alt=""
-              aria-hidden="true"
-              class="mr-2"
-            /> -->
-            <em>유의 사항</em>
+            <em>꼭 확인하세요</em>
           </p>
           <ul class="list__depth">
             <li>
               <p class="list__2depth">
-                업로드&#47;다운로드 최대 1G까지 증속가능하며, 1G를 초과하는
-                속도를 원하실 경우 &#39;비즈넷&#39;으로 서비스 변경하시기
-                바랍니다.
+                최대 1Gbps까지 증속할 수 있기 떄문에, Premium 요금제의 1Gbps를
+                이용하고 있다면 증속을 신청할 수 없어요. 더 빠른 속도로 인터넷을
+                이용하고 싶다면, '비즈넷' 서비스로 변경해 주세요.
                 <br />
-                (기본 제공 속도에서
-                <em
-                  >업로드는 100M, 다운로드는 200M &#8594; 500M &#47; 500M
-                  &#8594; 1G로 증속 가능</em
-                >합니다.)
+                - <em> 업로드 속도는 100Mbps 단위로 증속</em>할 수 있어요.
+                <br />
+                - <em> 다운로드 속도는 </em>Basic 요금제를 이용하고 있다면<em>
+                  200Mbps에서 500Mbps로</em
+                >
+                , Standard 요금제를 이용하고 있다면
+                <em> 500Mbps에서 1Gbps로 증속</em>할 수 있어요.
               </p>
             </li>
             <li>
-              <p class="list__2depth">
-                증속 신청은 최대 월 1회, 연간 2회 가능합니다
-              </p>
+              <p class="list__2depth">증속 신청은 1년 2번, 월 1회 가능해요.</p>
             </li>
           </ul>
         </li>

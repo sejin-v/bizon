@@ -306,10 +306,11 @@ onMounted(async () => {
         </button>
       </div>
       <div class="login__desc">
-        최초 로그인 시 아이디는 사용중인 서비스의 가입번호,<br />
-        비밀번호는 고객사의 사업자번호 입니다.
+        <span class="font-bold"> 로그인이 처음이세요? </span><br />
+        아이디는 U+가입번호(고객번호)를 <br />
+        비밀번호는 사업자 번호를 입력해 주세요.
         <button type="button" @click="openModal">
-          <span>가입번호 확인방법</span>
+          <span class="font-bold">U+가입번호가 기억나지 않아요</span>
           <icon
             name="arrow-r__line--4c8"
             width="6"
@@ -324,13 +325,19 @@ onMounted(async () => {
       v-model="guidePopupShow"
       title="가입번호 확인방법"
       class="login-p"
-      :size="MODAL_SIZE.LARGE"
+      :size="MODAL_SIZE.MEDIUM"
     >
       <template #content>
         <icon
+          class="img"
+          extension="png"
+          name="guidetop"
+          alt="가입번호는 이메일 또는 지로 청구서에 12자리 숫자로 표기되어 있습니다."
+        />
+        <icon
+          class="img mt-4"
+          extension="png"
           name="guide"
-          width="818px"
-          height="554px"
           alt="가입번호는 이메일 또는 지로 청구서에 12자리 숫자로 표기되어 있습니다."
         />
       </template>
