@@ -71,7 +71,7 @@ onMounted(async () => {
         prop="사용 속도"
         label="사용 속도"
         align="center"
-        min-width="150"
+        min-width="160"
       >
         <template #default="scope">
           <div class="flex flex-col items-center">
