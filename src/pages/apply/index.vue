@@ -22,6 +22,8 @@ const applyData = ref<IApplyData>({
   bizEmpEmalAddr: '',
   trfEvetOccrYn: '',
 });
+const applyIncreaseDisabled = ref(false);
+
 const breakpoints = useBreakpoints({
   mobile: 480,
 });
@@ -86,9 +88,16 @@ const handleApplyButton = () => {
   applyPopupShow.value = true;
 };
 
+watch(
+  () => applyPopupShow.value,
+  (newValue: boolean) => {
+    if (!newValue) applyIncreaseDisabled.value = false;
+  }
+);
 const handleConfirmApply = async () => {
   const data = applyIncreaseRef.value.getRequestData();
   try {
+    applyIncreaseDisabled.value = true;
     const result = await request.post(
       '/bizon/api/icsp/request',
       {
@@ -176,6 +185,7 @@ const brnoFormat = (brno: string) => {
 onMounted(async () => {
   const result = await getApplyData();
   applyData.value = result;
+  applyData.value.rqstStusCd = 'Y';
 });
 </script>
 
@@ -488,6 +498,7 @@ onMounted(async () => {
       confirm-text="네, 변경 하겠습니다."
       @cancel="handleCancelApply"
       @confirm="handleConfirmApply"
+      :disabled="applyIncreaseDisabled"
     >
       <template #content>
         <apply-increase
