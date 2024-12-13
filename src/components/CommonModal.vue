@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<IModalProps>(), {
   cancelText: '취소',
   showClose: true,
   useFooter: true,
+  disabled: false,
 });
 
 const emit = defineEmits<{
@@ -24,7 +25,7 @@ const modalShow = computed({
     return props.modelValue;
   },
   set(value) {
-    emit('update:modelValue', value as bolean);
+    emit('update:modelValue', value as boolean);
   },
 });
 
@@ -81,7 +82,12 @@ const confirm = () => {
         <button type="button" class="btn__line--negative-md" @click="cancel">
           {{ props.cancelText }}
         </button>
-        <button type="button" class="btn__full--primary-md" @click="confirm">
+        <button
+          :disabled="props.disabled"
+          type="button"
+          class="btn__full--primary-md"
+          @click="confirm"
+        >
           {{ props.confirmText }}
         </button>
       </slot>

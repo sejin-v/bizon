@@ -8,6 +8,7 @@ export interface IModalProps {
   closeOnClickModal?: boolean
   showClose?: boolean
   useFooter?: boolean
+  disabled?: boolean
 }
 
 export interface IModalPopup {
