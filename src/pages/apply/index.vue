@@ -185,7 +185,6 @@ const brnoFormat = (brno: string) => {
 onMounted(async () => {
   const result = await getApplyData();
   applyData.value = result;
-  applyData.value.rqstStusCd = 'Y';
 });
 </script>
 

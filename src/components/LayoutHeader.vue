@@ -68,7 +68,12 @@ const handleClick = () => {
   <header class="header">
     <h1 class="logo" @click="handleClick">
       <a>
-        <icon name="logo-lg" alt="LG U+" class="mr-2.5" />
+        <icon
+          name="lguplus-logo--gray"
+          extension="png"
+          alt="LG U+"
+          class="mr-2.5"
+        />
         <span>비즈온 증속신청</span>
       </a>
     </h1>

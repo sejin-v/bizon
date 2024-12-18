@@ -44,7 +44,8 @@ onMounted(() => {
       <p class="mt-5">Copyright &#169; LG Uplus Corp. All Rights Reserved.</p>
     </div>
     <icon
-      name="logo-lg"
+      name="lguplus-logo--gray"
+      extension="png"
       width="100"
       height="27"
       alt="LG U+"
